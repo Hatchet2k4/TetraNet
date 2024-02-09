@@ -6,21 +6,28 @@ using static Data;
 
 public partial class Spawner : Node
 {
-	public BlockType current_block;
+	public BlockType currentBlock;
+	public BlockType[] nextBlocks;
+
 	private BlockType[] _blockTypes;
-	private Random rand;
+	private Random _rand;
 
 	public override void _Ready()
 	{
-		rand = new Random();
+		_rand = new Random();
 		_blockTypes = (BlockType[])Enum.GetValues(typeof(BlockType));
-		PickRandomBlock();
+		currentBlock = PickRandomBlock();
+		nextBlocks = new BlockType[3];
+		for (int i = 0; i < 3; i++)
+		{
+			nextBlocks[i] = PickRandomBlock();
+		}
 	}
 
-	private void PickRandomBlock()
+	private BlockType PickRandomBlock()
 	{
-		int randomIndex = rand.Next(0, _blockTypes.Length);
-		current_block = _blockTypes[randomIndex];
+		int randomIndex = _rand.Next(0, _blockTypes.Length);
+		return _blockTypes[randomIndex];
 	}
 
 	public override void _Process(double delta)
