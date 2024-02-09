@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://b64y6wmanuif4"]
+
+[ext_resource type="Texture2D" uid="uid://dfoe7fg8s03t1" path="res://gfx/Orange.png" id="1_701cb"]
+[ext_resource type="Script" path="res://src/BlockData.cs" id="2_ymcdy"]
+
+[resource]
+script = ExtResource("2_ymcdy")
+blockType = 1
+spawnPosition = Vector2(0, 0)
+blockTexture = ExtResource("1_701cb")

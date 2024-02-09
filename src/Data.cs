@@ -3,6 +3,8 @@ namespace TetraNet;
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
+
 
 public partial class Data : Node
 {
@@ -30,7 +32,7 @@ public partial class Data : Node
 		{BlockType.Z, Z}
 	};
 
-    public static List<List<Vector2>> wall_kicks_i = new List<List<Vector2>>
+    public static List<List<Vector2>> wallKicksI = new List<List<Vector2>>
     {
         new List<Vector2> {new Vector2(0,0), new Vector2(-2,0), new Vector2(1,0), new Vector2(-2,-1), new Vector2(1,2)},
         new List<Vector2> {new Vector2(0,0), new Vector2(2,0), new Vector2(-1, 0), new Vector2(2,1), new Vector2(-1, -2)},
@@ -42,7 +44,7 @@ public partial class Data : Node
         new List<Vector2> {new Vector2(0,0), new Vector2(-1, 0), new Vector2(2, 0), new Vector2(-1,2), new Vector2(2, -1)}
     };
 
-	public static List<List<Vector2>> wall_kicks_jlostz = new List<List<Vector2>> {
+	public static List<List<Vector2>> wallKicks = new List<List<Vector2>> {
 		new List<Vector2> {new Vector2(0,0), new Vector2(-1,0), new Vector2(-1,1), new Vector2(0,-2), new Vector2(-1, -2)},
 		new List<Vector2> {new Vector2(0,0), new Vector2(1,0), new Vector2(1, -1), new Vector2(0,2), new Vector2(1, 2)},
 		new List<Vector2> {new Vector2(0,0), new Vector2(1, 0), new Vector2(1,-1), new Vector2(0,2), new Vector2(1, 2)},
@@ -51,6 +53,17 @@ public partial class Data : Node
 		new List<Vector2> {new Vector2(0,0), new Vector2(-1,0), new Vector2(-1, -1), new Vector2(0, 2), new Vector2(-1, 2)},
 		new List<Vector2> {new Vector2(0,0), new Vector2(-1,0), new Vector2(-1,-1), new Vector2(0, 2), new Vector2(-1, 2)},
 		new List<Vector2> {new Vector2(0,0), new Vector2(1, 0), new Vector2(1, 1), new Vector2(0,-2), new Vector2(1, -2)}
+	};
+
+	public static Dictionary<BlockType, Resource> blockResources = new()
+	{
+		{BlockType.I, GD.Load("res://resources/I.tres")},
+		{BlockType.J, GD.Load("res://resources/J.tres")},
+		{BlockType.L, GD.Load("res://resources/L.tres")},
+		{BlockType.O, GD.Load("res://resources/O.tres")},
+		{BlockType.S, GD.Load("res://resources/S.tres")},
+		{BlockType.T, GD.Load("res://resources/T.tres")},
+		{BlockType.Z, GD.Load("res://resources/Z.tres")}  		
 	};
 
 }
