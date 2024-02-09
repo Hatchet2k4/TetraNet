@@ -1,7 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://dyhu84kgwia8n"]
+[gd_scene load_steps=7 format=3 uid="uid://dyhu84kgwia8n"]
 
+[ext_resource type="Script" path="res://src/Spawner.cs" id="1_fo0rc"]
+[ext_resource type="Script" path="res://scenes/MainField.cs" id="1_uqqdg"]
 [ext_resource type="Texture2D" uid="uid://j5rbu80ek0x4" path="res://gfx/Border.png" id="1_yn1p1"]
 [ext_resource type="Texture2D" uid="uid://fpd1ccvyusfn" path="res://gfx/Grid.png" id="2_5baax"]
+[ext_resource type="PackedScene" uid="uid://ci12tydqs0eg" path="res://scenes/block.tscn" id="2_ciypn"]
+[ext_resource type="Texture2D" uid="uid://b362py33l2rw2" path="res://gfx/NextBorder.png" id="6_xj8da"]
 
 [node name="Main" type="Node2D"]
 
@@ -12,10 +16,15 @@ zoom = Vector2(0.5, 0.5)
 [node name="Main Field" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 32.0
-offset_top = 32.0
-offset_right = 72.0
-offset_bottom = 72.0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 56.0
+offset_bottom = 56.0
+script = ExtResource("1_uqqdg")
+_block = ExtResource("2_ciypn")
+
+[node name="Spawner" type="Node" parent="Main Field"]
+script = ExtResource("1_fo0rc")
 
 [node name="Border" type="TextureRect" parent="Main Field"]
 layout_mode = 0
@@ -23,7 +32,46 @@ offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("1_yn1p1")
 
-[node name="Grid" type="TextureRect" parent="Main Field"]
+[node name="Grid" type="TextureRect" parent="Main Field/Border"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 496.0
+offset_bottom = 976.0
+texture = ExtResource("2_5baax")
+stretch_mode = 1
+
+[node name="NextBlock" type="TextureRect" parent="Main Field"]
+layout_mode = 0
+offset_left = 556.0
+offset_right = 780.0
+offset_bottom = 607.0
+texture = ExtResource("6_xj8da")
+
+[node name="Grid" type="TextureRect" parent="Main Field/NextBlock"]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 208.0
+offset_bottom = 592.0
+texture = ExtResource("2_5baax")
+stretch_mode = 1
+
+[node name="Mini Field" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 1000.0
+offset_top = 16.0
+offset_right = 1040.0
+offset_bottom = 56.0
+scale = Vector2(0.5, 0.5)
+
+[node name="Border" type="TextureRect" parent="Mini Field"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_yn1p1")
+
+[node name="Grid" type="TextureRect" parent="Mini Field"]
 layout_mode = 0
 offset_left = 16.0
 offset_top = 16.0

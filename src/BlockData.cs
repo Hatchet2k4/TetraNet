@@ -1,3 +1,5 @@
+namespace TetraNet;
+
 using Godot;
 using System;
 using TetraNet;
