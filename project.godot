@@ -13,9 +13,21 @@ config_version=5
 config/name="TetraNet Tournament"
 config/description="A multiplayer Tetris game!"
 run/main_scene="res://scenes/bootup.tscn"
-config/features=PackedStringArray("4.2", "Mobile")
+config/features=PackedStringArray("4.2", "C#", "Mobile")
 boot_splash/show_image=false
 config/icon="res://gfx/icon.png"
+
+[autoload]
+
+Data="*res://src/Data.cs"
+
+[display]
+
+window/size/viewport_width=960
+window/size/viewport_height=540
+window/size/initial_position_type=3
+window/size/resizable=false
+window/stretch/mode="canvas_items"
 
 [dotnet]
 
