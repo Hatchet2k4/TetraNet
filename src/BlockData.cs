@@ -1,12 +1,11 @@
 namespace TetraNet;
 
 using Godot;
-using System;
-using TetraNet;
+using static Data;
 
 public partial class BlockData : Resource
 {
-    [Export] public Data.BlockType blockType;
+    [Export] public BlockType blockType;
     [Export] public Vector2 spawnPosition;
     [Export] Texture blockTexture;
 }

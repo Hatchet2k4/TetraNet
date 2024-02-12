@@ -1,3 +1,6 @@
-[gd_scene format=3 uid="uid://ci12tydqs0eg"]
+[gd_scene load_steps=2 format=3 uid="uid://ci12tydqs0eg"]
+
+[ext_resource type="Script" path="res://src/Block.cs" id="1_dgifd"]
 
 [node name="Block" type="Node2D"]
+script = ExtResource("1_dgifd")
