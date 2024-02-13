@@ -1,11 +1,7 @@
 namespace TetraNet;
 
 using Godot;
-using System;
 using System.Collections.Generic;
-using System.Net;
-using System.Net.NetworkInformation;
-
 
 public partial class Data : Node
 {
@@ -16,24 +12,16 @@ public partial class Data : Node
 		I, O, T, J, L, S, Z
 	}
 
-	public static List<Vector2> I = new() { new Vector2(-1, 0), new Vector2(0, 0), new Vector2(1, 0), new Vector2(2, 0) };
-	public static List<Vector2> J = new() { new Vector2(-1, -1), new Vector2(-1, 0), new Vector2(0, 0), new Vector2(1, 0) };
-	public static List<Vector2> L = new() { new Vector2(1, 1), new Vector2(-1, 0), new Vector2(0, 0), new Vector2(1, 0) };
-	public static List<Vector2> O = new() { new Vector2(0, 1), new Vector2(1, 1), new Vector2(0, 0), new Vector2(1, 0) };
-	public static List<Vector2> S = new() { new Vector2(0, 1), new Vector2(1, 1), new Vector2(-1, 0), new Vector2(0, 0) };
-	public static List<Vector2> T = new() { new Vector2(0, 1), new Vector2(-1, 0), new Vector2(0, 0), new Vector2(1, 0) };
-	public static List<Vector2> Z = new() { new Vector2(-1, 1), new Vector2(0, 1), new Vector2(0, 0), new Vector2(1, 0) };
-
-	public static Dictionary<BlockType, List<Vector2>> Cells = new()
-	{
-		{BlockType.I, I},
-		{BlockType.J, J},
-		{BlockType.L, L},
-		{BlockType.O, O},
-		{BlockType.S, S},
-		{BlockType.T, T},
-		{BlockType.Z, Z}
-	};
+    public static Dictionary<BlockType, List<Vector2>> Cells = new Dictionary<BlockType, List<Vector2>>
+    {
+        {BlockType.I, new List<Vector2> { new Vector2(-1, 0), new Vector2(0, 0), new Vector2(1, 0), new Vector2(2, 0) }},
+        {BlockType.J, new List<Vector2> { new Vector2(-1, -1), new Vector2(-1, 0), new Vector2(0, 0), new Vector2(1, 0) }},
+        {BlockType.L, new List<Vector2> { new Vector2(1, 1), new Vector2(-1, 0), new Vector2(0, 0), new Vector2(1, 0) }},
+        {BlockType.O, new List<Vector2> { new Vector2(0, 1), new Vector2(1, 1), new Vector2(0, 0), new Vector2(1, 0) }},
+        {BlockType.S, new List<Vector2> { new Vector2(0, 1), new Vector2(1, 1), new Vector2(-1, 0), new Vector2(0, 0) }},
+        {BlockType.T, new List<Vector2> { new Vector2(0, 1), new Vector2(-1, 0), new Vector2(0, 0), new Vector2(1, 0) }},
+        {BlockType.Z, new List<Vector2> { new Vector2(-1, 1), new Vector2(0, 1), new Vector2(0, 0), new Vector2(1, 0) }}
+    };
 
 	public static List<List<Vector2>> wallKicksI = new List<List<Vector2>>
 	{
@@ -58,16 +46,17 @@ public partial class Data : Node
 		new List<Vector2> {new Vector2(0,0), new Vector2(1, 0), new Vector2(1, 1), new Vector2(0,-2), new Vector2(1, -2)}
 	};
 
-	public static Dictionary<BlockType, Resource> blockResources = new()
+	
+	public static Dictionary<BlockType, BlockData> blockResources = new()
 	{
-		{BlockType.I, GD.Load("res://resources/I.tres")},
-		{BlockType.J, GD.Load("res://resources/J.tres")},
-		{BlockType.L, GD.Load("res://resources/L.tres")},
-		{BlockType.O, GD.Load("res://resources/O.tres")},
-		{BlockType.S, GD.Load("res://resources/S.tres")},
-		{BlockType.T, GD.Load("res://resources/T.tres")},
-		{BlockType.Z, GD.Load("res://resources/Z.tres")}
-	};
+		{BlockType.I, GD.Load("res://resources/I.tres") as BlockData},
+		{BlockType.J, GD.Load("res://resources/J.tres") as BlockData},
+		{BlockType.L, GD.Load("res://resources/L.tres") as BlockData},
+		{BlockType.O, GD.Load("res://resources/O.tres") as BlockData},
+		{BlockType.S, GD.Load("res://resources/S.tres") as BlockData},
+		{BlockType.T, GD.Load("res://resources/T.tres") as BlockData},
+		{BlockType.Z, GD.Load("res://resources/Z.tres") as BlockData}
+	};	
 
 	public static List<Vector2> clockwiseRotation = new()
 	{
