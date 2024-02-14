@@ -13,6 +13,8 @@ _collision = NodePath("CollisionShape2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_jh6qv")
+centered = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(24, 24)
 shape = SubResource("RectangleShape2D_7vmul")

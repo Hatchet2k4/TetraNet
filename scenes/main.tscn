@@ -1,16 +1,16 @@
-[gd_scene load_steps=9 format=3 uid="uid://dyhu84kgwia8n"]
+[gd_scene load_steps=9 format=3 uid="uid://dba4ubxkab2hi"]
 
-[ext_resource type="Script" path="res://src/Spawner.cs" id="1_fo0rc"]
-[ext_resource type="Script" path="res://src/MainField.cs" id="1_jljxt"]
-[ext_resource type="Script" path="res://src/Main.cs" id="1_ubwvu"]
-[ext_resource type="Texture2D" uid="uid://j5rbu80ek0x4" path="res://gfx/Border.png" id="1_yn1p1"]
-[ext_resource type="Texture2D" uid="uid://fpd1ccvyusfn" path="res://gfx/Grid.png" id="2_5baax"]
-[ext_resource type="PackedScene" uid="uid://ci12tydqs0eg" path="res://scenes/block.tscn" id="2_oo0fu"]
-[ext_resource type="Texture2D" uid="uid://b362py33l2rw2" path="res://gfx/NextBorder.png" id="6_xj8da"]
-[ext_resource type="Script" path="res://src/NextGrid.cs" id="7_a74fx"]
+[ext_resource type="Script" path="res://src/Main.cs" id="1_ahlpl"]
+[ext_resource type="Script" path="res://src/MainField.cs" id="2_515ng"]
+[ext_resource type="PackedScene" uid="uid://ci12tydqs0eg" path="res://scenes/block.tscn" id="3_yjmfd"]
+[ext_resource type="Script" path="res://src/Spawner.cs" id="4_edpkq"]
+[ext_resource type="Texture2D" uid="uid://j5rbu80ek0x4" path="res://gfx/Border.png" id="5_rpy1o"]
+[ext_resource type="Texture2D" uid="uid://fpd1ccvyusfn" path="res://gfx/Grid.png" id="6_x34jm"]
+[ext_resource type="Texture2D" uid="uid://b362py33l2rw2" path="res://gfx/NextBorder.png" id="7_gobis"]
+[ext_resource type="Script" path="res://src/NextGrid.cs" id="8_lnh50"]
 
 [node name="Main" type="Node2D"]
-script = ExtResource("1_ubwvu")
+script = ExtResource("1_ahlpl")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0
@@ -23,20 +23,20 @@ offset_left = 16.0
 offset_top = 16.0
 offset_right = 56.0
 offset_bottom = 56.0
-script = ExtResource("1_jljxt")
-_blockScene = ExtResource("2_oo0fu")
+script = ExtResource("2_515ng")
+_blockScene = ExtResource("3_yjmfd")
 _spawner = NodePath("Spawner")
 _grid = NodePath("Border/Grid")
 _nextGrid = NodePath("NextBlock/Grid")
 
 [node name="Spawner" type="Node" parent="Main Field"]
-script = ExtResource("1_fo0rc")
+script = ExtResource("4_edpkq")
 
 [node name="Border" type="TextureRect" parent="Main Field"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
-texture = ExtResource("1_yn1p1")
+texture = ExtResource("5_rpy1o")
 
 [node name="Grid" type="TextureRect" parent="Main Field/Border"]
 layout_mode = 0
@@ -44,7 +44,7 @@ offset_left = 16.0
 offset_top = 16.0
 offset_right = 496.0
 offset_bottom = 976.0
-texture = ExtResource("2_5baax")
+texture = ExtResource("6_x34jm")
 stretch_mode = 1
 
 [node name="NextBlock" type="TextureRect" parent="Main Field" node_paths=PackedStringArray("_spawner")]
@@ -52,8 +52,8 @@ layout_mode = 0
 offset_left = 556.0
 offset_right = 780.0
 offset_bottom = 607.0
-texture = ExtResource("6_xj8da")
-script = ExtResource("7_a74fx")
+texture = ExtResource("7_gobis")
+script = ExtResource("8_lnh50")
 _spawner = NodePath("../Spawner")
 
 [node name="Grid" type="TextureRect" parent="Main Field/NextBlock"]
@@ -62,7 +62,7 @@ offset_left = 16.0
 offset_top = 16.0
 offset_right = 208.0
 offset_bottom = 592.0
-texture = ExtResource("2_5baax")
+texture = ExtResource("6_x34jm")
 stretch_mode = 1
 
 [node name="Mini Field" type="Control" parent="."]
@@ -78,7 +78,7 @@ scale = Vector2(0.5, 0.5)
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
-texture = ExtResource("1_yn1p1")
+texture = ExtResource("5_rpy1o")
 
 [node name="Grid" type="TextureRect" parent="Mini Field"]
 layout_mode = 0
@@ -86,5 +86,5 @@ offset_left = 16.0
 offset_top = 16.0
 offset_right = 496.0
 offset_bottom = 976.0
-texture = ExtResource("2_5baax")
+texture = ExtResource("6_x34jm")
 stretch_mode = 1
