@@ -9,18 +9,18 @@ public partial class Spawner : Node
 {
 	public BlockType currentBlock;
 	public List<BlockType> nextBlocks;
-
 	private BlockType[] _blockTypes;
 	private Random _rand;
+	[Export] public PackedScene blockScene;
 
 	public override void _Ready()
 	{
 		_rand = new Random();
 		nextBlocks = new();
-		
+
 		_blockTypes = (BlockType[])Enum.GetValues(typeof(BlockType));
 		currentBlock = PickRandomBlock();
-		
+
 		for (int i = 0; i < 3; i++)
 		{
 			nextBlocks.Add(PickRandomBlock());

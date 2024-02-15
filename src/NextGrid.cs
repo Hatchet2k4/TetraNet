@@ -1,18 +1,32 @@
-
 namespace TetraNet;
 
 using Godot;
+using static Data;
+using System.Collections.Generic;
 
 public partial class NextGrid : TextureRect
 {
 	[Export] private Spawner _spawner;
-	// Called when the node enters the scene tree for the first time.
+	[Export] private TextureRect _nextGrid;
+	public List<Block> nextBlocks;
+
 	public override void _Ready()
 	{
+		nextBlocks = new();
+		Populate();
+		SetProcess(false);
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+	public void Populate()
 	{
+		nextBlocks.Clear();
+		for (int i = 0; i < 3; i++)
+		{
+			Block b = _spawner.blockScene.Instantiate() as Block;
+			b.Initialize(Data.blockResources[_spawner.nextBlocks[i]]);
+			b.Position = _nextGrid.Position + new Vector2(48, 48 * (4 * i));
+			AddChild(b);
+			nextBlocks.Add(b);
+		}
 	}
 }

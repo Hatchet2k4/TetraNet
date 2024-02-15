@@ -24,13 +24,13 @@ offset_top = 16.0
 offset_right = 56.0
 offset_bottom = 56.0
 script = ExtResource("2_515ng")
-_blockScene = ExtResource("3_yjmfd")
 _spawner = NodePath("Spawner")
 _grid = NodePath("Border/Grid")
 _nextGrid = NodePath("NextBlock/Grid")
 
 [node name="Spawner" type="Node" parent="Main Field"]
 script = ExtResource("4_edpkq")
+blockScene = ExtResource("3_yjmfd")
 
 [node name="Border" type="TextureRect" parent="Main Field"]
 layout_mode = 0
@@ -47,7 +47,7 @@ offset_bottom = 976.0
 texture = ExtResource("6_x34jm")
 stretch_mode = 1
 
-[node name="NextBlock" type="TextureRect" parent="Main Field" node_paths=PackedStringArray("_spawner")]
+[node name="NextBlock" type="TextureRect" parent="Main Field" node_paths=PackedStringArray("_spawner", "_nextGrid")]
 layout_mode = 0
 offset_left = 556.0
 offset_right = 780.0
@@ -55,6 +55,7 @@ offset_bottom = 607.0
 texture = ExtResource("7_gobis")
 script = ExtResource("8_lnh50")
 _spawner = NodePath("../Spawner")
+_nextGrid = NodePath("Grid")
 
 [node name="Grid" type="TextureRect" parent="Main Field/NextBlock"]
 layout_mode = 0
