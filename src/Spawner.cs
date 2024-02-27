@@ -42,5 +42,7 @@ public partial class Spawner : Node
 
 	public override void _Process(double delta)
 	{
+
+
 	}
 }

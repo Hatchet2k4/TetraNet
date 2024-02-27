@@ -5,28 +5,30 @@ using static Data;
 
 public partial class MainField : Control
 {
-
 	[Export] private Spawner _spawner;
 	[Export] private TextureRect _grid;
-	[Export] private Timer _timer;
 	[Export] private TextureRect _nextGrid;
+
+	private double _fallTime;
 
 	private Piece[,] _gridData;
 
 	private Signal gameover;
 	private Block _currentBlock;
 
+	private double _time;
 
-	public void onTimer()
+	public void MoveDown()
 	{
-		_currentBlock.Position += Vector2.Down * 48;
+		_currentBlock.Position += DOWN * GRID_SIZE;
 	}
 
 	public override void _Ready()
 	{
+		_fallTime = 0.75f;
+		_time = 0;
 		_gridData = new Piece[GRID_W, GRID_H];
 		SpawnNewBlock(_spawner.currentBlock);
-		_timer.Start();
 	}
 
 	public void SpawnNewBlock(BlockType t)
@@ -39,5 +41,20 @@ public partial class MainField : Control
 
 	public override void _Process(double delta)
 	{
+		_time += delta;
+		if (_time > _fallTime)
+		{
+			_time -= _fallTime;
+			MoveDown();
+		}
+		else
+		{
+			ProcessInput();
+		}
+	}
+
+	public void ProcessInput()
+	{
+
 	}
 }

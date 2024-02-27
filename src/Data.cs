@@ -5,9 +5,14 @@ using System.Collections.Generic;
 
 public partial class Data : Node
 {
-	public const int GRID_SIZE = 48;
-	public const int GRID_W = 10;
-	public const int GRID_H = 20;
+	public static readonly int GRID_SIZE = 48;
+	public static readonly int GRID_W = 10;
+	public static readonly int GRID_H = 20;
+	public static readonly Vector2 DOWN = Vector2.Down;
+	public static readonly Vector2 UP = Vector2.Up;
+	public static readonly Vector2 LEFT = Vector2.Left;
+	public static readonly Vector2 RIGHT = Vector2.Right;
+
 
 	public enum BlockType
 	{
