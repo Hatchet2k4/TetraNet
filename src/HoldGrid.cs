@@ -3,7 +3,7 @@ namespace TetraNet;
 using Godot;
 
 
-public partial class HoldGrid : TextureRect
+public partial class HoldGrid : Control
 {
 
 	[Export] private TextureRect _holdGrid;

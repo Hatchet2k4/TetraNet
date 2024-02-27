@@ -17,11 +17,10 @@ public partial class MainField : Control
 	private Block _currentBlock;
 
 	private double _time;
+	private double _holdTime;
+	private double _holdRate = 0.1f;
 
-	public void MoveDown()
-	{
-		_currentBlock.Position += DOWN * GRID_SIZE;
-	}
+
 
 	public override void _Ready()
 	{
@@ -55,6 +54,30 @@ public partial class MainField : Control
 
 	public void ProcessInput()
 	{
+		if (Gamepad.LeftPressed())
+		{
+			MoveLeft();
+		}
+		else if (Gamepad.RightPressed())
+		{
+			MoveRight();
+		}
 
 	}
+
+	public void MoveLeft()
+	{
+		_currentBlock.Position += LEFT * GRID_SIZE;
+	}
+
+	public void MoveRight()
+	{
+		_currentBlock.Position += RIGHT * GRID_SIZE;
+	}
+
+	public void MoveDown()
+	{
+		_currentBlock.Position += DOWN * GRID_SIZE;
+	}
+
 }

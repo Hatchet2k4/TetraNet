@@ -4,7 +4,7 @@ using Godot;
 using static Data;
 using System.Collections.Generic;
 
-public partial class NextGrid : TextureRect
+public partial class NextGrid : Control
 {
 	[Export] private Spawner _spawner;
 	[Export] private TextureRect _nextGrid;
