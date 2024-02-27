@@ -67,6 +67,7 @@ _spawner = NodePath("../Spawner")
 _nextGrid = NodePath("Grid")
 
 [node name="Grid" type="TextureRect" parent="NextBlock"]
+visible = false
 layout_mode = 0
 offset_left = 16.0
 offset_top = 16.0
@@ -77,9 +78,9 @@ stretch_mode = 1
 
 [node name="HoldBlock" type="NinePatchRect" parent="."]
 offset_left = 572.0
-offset_top = 499.0
+offset_top = 500.0
 offset_right = 796.0
-offset_bottom = 723.0
+offset_bottom = 724.0
 texture = ExtResource("10_w3jrr")
 patch_margin_left = 16
 patch_margin_top = 16

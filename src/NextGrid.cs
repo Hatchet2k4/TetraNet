@@ -20,11 +20,24 @@ public partial class NextGrid : Control
 	public void Populate()
 	{
 		nextBlocks.Clear();
+
+		BlockType[] types = {
+			BlockType.I,
+			BlockType.J,
+			BlockType.L,
+			BlockType.O,
+			BlockType.S,
+			BlockType.T,
+			BlockType.Z
+		};
+
 		for (int i = 0; i < 3; i++)
 		{
 			Block b = _spawner.blockScene.Instantiate() as Block;
-			b.Initialize(Data.blockResources[_spawner.nextBlocks[i]]);
-			b.Position = _nextGrid.Position + new Vector2(48, 48 * (4 * i));
+			BlockType bt = _spawner.nextBlocks[i];
+			b.Initialize(blockResources[bt]);
+			//b.Initialize(blockResources[types[i]]);
+			b.Position = _nextGrid.Position + new Vector2(GRID_SIZE, GRID_SIZE * (3 * i)) + (spawnPositions[bt] * GRID_SIZE);
 			AddChild(b);
 			nextBlocks.Add(b);
 		}
