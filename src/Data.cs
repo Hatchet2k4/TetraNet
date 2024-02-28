@@ -66,13 +66,13 @@ public partial class Data : Node
 
 	public static Dictionary<BlockType, Vector2> spawnPositions = new()
 	{
-		{BlockType.I, new Vector2(0,1)},
-		{BlockType.J, new Vector2(0.5f,1)},
-		{BlockType.L, new Vector2(0.5f,2)},
-		{BlockType.O, new Vector2(0, 1)},
-		{BlockType.S, new Vector2(0.5f,1)},
-		{BlockType.T, new Vector2(0.5f,1)},
-		{BlockType.Z, new Vector2(0.5f,1)}
+		{BlockType.I, new Vector2(0.5f,0.5f)},
+		{BlockType.J, new Vector2(1,0.5f)},
+		{BlockType.L, new Vector2(1,0.5f)},
+		{BlockType.O, new Vector2(0.5f, 0.5f)},
+		{BlockType.S, new Vector2(1,0.5f)},
+		{BlockType.T, new Vector2(1,0.5f)},
+		{BlockType.Z, new Vector2(1,0.5f)}
 	};
 
 

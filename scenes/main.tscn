@@ -1,14 +1,19 @@
-[gd_scene load_steps=10 format=3 uid="uid://dba4ubxkab2hi"]
+[gd_scene load_steps=12 format=3 uid="uid://dba4ubxkab2hi"]
 
 [ext_resource type="Script" path="res://src/Main.cs" id="1_ahlpl"]
 [ext_resource type="Script" path="res://src/MainField.cs" id="2_515ng"]
 [ext_resource type="PackedScene" uid="uid://ci12tydqs0eg" path="res://scenes/block.tscn" id="3_yjmfd"]
 [ext_resource type="Script" path="res://src/Spawner.cs" id="4_edpkq"]
+[ext_resource type="LabelSettings" uid="uid://d0u2fihvoi8b4" path="res://resources/mainfont.tres" id="5_nx2xu"]
 [ext_resource type="Texture2D" uid="uid://j5rbu80ek0x4" path="res://gfx/Border.png" id="5_rpy1o"]
 [ext_resource type="Texture2D" uid="uid://fpd1ccvyusfn" path="res://gfx/Grid.png" id="6_x34jm"]
+[ext_resource type="FontFile" path="res://fonts/kirifont/Kirifont.tres" id="7_dkgbi"]
 [ext_resource type="Script" path="res://src/NextGrid.cs" id="8_lnh50"]
 [ext_resource type="Texture2D" uid="uid://smxnw8u1gp0k" path="res://gfx/HoldBorder.png" id="10_w3jrr"]
-[ext_resource type="Script" path="res://src/HoldGrid.cs" id="11_rfw3t"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ay8rd"]
+font = ExtResource("7_dkgbi")
+font_size = 24
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_ahlpl")
@@ -21,19 +26,28 @@ zoom = Vector2(0.5, 0.5)
 script = ExtResource("4_edpkq")
 blockScene = ExtResource("3_yjmfd")
 
-[node name="Main Field" type="Control" parent="." node_paths=PackedStringArray("_spawner", "_grid", "_nextGrid")]
+[node name="Main Area" type="Control" parent="." node_paths=PackedStringArray("_spawner", "_grid", "_nextGrid")]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 16.0
-offset_top = 16.0
+offset_top = 60.0
 offset_right = 528.0
-offset_bottom = 1008.0
+offset_bottom = 1052.0
 script = ExtResource("2_515ng")
 _spawner = NodePath("../Spawner")
 _grid = NodePath("Border/Grid")
-_nextGrid = NodePath("../NextBlock/Grid")
+_nextGrid = NodePath("../NextBox/Grid")
 
-[node name="Border" type="NinePatchRect" parent="Main Field"]
+[node name="Player 1" type="Label" parent="Main Area"]
+offset_top = -44.0
+offset_right = 512.0
+offset_bottom = -4.0
+text = "PLAYER 1"
+label_settings = ExtResource("5_nx2xu")
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Border" type="NinePatchRect" parent="Main Area"]
 layout_mode = 0
 offset_right = 512.0
 offset_bottom = 992.0
@@ -43,7 +57,7 @@ patch_margin_top = 16
 patch_margin_right = 16
 patch_margin_bottom = 16
 
-[node name="Grid" type="TextureRect" parent="Main Field/Border"]
+[node name="Grid" type="TextureRect" parent="Main Area/Border"]
 layout_mode = 0
 offset_left = 16.0
 offset_top = 16.0
@@ -52,11 +66,11 @@ offset_bottom = 976.0
 texture = ExtResource("6_x34jm")
 stretch_mode = 1
 
-[node name="NextBlock" type="NinePatchRect" parent="." node_paths=PackedStringArray("_spawner", "_nextGrid")]
+[node name="NextBox" type="NinePatchRect" parent="." node_paths=PackedStringArray("_spawner", "_nextGrid")]
 offset_left = 572.0
-offset_top = 16.0
-offset_right = 796.0
-offset_bottom = 480.0
+offset_top = 60.0
+offset_right = 844.0
+offset_bottom = 524.0
 texture = ExtResource("10_w3jrr")
 patch_margin_left = 16
 patch_margin_top = 16
@@ -66,50 +80,136 @@ script = ExtResource("8_lnh50")
 _spawner = NodePath("../Spawner")
 _nextGrid = NodePath("Grid")
 
-[node name="Grid" type="TextureRect" parent="NextBlock"]
-visible = false
-layout_mode = 0
+[node name="Next" type="Label" parent="NextBox"]
+offset_top = -44.0
+offset_right = 272.0
+offset_bottom = -4.0
+text = "NEXT"
+label_settings = ExtResource("5_nx2xu")
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Grid" type="TextureRect" parent="NextBox"]
 offset_left = 16.0
 offset_top = 16.0
-offset_right = 208.0
+offset_right = 256.0
 offset_bottom = 448.0
 texture = ExtResource("6_x34jm")
 stretch_mode = 1
 
-[node name="HoldBlock" type="NinePatchRect" parent="."]
+[node name="HoldBox" type="NinePatchRect" parent="."]
 offset_left = 572.0
-offset_top = 500.0
-offset_right = 796.0
-offset_bottom = 724.0
+offset_top = 580.0
+offset_right = 844.0
+offset_bottom = 756.0
 texture = ExtResource("10_w3jrr")
 patch_margin_left = 16
 patch_margin_top = 16
 patch_margin_right = 16
 patch_margin_bottom = 16
-script = ExtResource("11_rfw3t")
 
-[node name="Grid" type="TextureRect" parent="HoldBlock"]
-layout_mode = 0
+[node name="Hold" type="Label" parent="HoldBox"]
+offset_top = -44.0
+offset_right = 272.0
+offset_bottom = -4.0
+text = "HOLD
+"
+label_settings = ExtResource("5_nx2xu")
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="ScoreBox" type="NinePatchRect" parent="."]
+offset_left = 572.0
+offset_top = 812.0
+offset_right = 844.0
+offset_bottom = 1052.0
+texture = ExtResource("10_w3jrr")
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+
+[node name="Score" type="Label" parent="ScoreBox"]
+offset_left = 4.0
+offset_top = -44.0
+offset_right = 276.0
+offset_bottom = -4.0
+text = "SCORE"
+label_settings = ExtResource("5_nx2xu")
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="InventoryBox" type="NinePatchRect" parent="."]
 offset_left = 16.0
-offset_top = 16.0
-offset_right = 208.0
-offset_bottom = 208.0
-texture = ExtResource("6_x34jm")
-stretch_mode = 1
+offset_top = 1104.0
+offset_right = 528.0
+offset_bottom = 1424.0
+texture = ExtResource("10_w3jrr")
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+
+[node name="Inventory" type="Label" parent="InventoryBox"]
+offset_top = -44.0
+offset_right = 512.0
+offset_bottom = -4.0
+text = "INVENTORY"
+label_settings = ExtResource("5_nx2xu")
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_left = 888.0
+offset_top = 1123.0
+offset_right = 1375.0
+offset_bottom = 1924.0
+
+[node name="ChatBox" type="NinePatchRect" parent="."]
+offset_left = 572.0
+offset_top = 1104.0
+offset_right = 2526.0
+offset_bottom = 1344.0
+texture = ExtResource("10_w3jrr")
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+
+[node name="ChatBox2" type="NinePatchRect" parent="."]
+offset_left = 572.0
+offset_top = 1344.0
+offset_right = 2526.0
+offset_bottom = 1424.0
+texture = ExtResource("10_w3jrr")
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+
+[node name="Player 2" type="Label" parent="."]
+offset_left = 1000.0
+offset_right = 1256.0
+offset_bottom = 32.0
+text = "Opponent 1"
+label_settings = SubResource("LabelSettings_ay8rd")
+horizontal_alignment = 1
+vertical_alignment = 2
 
 [node name="Mini Field" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 1000.0
-offset_top = 16.0
+offset_top = 40.0
 offset_right = 1512.0
-offset_bottom = 1008.0
+offset_bottom = 1032.0
 scale = Vector2(0.5, 0.5)
 
 [node name="Border" type="TextureRect" parent="Mini Field"]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_top = -8.0
+offset_right = 512.0
+offset_bottom = 984.0
 texture = ExtResource("5_rpy1o")
 
 [node name="Grid" type="TextureRect" parent="Mini Field/Border"]
@@ -121,19 +221,23 @@ offset_bottom = 976.0
 texture = ExtResource("6_x34jm")
 stretch_mode = 1
 
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
-offset_left = 888.0
-offset_top = 1123.0
-offset_right = 1375.0
-offset_bottom = 1924.0
+[node name="Player 3" type="Label" parent="."]
+offset_left = 1000.0
+offset_top = 532.0
+offset_right = 1256.0
+offset_bottom = 564.0
+text = "Opponent 2"
+label_settings = SubResource("LabelSettings_ay8rd")
+horizontal_alignment = 1
+vertical_alignment = 2
 
 [node name="Mini Field2" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 1000.0
-offset_top = 528.0
+offset_top = 564.0
 offset_right = 1512.0
-offset_bottom = 1520.0
+offset_bottom = 1556.0
 scale = Vector2(0.5, 0.5)
 
 [node name="Border" type="TextureRect" parent="Mini Field2"]
@@ -143,6 +247,280 @@ offset_bottom = 40.0
 texture = ExtResource("5_rpy1o")
 
 [node name="Grid" type="TextureRect" parent="Mini Field2"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 496.0
+offset_bottom = 976.0
+texture = ExtResource("6_x34jm")
+stretch_mode = 1
+
+[node name="Player 4" type="Label" parent="."]
+offset_left = 1296.0
+offset_right = 1552.0
+offset_bottom = 32.0
+text = "Opponent 3"
+label_settings = SubResource("LabelSettings_ay8rd")
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Mini Field3" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 1296.0
+offset_top = 40.0
+offset_right = 1808.0
+offset_bottom = 1032.0
+scale = Vector2(0.5, 0.5)
+
+[node name="Border" type="TextureRect" parent="Mini Field3"]
+layout_mode = 0
+offset_top = -8.0
+offset_right = 512.0
+offset_bottom = 984.0
+texture = ExtResource("5_rpy1o")
+
+[node name="Grid" type="TextureRect" parent="Mini Field3/Border"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 496.0
+offset_bottom = 976.0
+texture = ExtResource("6_x34jm")
+stretch_mode = 1
+
+[node name="Player 5" type="Label" parent="."]
+offset_left = 1296.0
+offset_top = 532.0
+offset_right = 1552.0
+offset_bottom = 564.0
+text = "Opponent 4
+"
+label_settings = SubResource("LabelSettings_ay8rd")
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Mini Field4" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 1296.0
+offset_top = 564.0
+offset_right = 1808.0
+offset_bottom = 1556.0
+scale = Vector2(0.5, 0.5)
+
+[node name="Border" type="TextureRect" parent="Mini Field4"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("5_rpy1o")
+
+[node name="Grid" type="TextureRect" parent="Mini Field4"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 496.0
+offset_bottom = 976.0
+texture = ExtResource("6_x34jm")
+stretch_mode = 1
+
+[node name="Player 6" type="Label" parent="."]
+offset_left = 1592.0
+offset_right = 1848.0
+offset_bottom = 32.0
+text = "Opponent 5"
+label_settings = SubResource("LabelSettings_ay8rd")
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Mini Field5" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 1592.0
+offset_top = 40.0
+offset_right = 2104.0
+offset_bottom = 1032.0
+scale = Vector2(0.5, 0.5)
+
+[node name="Border" type="TextureRect" parent="Mini Field5"]
+layout_mode = 0
+offset_top = -8.0
+offset_right = 512.0
+offset_bottom = 984.0
+texture = ExtResource("5_rpy1o")
+
+[node name="Grid" type="TextureRect" parent="Mini Field5/Border"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 496.0
+offset_bottom = 976.0
+texture = ExtResource("6_x34jm")
+stretch_mode = 1
+
+[node name="Player 7" type="Label" parent="."]
+offset_left = 1592.0
+offset_top = 532.0
+offset_right = 1848.0
+offset_bottom = 564.0
+text = "Opponent 6
+"
+label_settings = SubResource("LabelSettings_ay8rd")
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Mini Field6" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 1592.0
+offset_top = 564.0
+offset_right = 2104.0
+offset_bottom = 1556.0
+scale = Vector2(0.5, 0.5)
+
+[node name="Border" type="TextureRect" parent="Mini Field6"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("5_rpy1o")
+
+[node name="Grid" type="TextureRect" parent="Mini Field6"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 496.0
+offset_bottom = 976.0
+texture = ExtResource("6_x34jm")
+stretch_mode = 1
+
+[node name="Player 8" type="Label" parent="."]
+offset_left = 1888.0
+offset_right = 2144.0
+offset_bottom = 32.0
+text = "Opponent 7"
+label_settings = SubResource("LabelSettings_ay8rd")
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Mini Field7" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 1888.0
+offset_top = 40.0
+offset_right = 2400.0
+offset_bottom = 1032.0
+scale = Vector2(0.5, 0.5)
+
+[node name="Border" type="TextureRect" parent="Mini Field7"]
+layout_mode = 0
+offset_top = -8.0
+offset_right = 512.0
+offset_bottom = 984.0
+texture = ExtResource("5_rpy1o")
+
+[node name="Grid" type="TextureRect" parent="Mini Field7/Border"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 496.0
+offset_bottom = 976.0
+texture = ExtResource("6_x34jm")
+stretch_mode = 1
+
+[node name="Player 9" type="Label" parent="."]
+offset_left = 1888.0
+offset_top = 532.0
+offset_right = 2144.0
+offset_bottom = 564.0
+text = "Opponent 8"
+label_settings = SubResource("LabelSettings_ay8rd")
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Mini Field8" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 1888.0
+offset_top = 564.0
+offset_right = 2400.0
+offset_bottom = 1556.0
+scale = Vector2(0.5, 0.5)
+
+[node name="Border" type="TextureRect" parent="Mini Field8"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("5_rpy1o")
+
+[node name="Grid" type="TextureRect" parent="Mini Field8"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 496.0
+offset_bottom = 976.0
+texture = ExtResource("6_x34jm")
+stretch_mode = 1
+
+[node name="Player 10" type="Label" parent="."]
+offset_left = 2184.0
+offset_right = 2440.0
+offset_bottom = 32.0
+text = "Opponent 9"
+label_settings = SubResource("LabelSettings_ay8rd")
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Mini Field9" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 2184.0
+offset_top = 40.0
+offset_right = 2696.0
+offset_bottom = 1032.0
+scale = Vector2(0.5, 0.5)
+
+[node name="Border" type="TextureRect" parent="Mini Field9"]
+layout_mode = 0
+offset_top = -8.0
+offset_right = 512.0
+offset_bottom = 984.0
+texture = ExtResource("5_rpy1o")
+
+[node name="Grid" type="TextureRect" parent="Mini Field9/Border"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 496.0
+offset_bottom = 976.0
+texture = ExtResource("6_x34jm")
+stretch_mode = 1
+
+[node name="Player 11" type="Label" parent="."]
+offset_left = 2184.0
+offset_top = 532.0
+offset_right = 2440.0
+offset_bottom = 564.0
+text = "Opponent 10	"
+label_settings = SubResource("LabelSettings_ay8rd")
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Mini Field10" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 2184.0
+offset_top = 564.0
+offset_right = 2696.0
+offset_bottom = 1556.0
+scale = Vector2(0.5, 0.5)
+
+[node name="Border" type="TextureRect" parent="Mini Field10"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("5_rpy1o")
+
+[node name="Grid" type="TextureRect" parent="Mini Field10"]
 layout_mode = 0
 offset_left = 16.0
 offset_top = 16.0

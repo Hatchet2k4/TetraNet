@@ -1,0 +1,7 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://d0u2fihvoi8b4"]
+
+[ext_resource type="FontFile" path="res://fonts/kirifont/Kirifont.tres" id="1_yaku5"]
+
+[resource]
+font = ExtResource("1_yaku5")
+font_size = 32
