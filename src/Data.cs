@@ -99,4 +99,9 @@ public partial class Data : Node
 		new Vector2(-1, 0)
 	};
 
+	public static Dictionary<Vector2, List<Vector2>> rotations = new()
+	{
+		{LEFT, counterClockwiseRotation},
+		{RIGHT, clockwiseRotation}
+	};
 }

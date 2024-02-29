@@ -2,6 +2,7 @@ namespace TetraNet;
 
 using Godot;
 using static Data;
+using System.Collections.Generic;
 
 public partial class MainField : Control
 {
@@ -59,6 +60,10 @@ public partial class MainField : Control
 
 	public void ProcessInput()
 	{
+		if (Gamepad.UpPressed())
+		{
+			Rotate(LEFT);
+		}
 		if (Gamepad.LeftPressed())
 		{
 			Move(LEFT);
@@ -71,6 +76,20 @@ public partial class MainField : Control
 		{
 			Move(DOWN);
 		}
+	}
+
+	public void Rotate(Vector2 direction)
+	{
+		List<Vector2> rotationMatrix = rotations[direction];
+		List<Vector2> tetromino_cells = Cells[_currentBlock.BlockType];
+
+		for (int i = 0; i < 4; i++)
+		{
+			Vector2 cell = tetromino_cells[i];
+			var coordinates = rotationMatrix[0] * cell.X + rotationMatrix[1] * cell.Y;
+			_currentBlock.cells[i] = coordinates;
+		}
+		_currentBlock.ResetPositions();
 	}
 
 	public void Move(Vector2 direction)

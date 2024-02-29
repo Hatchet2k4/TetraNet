@@ -28,15 +28,23 @@ public partial class Block : Node2D
 	{
 		_blockData = bd;
 		_pieces = new Piece[4];
-		cells = Data.Cells[_blockData.blockType];
+		cells = Cells[_blockData.blockType];
 
 		for (int i = 0; i < 4; i++)
 		{
 			Piece p = _pieceScene.Instantiate() as Piece;
-			p.Position = cells[i] * p.GetSize();
+			p.Position = cells[i] * GRID_SIZE;
 			p.SetTexture(bd.blockTexture);
 			_pieces[i] = p;
 			AddChild(p);
+		}
+	}
+
+	public void ResetPositions()
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			_pieces[i].Position = cells[i] * GRID_SIZE;
 		}
 	}
 
