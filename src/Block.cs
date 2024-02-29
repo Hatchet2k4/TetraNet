@@ -2,12 +2,22 @@ namespace TetraNet;
 
 using Godot;
 using System.Collections.Generic;
+using static Data;
 
 public partial class Block : Node2D
 {
 	private PackedScene _pieceScene = (PackedScene)ResourceLoader.Load("res://scenes/piece.tscn");
 	private BlockData _blockData;
 	private Piece[] _pieces;
+	public List<Vector2> cells;
+
+	public BlockType BlockType
+	{
+		get
+		{
+			return _blockData.blockType;
+		}
+	}
 
 	public override void _Ready()
 	{
@@ -18,7 +28,7 @@ public partial class Block : Node2D
 	{
 		_blockData = bd;
 		_pieces = new Piece[4];
-		List<Vector2> cells = Data.Cells[_blockData.blockType];
+		cells = Data.Cells[_blockData.blockType];
 
 		for (int i = 0; i < 4; i++)
 		{
@@ -28,10 +38,12 @@ public partial class Block : Node2D
 			_pieces[i] = p;
 			AddChild(p);
 		}
-
 	}
 
-	public override void _Process(double delta)
+	public Piece GetPiece(int index)
 	{
+		return _pieces[index];
 	}
+
+
 }

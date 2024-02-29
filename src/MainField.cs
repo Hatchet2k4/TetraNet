@@ -9,18 +9,19 @@ public partial class MainField : Control
 	[Export] private TextureRect _grid;
 	[Export] private TextureRect _nextGrid;
 
+	private PackedScene _pieceScene = (PackedScene)ResourceLoader.Load("res://scenes/piece.tscn");
+
 	private double _fallTime;
 
 	private Piece[,] _gridData;
 
 	private Signal gameover;
 	private Block _currentBlock;
-
 	private double _time;
 	private double _holdTime;
 	private double _holdRate = 0.1f;
 
-
+	public Vector2 blockPosition;
 
 	public override void _Ready()
 	{
@@ -32,9 +33,13 @@ public partial class MainField : Control
 
 	public void SpawnNewBlock(BlockType t)
 	{
+		GD.Print("SpawnNewBlock");
 		_currentBlock = _spawner.blockScene.Instantiate() as Block;
-		_currentBlock.Initialize(Data.blockResources[t]);
-		_currentBlock.Position = _grid.Position + new Vector2(24 * 10, 0);
+		_currentBlock.Initialize(blockResources[t]);
+
+		blockPosition = new Vector2(4, 0) + gridSpawnPositions[t];
+		_currentBlock.Position = _grid.Position + (blockPosition * GRID_SIZE);
+
 		AddChild(_currentBlock);
 	}
 
@@ -44,7 +49,7 @@ public partial class MainField : Control
 		if (_time > _fallTime)
 		{
 			_time -= _fallTime;
-			MoveDown();
+			Move(DOWN);
 		}
 		else
 		{
@@ -56,28 +61,90 @@ public partial class MainField : Control
 	{
 		if (Gamepad.LeftPressed())
 		{
-			MoveLeft();
+			Move(LEFT);
 		}
 		else if (Gamepad.RightPressed())
 		{
-			MoveRight();
+			Move(RIGHT);
 		}
-
+		else if (Gamepad.DownPressed())
+		{
+			Move(DOWN);
+		}
 	}
 
-	public void MoveLeft()
+	public void Move(Vector2 direction)
 	{
-		_currentBlock.Position += LEFT * GRID_SIZE;
+		if (CheckCollisions(direction) == false)
+		{
+			blockPosition += direction;
+			_currentBlock.Position = _grid.Position + (blockPosition * GRID_SIZE);
+
+			for (int i = 0; i < 4; i++)
+			{
+				Vector2 testPosition = blockPosition + _currentBlock.cells[i];
+				int x = (int)testPosition.X;
+				int y = (int)testPosition.Y;
+				GD.Print(testPosition);
+			}
+			if (direction == DOWN)
+			{
+				_time = 0f;
+			}
+
+		}
+		else
+		{
+			if (direction == DOWN)
+			{
+				Land();
+			}
+		}
 	}
 
-	public void MoveRight()
+	public bool CheckGrid(int x, int y)
 	{
-		_currentBlock.Position += RIGHT * GRID_SIZE;
+		if (x < 0 || x >= GRID_W || y < 0 || y >= GRID_H)
+		{
+			//GD.Print("BoundsCollision");
+			return true;
+		}
+		if (_gridData[x, y] != null) return true;
+		return false;
 	}
 
-	public void MoveDown()
+	public bool CheckCollisions(Vector2 direction)
 	{
-		_currentBlock.Position += DOWN * GRID_SIZE;
+		for (int i = 0; i < 4; i++)
+		{
+			Vector2 testPosition = blockPosition + direction + _currentBlock.cells[i];
+			int x = (int)testPosition.X;
+			int y = (int)testPosition.Y;
+
+			if (CheckGrid(x, y))
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
+	public void Land()
+	{
+		GD.Print("Land");
+		for (int i = 0; i < 4; i++)
+		{
+			Vector2 position = blockPosition + _currentBlock.cells[i];
+			int x = (int)position.X;
+			int y = (int)position.Y;
+
+			Piece p = _currentBlock.GetPiece(i);
+			_currentBlock.RemoveChild(p);
+			p.Position = _grid.Position + position * GRID_SIZE;
+			AddChild(p);
+			_gridData[x, y] = p;
+		}
+		RemoveChild(_currentBlock);
+		SpawnNewBlock(_spawner.PickRandomBlock());
+	}
 }

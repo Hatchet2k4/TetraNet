@@ -27,7 +27,7 @@ public partial class Spawner : Node
 		}
 	}
 
-	private BlockType PickRandomBlock()
+	public BlockType PickRandomBlock()
 	{
 		int randomIndex = _rand.Next(0, _blockTypes.Length);
 		return _blockTypes[randomIndex];

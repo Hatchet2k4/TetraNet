@@ -64,7 +64,7 @@ public partial class Data : Node
 		{BlockType.Z, GD.Load("res://resources/Z.tres") as BlockData}
 	};
 
-	public static Dictionary<BlockType, Vector2> spawnPositions = new()
+	public static Dictionary<BlockType, Vector2> nextSpawnPositions = new()
 	{
 		{BlockType.I, new Vector2(0.5f,0.5f)},
 		{BlockType.J, new Vector2(1,0.5f)},
@@ -75,6 +75,16 @@ public partial class Data : Node
 		{BlockType.Z, new Vector2(1,0.5f)}
 	};
 
+	public static Dictionary<BlockType, Vector2> gridSpawnPositions = new()
+	{
+		{BlockType.I, new Vector2(-1f,0f)},
+		{BlockType.J, new Vector2(0f,1f)},
+		{BlockType.L, new Vector2(0f,0f)},
+		{BlockType.O, new Vector2(1f,0f)},
+		{BlockType.S, new Vector2(0f,0f)},
+		{BlockType.T, new Vector2(0f,0f)},
+		{BlockType.Z, new Vector2(0f,0f)}
+	};
 
 
 	public static List<Vector2> clockwiseRotation = new()

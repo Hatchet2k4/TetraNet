@@ -37,7 +37,7 @@ public partial class NextGrid : Control
 			BlockType bt = _spawner.nextBlocks[i];
 			b.Initialize(blockResources[bt]);
 			//b.Initialize(blockResources[types[i]]);
-			b.Position = _nextGrid.Position + new Vector2(GRID_SIZE, GRID_SIZE * (3 * i)) + (spawnPositions[bt] * GRID_SIZE);
+			b.Position = _nextGrid.Position + new Vector2(GRID_SIZE, GRID_SIZE * (3 * i)) + (nextSpawnPositions[bt] * GRID_SIZE);
 			AddChild(b);
 			nextBlocks.Add(b);
 		}
