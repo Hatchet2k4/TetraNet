@@ -1,11 +1,10 @@
 namespace TetraNet;
 
 using Godot;
-
+using static Data;
 
 public partial class HoldGrid : Control
 {
-
 	[Export] private TextureRect _holdGrid;
 	public Block _holdBlock;
 
@@ -26,19 +25,25 @@ public partial class HoldGrid : Control
 
 	public void SetBlock(Block block)
 	{
+		if (HasBlock()) RemoveChild(_holdBlock);
 		_holdBlock = block;
+		_holdBlock.DefaultRotation();
+		AddChild(_holdBlock);
+		Populate();
 	}
 
 	public Block GetBlock()
 	{
+
 		return _holdBlock;
 	}
 
-	public Block SwapBlock(Block block)
+	public void Populate()
 	{
-		Block returnBlock = _holdBlock;
-		_holdBlock = block;
-		return returnBlock;
+		if (HasBlock())
+		{
+			_holdBlock.Position = _holdGrid.Position + nextSpawnPositions[_holdBlock.BlockType] * GRID_SIZE;
+		}
 	}
 
 }

@@ -49,6 +49,13 @@ public partial class Block : Node2D
 		ResetPositions();
 	}
 
+	public void DefaultRotation()
+	{
+		shape.orientation = 0;
+		cells = shape.GetCells();
+		ResetPositions();
+	}
+
 	public void ResetPositions()
 	{
 		for (int i = 0; i < 4; i++)

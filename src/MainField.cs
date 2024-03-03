@@ -10,6 +10,7 @@ public partial class MainField : Control
 	[Export] private Spawner _spawner;
 	[Export] private TextureRect _grid;
 	[Export] private NextGrid _nextGrid;
+	[Export] private HoldGrid _holdGrid;
 
 	[Export] private AudioStreamPlayer music;
 	[Export] private AudioStreamPlayer landSound;
@@ -38,6 +39,8 @@ public partial class MainField : Control
 	private int clearIndex; //column to clear for row removal effect
 	private double clearTimer;
 
+	public bool swapped;
+
 	public override void _Ready()
 	{
 		_fallTime = 0.5f;
@@ -45,6 +48,7 @@ public partial class MainField : Control
 		_gridData = new Piece[GRID_W, GRID_H];
 		_lines = new();
 		SpawnNewBlock(_spawner.GetNextBlock());
+		swapped = false;
 		music.Play();
 	}
 
@@ -82,9 +86,11 @@ public partial class MainField : Control
 					_lines.Clear();
 					clearTimer = 0f;
 					clearIndex = 0;
+					swapped = false;
 					SpawnNewBlock(_spawner.GetNextBlock());
 				}
 			}
+
 			return; //may refactor this later to allow inventory input even while lines are being cleared
 		}
 
@@ -117,6 +123,10 @@ public partial class MainField : Control
 		else if (Gamepad.PressedB())
 		{
 			FastDrop();
+		}
+		else if (Gamepad.PressedA())
+		{
+			SwapBlocks();
 		}
 		else if (Gamepad.DownHeld() || Gamepad.RightHeld() || Gamepad.LeftHeld())
 		{
@@ -185,6 +195,26 @@ public partial class MainField : Control
 		Land();
 	}
 
+	public void SwapBlocks()
+	{
+		if (swapped) return;
+
+		if (!_holdGrid.HasBlock())
+		{
+			RemoveChild(_currentBlock);
+			_holdGrid.SetBlock(_currentBlock);
+			SpawnNewBlock(_spawner.GetNextBlock());
+		}
+		else
+		{
+			Block t = _currentBlock;
+			RemoveChild(_currentBlock);
+			SpawnNewBlock(_holdGrid.GetBlock().BlockType);
+			_holdGrid.SetBlock(t);
+		}
+		swapped = true;
+	}
+
 	public bool CheckGrid(int x, int y)
 	{
 		if (x < 0 || x >= GRID_W || y < 0 || y >= GRID_H)
@@ -214,6 +244,7 @@ public partial class MainField : Control
 	public void Land()
 	{
 		landSound.Play();
+		swapped = false;
 		for (int i = 0; i < 4; i++)
 		{
 			Vector2 position = blockPosition + _currentBlock.cells[i];

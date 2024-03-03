@@ -19,7 +19,6 @@ public class Shape
 
 	public void Rotate(Vector2 direction)
 	{
-		GD.Print("Rotate");
 		if (direction == Data.RIGHT)
 		{
 			orientation++;

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dba4ubxkab2hi"]
+[gd_scene load_steps=16 format=3 uid="uid://dba4ubxkab2hi"]
 
 [ext_resource type="Script" path="res://src/Main.cs" id="1_ahlpl"]
 [ext_resource type="AudioStream" uid="uid://dgv7fq4c7f832" path="res://sfx/land.wav" id="2_0tjit"]
@@ -13,6 +13,7 @@
 [ext_resource type="FontFile" path="res://fonts/kirifont/Kirifont.tres" id="7_dkgbi"]
 [ext_resource type="PackedScene" uid="uid://dijfdnwe6x7tn" path="res://scenes/next_box.tscn" id="8_l0fyc"]
 [ext_resource type="Texture2D" uid="uid://smxnw8u1gp0k" path="res://gfx/HoldBorder.png" id="10_w3jrr"]
+[ext_resource type="PackedScene" uid="uid://c8i7yj12e7n14" path="res://scenes/hold_box.tscn" id="12_c3cha"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ay8rd"]
 font = ExtResource("7_dkgbi")
@@ -41,7 +42,7 @@ volume_db = -18.795
 script = ExtResource("4_edpkq")
 blockScene = ExtResource("3_yjmfd")
 
-[node name="Main Area" type="Control" parent="." node_paths=PackedStringArray("_spawner", "_grid", "_nextGrid", "music", "landSound", "clear1Sound")]
+[node name="Main Area" type="Control" parent="." node_paths=PackedStringArray("_spawner", "_grid", "_nextGrid", "_holdGrid", "music", "landSound", "clear1Sound")]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 16.0
@@ -52,6 +53,7 @@ script = ExtResource("2_515ng")
 _spawner = NodePath("../Spawner")
 _grid = NodePath("Border/Grid")
 _nextGrid = NodePath("../NextBox")
+_holdGrid = NodePath("../HoldBox")
 music = NodePath("../Sounds/Music")
 landSound = NodePath("../Sounds/Land")
 clear1Sound = NodePath("../Sounds/Clear1")
@@ -86,29 +88,17 @@ texture = ExtResource("6_x34jm")
 stretch_mode = 1
 
 [node name="NextBox" parent="." node_paths=PackedStringArray("_spawner") instance=ExtResource("8_l0fyc")]
+offset_left = 572.0
+offset_top = 60.0
+offset_right = 844.0
+offset_bottom = 524.0
 _spawner = NodePath("../Spawner")
 
-[node name="HoldBox" type="NinePatchRect" parent="."]
+[node name="HoldBox" parent="." instance=ExtResource("12_c3cha")]
 offset_left = 572.0
 offset_top = 580.0
 offset_right = 844.0
 offset_bottom = 756.0
-texture = ExtResource("10_w3jrr")
-patch_margin_left = 16
-patch_margin_top = 16
-patch_margin_right = 16
-patch_margin_bottom = 16
-
-[node name="Hold" type="Label" parent="HoldBox"]
-layout_mode = 0
-offset_top = -44.0
-offset_right = 272.0
-offset_bottom = -4.0
-text = "HOLD
-"
-label_settings = ExtResource("5_nx2xu")
-horizontal_alignment = 1
-vertical_alignment = 2
 
 [node name="ScoreBox" type="NinePatchRect" parent="."]
 offset_left = 572.0
