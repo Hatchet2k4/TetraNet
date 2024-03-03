@@ -3,6 +3,7 @@ namespace TetraNet;
 using Godot;
 using static Data;
 using System.Collections.Generic;
+using System;
 
 public partial class MainField : Control
 {
@@ -22,13 +23,24 @@ public partial class MainField : Control
 	private double _holdTime;
 	private double _holdRate = 0.1f;
 
+	private double fadeTime = 0.5;
+
+	private double repeatRate = 0.1f;
+	private bool _downHeld;
+
 	public Vector2 blockPosition;
+
+	private List<int> _lines = new List<int>(); //stores list of rows for completed lines
+
+	private int clearIndex; //column to clear for row removal effect
+	private double clearTimer;
 
 	public override void _Ready()
 	{
 		_fallTime = 0.75f;
 		_time = 0;
 		_gridData = new Piece[GRID_W, GRID_H];
+		_lines = new();
 		SpawnNewBlock(_spawner.currentBlock);
 	}
 
@@ -46,6 +58,32 @@ public partial class MainField : Control
 
 	public override void _Process(double delta)
 	{
+		if (_lines.Count > 0) //processing lines
+		{
+			clearTimer += delta;
+			if (clearTimer >= 0.02f)
+			{
+				clearTimer -= 0.02f;
+				for (int i = 0; i < _lines.Count; i++)
+				{
+					int y = _lines[i];
+					RemoveChild(_gridData[clearIndex, y]);
+					_gridData[clearIndex, y] = null;
+				}
+				clearIndex++;
+				if (clearIndex == GRID_W)
+				{
+					RemoveBlankLines();
+					ResetPiecePositions();
+					_lines.Clear();
+					clearTimer = 0f;
+					clearIndex = 0;
+					SpawnNewBlock(_spawner.PickRandomBlock());
+				}
+			}
+			return; //may refactor this later to allow inventory input even while lines are being cleared
+		}
+
 		_time += delta;
 		if (_time > _fallTime)
 		{
@@ -54,11 +92,11 @@ public partial class MainField : Control
 		}
 		else
 		{
-			ProcessInput();
+			ProcessInput(delta);
 		}
 	}
 
-	public void ProcessInput()
+	public void ProcessInput(double delta)
 	{
 		if (Gamepad.UpPressed())
 		{
@@ -72,10 +110,28 @@ public partial class MainField : Control
 		{
 			Move(RIGHT);
 		}
-		else if (Gamepad.DownPressed())
+		else if (Gamepad.DownHeld() || Gamepad.RightHeld() || Gamepad.LeftHeld())
 		{
-			Move(DOWN);
+			if (!_downHeld && _holdTime == 0d)
+			{
+				_holdTime = _holdRate;
+				_downHeld = true;
+			}
+			else if (_holdTime <= 0d)
+			{
+				_holdTime += _holdRate;
+				if (Gamepad.DownHeld()) Move(DOWN);
+				else if (Gamepad.LeftHeld()) Move(LEFT);
+				else if (Gamepad.RightHeld()) Move(RIGHT);
+			}
+			else
+			{
+				_holdTime -= delta;
+			}
+			return;
 		}
+		_downHeld = false;
+		_holdTime = 0d;
 	}
 
 	public void Rotate(Vector2 direction)
@@ -125,7 +181,6 @@ public partial class MainField : Control
 	{
 		if (x < 0 || x >= GRID_W || y < 0 || y >= GRID_H)
 		{
-			//GD.Print("BoundsCollision");
 			return true;
 		}
 		if (_gridData[x, y] != null) return true;
@@ -164,6 +219,60 @@ public partial class MainField : Control
 			_gridData[x, y] = p;
 		}
 		RemoveChild(_currentBlock);
-		SpawnNewBlock(_spawner.PickRandomBlock());
+		CheckLines();
+		if (_lines.Count == 0) SpawnNewBlock(_spawner.PickRandomBlock());
 	}
+
+	public void RemoveBlankLines()
+	{
+		foreach (int y in _lines)
+		{
+			for (int x = 0; x < GRID_W; x++)
+			{
+				for (int dy = y; dy >= 0; dy--)
+				{
+					if (dy > 0) _gridData[x, dy] = _gridData[x, dy - 1];
+					else _gridData[x, dy] = null;
+				}
+			}
+		}
+	}
+
+	public void ResetPiecePositions()
+	{
+		for (int y = 0; y < GRID_H; y++)
+		{
+			for (int x = 0; x < GRID_W; x++)
+			{
+				if (_gridData[x, y] != null)
+				{
+					_gridData[x, y].Position = _grid.Position + new Vector2(x * GRID_SIZE, y * GRID_SIZE);
+				}
+			}
+		}
+	}
+
+	public void CheckLines()
+	{
+		int numlines = 0;
+		for (int y = 0; y < GRID_H; y++)
+		{
+
+			for (int x = 0; x < GRID_W; x++)
+			{
+				if (_gridData[x, y] == null)
+				{
+					break;
+				}
+
+				if (x + 1 == GRID_W) //made it all the way across, found a line!
+				{
+					numlines += 1;
+					_lines.Add(y); //found on line y
+				}
+			}
+		}
+
+	}
+
 }
