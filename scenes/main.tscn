@@ -1,9 +1,12 @@
-[gd_scene load_steps=12 format=3 uid="uid://dba4ubxkab2hi"]
+[gd_scene load_steps=15 format=3 uid="uid://dba4ubxkab2hi"]
 
 [ext_resource type="Script" path="res://src/Main.cs" id="1_ahlpl"]
+[ext_resource type="AudioStream" uid="uid://dgv7fq4c7f832" path="res://sfx/land.wav" id="2_0tjit"]
 [ext_resource type="Script" path="res://src/MainField.cs" id="2_515ng"]
 [ext_resource type="PackedScene" uid="uid://ci12tydqs0eg" path="res://scenes/block.tscn" id="3_yjmfd"]
+[ext_resource type="AudioStream" uid="uid://o5pjkmq87byb" path="res://sfx/clear 1.wav" id="4_5abv5"]
 [ext_resource type="Script" path="res://src/Spawner.cs" id="4_edpkq"]
+[ext_resource type="AudioStream" uid="uid://bi0l828ecc5rr" path="res://music/Electronic Vol4 1080 Intensity 1.mp3" id="4_gehqj"]
 [ext_resource type="LabelSettings" uid="uid://d0u2fihvoi8b4" path="res://resources/mainfont.tres" id="5_nx2xu"]
 [ext_resource type="Texture2D" uid="uid://j5rbu80ek0x4" path="res://gfx/Border.png" id="5_rpy1o"]
 [ext_resource type="Texture2D" uid="uid://fpd1ccvyusfn" path="res://gfx/Grid.png" id="6_x34jm"]
@@ -22,11 +25,22 @@ script = ExtResource("1_ahlpl")
 anchor_mode = 0
 zoom = Vector2(0.5, 0.5)
 
+[node name="Sounds" type="Node2D" parent="."]
+
+[node name="Land" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("2_0tjit")
+
+[node name="Clear1" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("4_5abv5")
+
+[node name="Music" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("4_gehqj")
+
 [node name="Spawner" type="Node" parent="."]
 script = ExtResource("4_edpkq")
 blockScene = ExtResource("3_yjmfd")
 
-[node name="Main Area" type="Control" parent="." node_paths=PackedStringArray("_spawner", "_grid", "_nextGrid")]
+[node name="Main Area" type="Control" parent="." node_paths=PackedStringArray("_spawner", "_grid", "_nextGrid", "music", "landSound", "clear1Sound")]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 16.0
@@ -37,6 +51,9 @@ script = ExtResource("2_515ng")
 _spawner = NodePath("../Spawner")
 _grid = NodePath("Border/Grid")
 _nextGrid = NodePath("../NextBox")
+music = NodePath("../Sounds/Music")
+landSound = NodePath("../Sounds/Land")
+clear1Sound = NodePath("../Sounds/Clear1")
 
 [node name="Player 1" type="Label" parent="Main Area"]
 layout_mode = 0

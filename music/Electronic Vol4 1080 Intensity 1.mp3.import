@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bi0l828ecc5rr"
+path="res://.godot/imported/Electronic Vol4 1080 Intensity 1.mp3-0ce3f553add9450dc3f7085874eb65ba.mp3str"
+
+[deps]
+
+source_file="res://music/Electronic Vol4 1080 Intensity 1.mp3"
+dest_files=["res://.godot/imported/Electronic Vol4 1080 Intensity 1.mp3-0ce3f553add9450dc3f7085874eb65ba.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

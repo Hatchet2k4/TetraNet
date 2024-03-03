@@ -11,6 +11,10 @@ public partial class MainField : Control
 	[Export] private TextureRect _grid;
 	[Export] private NextGrid _nextGrid;
 
+	[Export] private AudioStreamPlayer music;
+	[Export] private AudioStreamPlayer landSound;
+	[Export] private AudioStreamPlayer clear1Sound;
+
 	private PackedScene _pieceScene = (PackedScene)ResourceLoader.Load("res://scenes/piece.tscn");
 
 	private double _fallTime;
@@ -41,6 +45,7 @@ public partial class MainField : Control
 		_gridData = new Piece[GRID_W, GRID_H];
 		_lines = new();
 		SpawnNewBlock(_spawner.GetNextBlock());
+		music.Play();
 	}
 
 	public void SpawnNewBlock(BlockType t)
@@ -222,7 +227,7 @@ public partial class MainField : Control
 
 	public void Land()
 	{
-		GD.Print("Land");
+		landSound.Play();
 		for (int i = 0; i < 4; i++)
 		{
 			Vector2 position = blockPosition + _currentBlock.cells[i];
@@ -289,5 +294,6 @@ public partial class MainField : Control
 				}
 			}
 		}
+		if (numlines > 0) clear1Sound.Play();
 	}
 }
