@@ -9,7 +9,7 @@ public partial class MainField : Control
 {
 	[Export] private Spawner _spawner;
 	[Export] private TextureRect _grid;
-	[Export] private TextureRect _nextGrid;
+	[Export] private NextGrid _nextGrid;
 
 	private PackedScene _pieceScene = (PackedScene)ResourceLoader.Load("res://scenes/piece.tscn");
 
@@ -25,7 +25,6 @@ public partial class MainField : Control
 
 	private double fadeTime = 0.5;
 
-	private double repeatRate = 0.1f;
 	private bool _downHeld;
 
 	public Vector2 blockPosition;
@@ -37,16 +36,15 @@ public partial class MainField : Control
 
 	public override void _Ready()
 	{
-		_fallTime = 0.75f;
+		_fallTime = 0.5f;
 		_time = 0;
 		_gridData = new Piece[GRID_W, GRID_H];
 		_lines = new();
-		SpawnNewBlock(_spawner.currentBlock);
+		SpawnNewBlock(_spawner.GetNextBlock());
 	}
 
 	public void SpawnNewBlock(BlockType t)
 	{
-		GD.Print("SpawnNewBlock");
 		_currentBlock = _spawner.blockScene.Instantiate() as Block;
 		_currentBlock.Initialize(blockResources[t]);
 
@@ -54,6 +52,7 @@ public partial class MainField : Control
 		_currentBlock.Position = _grid.Position + (blockPosition * GRID_SIZE);
 
 		AddChild(_currentBlock);
+		_nextGrid.Populate();
 	}
 
 	public override void _Process(double delta)
@@ -78,7 +77,7 @@ public partial class MainField : Control
 					_lines.Clear();
 					clearTimer = 0f;
 					clearIndex = 0;
-					SpawnNewBlock(_spawner.PickRandomBlock());
+					SpawnNewBlock(_spawner.GetNextBlock());
 				}
 			}
 			return; //may refactor this later to allow inventory input even while lines are being cleared
@@ -141,12 +140,17 @@ public partial class MainField : Control
 	public void Rotate(Vector2 direction)
 	{
 		List<Vector2> rotationMatrix = rotations[direction];
-		List<Vector2> tetromino_cells = Cells[_currentBlock.BlockType];
+		List<Vector2> cells = new();
+		foreach (Vector2 cell in Cells[_currentBlock.BlockType])
+		{
+			cells.Add(new Vector2(cell.X, cell.Y)); //need to do this so I don't end up rotating the base positions..
+		}
+
 
 		for (int i = 0; i < 4; i++)
 		{
-			Vector2 cell = tetromino_cells[i];
-			var coordinates = rotationMatrix[0] * cell.X + rotationMatrix[1] * cell.Y;
+			Vector2 cell = cells[i];
+			Vector2 coordinates = rotationMatrix[0] * cell.X + rotationMatrix[1] * cell.Y;
 			_currentBlock.cells[i] = coordinates;
 		}
 		_currentBlock.ResetPositions();
@@ -233,7 +237,7 @@ public partial class MainField : Control
 		}
 		RemoveChild(_currentBlock);
 		CheckLines();
-		if (_lines.Count == 0) SpawnNewBlock(_spawner.PickRandomBlock());
+		if (_lines.Count == 0) SpawnNewBlock(_spawner.GetNextBlock());
 	}
 
 	public void RemoveBlankLines()
@@ -285,7 +289,5 @@ public partial class MainField : Control
 				}
 			}
 		}
-
 	}
-
 }

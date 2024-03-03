@@ -19,7 +19,16 @@ public partial class NextGrid : Control
 
 	public void Populate()
 	{
-		nextBlocks.Clear();
+		if (nextBlocks == null) return;
+
+		if (nextBlocks.Count > 0)
+		{
+			foreach (Block b in nextBlocks)
+			{
+				RemoveChild(b);
+			}
+			nextBlocks.Clear();
+		}
 
 		BlockType[] types = {
 			BlockType.I,

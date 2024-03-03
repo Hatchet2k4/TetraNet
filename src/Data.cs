@@ -67,7 +67,7 @@ public partial class Data : Node
 	public static Dictionary<BlockType, Vector2> nextSpawnPositions = new()
 	{
 		{BlockType.I, new Vector2(0.5f,0.5f)},
-		{BlockType.J, new Vector2(1,0.5f)},
+		{BlockType.J, new Vector2(1,1.5f)},
 		{BlockType.L, new Vector2(1,0.5f)},
 		{BlockType.O, new Vector2(0.5f, 0.5f)},
 		{BlockType.S, new Vector2(1,0.5f)},
@@ -78,7 +78,7 @@ public partial class Data : Node
 	public static Dictionary<BlockType, Vector2> gridSpawnPositions = new()
 	{
 		{BlockType.I, new Vector2(-1f,0f)},
-		{BlockType.J, new Vector2(0f,1f)},
+		{BlockType.J, new Vector2(0f,2f)},
 		{BlockType.L, new Vector2(0f,0f)},
 		{BlockType.O, new Vector2(1f,0f)},
 		{BlockType.S, new Vector2(0f,0f)},
