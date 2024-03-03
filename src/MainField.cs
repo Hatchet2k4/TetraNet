@@ -104,7 +104,7 @@ public partial class MainField : Control
 	{
 		if (Gamepad.UpPressed())
 		{
-			Rotate(LEFT);
+			Rotate(RIGHT);
 		}
 		if (Gamepad.LeftPressed())
 		{
@@ -144,21 +144,7 @@ public partial class MainField : Control
 
 	public void Rotate(Vector2 direction)
 	{
-		List<Vector2> rotationMatrix = rotations[direction];
-		List<Vector2> cells = new();
-		foreach (Vector2 cell in Cells[_currentBlock.BlockType])
-		{
-			cells.Add(new Vector2(cell.X, cell.Y)); //need to do this so I don't end up rotating the base positions..
-		}
-
-
-		for (int i = 0; i < 4; i++)
-		{
-			Vector2 cell = cells[i];
-			Vector2 coordinates = rotationMatrix[0] * cell.X + rotationMatrix[1] * cell.Y;
-			_currentBlock.cells[i] = coordinates;
-		}
-		_currentBlock.ResetPositions();
+		_currentBlock.Rotate(direction);
 	}
 
 	public void Move(Vector2 direction)
@@ -173,7 +159,7 @@ public partial class MainField : Control
 				Vector2 testPosition = blockPosition + _currentBlock.cells[i];
 				int x = (int)testPosition.X;
 				int y = (int)testPosition.Y;
-				GD.Print(testPosition);
+				//GD.Print(testPosition);
 			}
 			if (direction == DOWN)
 			{

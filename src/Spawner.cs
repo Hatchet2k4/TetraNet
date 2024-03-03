@@ -7,7 +7,6 @@ using System.Collections.Generic;
 
 public partial class Spawner : Node
 {
-	public BlockType currentBlock;
 	public List<BlockType> nextBlocks;
 	private BlockType[] _blockTypes;
 	private Random _rand;
@@ -17,9 +16,7 @@ public partial class Spawner : Node
 	{
 		_rand = new Random();
 		nextBlocks = new();
-
 		_blockTypes = (BlockType[])Enum.GetValues(typeof(BlockType));
-		currentBlock = PickRandomBlock();
 		for (int i = 0; i < 3; i++)
 		{
 			nextBlocks.Add(PickRandomBlock());
@@ -35,14 +32,13 @@ public partial class Spawner : Node
 
 	public BlockType GetNextBlock()
 	{
-		BlockType next = currentBlock;
+		BlockType next = nextBlocks[0];
 		SpawnNewBlock();
 		return next;
 	}
 
 	private void SpawnNewBlock()
 	{
-		currentBlock = nextBlocks[0];
 		nextBlocks.RemoveAt(0);
 		nextBlocks.Add(PickRandomBlock());
 	}

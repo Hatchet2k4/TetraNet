@@ -1,7 +1,12 @@
+using System.Collections.Generic;
+
 namespace TetraNet;
 
 using Godot;
+using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
+
 
 public partial class Data : Node
 {
@@ -18,17 +23,6 @@ public partial class Data : Node
 	{
 		I, O, T, J, L, S, Z
 	}
-
-	public static Dictionary<BlockType, List<Vector2>> Cells = new Dictionary<BlockType, List<Vector2>>
-	{
-		{BlockType.I, new List<Vector2> { new Vector2(-1, 0), new Vector2(0, 0), new Vector2(1, 0), new Vector2(2, 0) }},
-		{BlockType.J, new List<Vector2> { new Vector2(-1, -1), new Vector2(-1, 0), new Vector2(0, 0), new Vector2(1, 0) }},
-		{BlockType.L, new List<Vector2> { new Vector2(1, 1), new Vector2(-1, 0), new Vector2(0, 0), new Vector2(1, 0) }},
-		{BlockType.O, new List<Vector2> { new Vector2(0, 1), new Vector2(1, 1), new Vector2(0, 0), new Vector2(1, 0) }},
-		{BlockType.S, new List<Vector2> { new Vector2(0, 1), new Vector2(1, 1), new Vector2(-1, 0), new Vector2(0, 0) }},
-		{BlockType.T, new List<Vector2> { new Vector2(0, 1), new Vector2(-1, 0), new Vector2(0, 0), new Vector2(1, 0) }},
-		{BlockType.Z, new List<Vector2> { new Vector2(-1, 1), new Vector2(0, 1), new Vector2(0, 0), new Vector2(1, 0) }}
-	};
 
 	public static List<List<Vector2>> wallKicksI = new List<List<Vector2>>
 	{
@@ -66,10 +60,10 @@ public partial class Data : Node
 
 	public static Dictionary<BlockType, Vector2> nextSpawnPositions = new()
 	{
-		{BlockType.I, new Vector2(0.5f,0.5f)},
-		{BlockType.J, new Vector2(1,1.5f)},
+		{BlockType.I, new Vector2(0.5f,0)},
+		{BlockType.J, new Vector2(1,0.5f)},
 		{BlockType.L, new Vector2(1,0.5f)},
-		{BlockType.O, new Vector2(0.5f, 0.5f)},
+		{BlockType.O, new Vector2(1.5f, 0.5f)},
 		{BlockType.S, new Vector2(1,0.5f)},
 		{BlockType.T, new Vector2(1,0.5f)},
 		{BlockType.Z, new Vector2(1,0.5f)}
@@ -77,15 +71,14 @@ public partial class Data : Node
 
 	public static Dictionary<BlockType, Vector2> gridSpawnPositions = new()
 	{
-		{BlockType.I, new Vector2(-1f,0f)},
-		{BlockType.J, new Vector2(0f,2f)},
+		{BlockType.I, new Vector2(-1f,-1f)},
+		{BlockType.J, new Vector2(0f,0f)},
 		{BlockType.L, new Vector2(0f,0f)},
 		{BlockType.O, new Vector2(1f,0f)},
 		{BlockType.S, new Vector2(0f,0f)},
 		{BlockType.T, new Vector2(0f,0f)},
 		{BlockType.Z, new Vector2(0f,0f)}
 	};
-
 
 	public static List<Vector2> clockwiseRotation = new()
 	{
@@ -105,3 +98,5 @@ public partial class Data : Node
 		{RIGHT, clockwiseRotation}
 	};
 }
+
+

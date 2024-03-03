@@ -9,6 +9,7 @@ public partial class Block : Node2D
 	private PackedScene _pieceScene = (PackedScene)ResourceLoader.Load("res://scenes/piece.tscn");
 	private BlockData _blockData;
 	private Piece[] _pieces;
+	public Shape shape;
 	public List<Vector2> cells;
 
 	public BlockType BlockType
@@ -28,7 +29,8 @@ public partial class Block : Node2D
 	{
 		_blockData = bd;
 		_pieces = new Piece[4];
-		cells = Cells[_blockData.blockType];
+		shape = new Shape(_blockData.blockType);
+		cells = shape.GetCells();
 
 		for (int i = 0; i < 4; i++)
 		{
@@ -38,6 +40,13 @@ public partial class Block : Node2D
 			_pieces[i] = p;
 			AddChild(p);
 		}
+	}
+
+	public void Rotate(Vector2 direction)
+	{
+		shape.Rotate(direction);
+		cells = shape.GetCells();
+		ResetPositions();
 	}
 
 	public void ResetPositions()
