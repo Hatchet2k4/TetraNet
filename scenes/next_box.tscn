@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://dijfdnwe6x7tn"]
+
+[ext_resource type="Texture2D" uid="uid://smxnw8u1gp0k" path="res://gfx/HoldBorder.png" id="1_iqiv8"]
+[ext_resource type="Script" path="res://src/NextGrid.cs" id="2_8x5vd"]
+[ext_resource type="LabelSettings" uid="uid://d0u2fihvoi8b4" path="res://resources/mainfont.tres" id="3_1yl13"]
+[ext_resource type="Texture2D" uid="uid://fpd1ccvyusfn" path="res://gfx/Grid.png" id="4_n7upk"]
+
+[node name="NextBox" type="NinePatchRect" node_paths=PackedStringArray("_nextGrid")]
+offset_left = 572.0
+offset_top = 60.0
+offset_right = 844.0
+offset_bottom = 524.0
+texture = ExtResource("1_iqiv8")
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+script = ExtResource("2_8x5vd")
+_nextGrid = NodePath("Grid")
+
+[node name="Next" type="Label" parent="."]
+layout_mode = 0
+offset_top = -44.0
+offset_right = 272.0
+offset_bottom = -4.0
+text = "NEXT"
+label_settings = ExtResource("3_1yl13")
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Grid" type="TextureRect" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 256.0
+offset_bottom = 448.0
+texture = ExtResource("4_n7upk")
+stretch_mode = 1
