@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3 uid="uid://c8i7yj12e7n14"]
+
+[ext_resource type="Texture2D" uid="uid://smxnw8u1gp0k" path="res://gfx/HoldBorder.png" id="1_8ny4r"]
+[ext_resource type="LabelSettings" uid="uid://d0u2fihvoi8b4" path="res://resources/mainfont.tres" id="2_14hc5"]
+[ext_resource type="Script" path="res://src/HoldGrid.cs" id="2_i75rt"]
+[ext_resource type="Texture2D" uid="uid://fpd1ccvyusfn" path="res://gfx/Grid.png" id="4_dyeun"]
+
+[node name="HoldBox" type="NinePatchRect" node_paths=PackedStringArray("_holdGrid")]
+offset_right = 272.0
+offset_bottom = 176.0
+texture = ExtResource("1_8ny4r")
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+script = ExtResource("2_i75rt")
+_holdGrid = NodePath("Grid")
+
+[node name="Hold" type="Label" parent="."]
+layout_mode = 0
+offset_top = -44.0
+offset_right = 272.0
+offset_bottom = -4.0
+text = "HOLD
+"
+label_settings = ExtResource("2_14hc5")
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Grid" type="TextureRect" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 256.0
+offset_bottom = 160.0
+texture = ExtResource("4_dyeun")
+stretch_mode = 1

@@ -1,8 +1,11 @@
-[gd_scene load_steps=16 format=3 uid="uid://dba4ubxkab2hi"]
+[gd_scene load_steps=21 format=3 uid="uid://dba4ubxkab2hi"]
 
-[ext_resource type="Script" path="res://src/Main.cs" id="1_ahlpl"]
+[ext_resource type="AudioStream" uid="uid://3gt8y2muyuuy" path="res://sfx/hold.wav" id="1_6p8t6"]
+[ext_resource type="AudioStream" uid="uid://chp35s7nn3l18" path="res://sfx/rotate.wav" id="1_q8bov"]
 [ext_resource type="AudioStream" uid="uid://dgv7fq4c7f832" path="res://sfx/land.wav" id="2_0tjit"]
+[ext_resource type="AudioStream" uid="uid://1grl13fln84y" path="res://sfx/drop.wav" id="2_6se06"]
 [ext_resource type="Script" path="res://src/MainField.cs" id="2_515ng"]
+[ext_resource type="AudioStream" uid="uid://cks47ttfmj3ww" path="res://sfx/move.wav" id="2_dhxxm"]
 [ext_resource type="PackedScene" uid="uid://ci12tydqs0eg" path="res://scenes/block.tscn" id="3_yjmfd"]
 [ext_resource type="AudioStream" uid="uid://o5pjkmq87byb" path="res://sfx/clear 1.wav" id="4_5abv5"]
 [ext_resource type="Script" path="res://src/Spawner.cs" id="4_edpkq"]
@@ -11,7 +14,9 @@
 [ext_resource type="Texture2D" uid="uid://j5rbu80ek0x4" path="res://gfx/Border.png" id="5_rpy1o"]
 [ext_resource type="Texture2D" uid="uid://fpd1ccvyusfn" path="res://gfx/Grid.png" id="6_x34jm"]
 [ext_resource type="FontFile" path="res://fonts/kirifont/Kirifont.tres" id="7_dkgbi"]
+[ext_resource type="AudioStream" uid="uid://dsrusdrhw1laa" path="res://sfx/clear 2.wav" id="8_gfis2"]
 [ext_resource type="PackedScene" uid="uid://dijfdnwe6x7tn" path="res://scenes/next_box.tscn" id="8_l0fyc"]
+[ext_resource type="AudioStream" uid="uid://ce72ygwwhwpon" path="res://sfx/clear 3.wav" id="9_nkkwi"]
 [ext_resource type="Texture2D" uid="uid://smxnw8u1gp0k" path="res://gfx/HoldBorder.png" id="10_w3jrr"]
 [ext_resource type="PackedScene" uid="uid://c8i7yj12e7n14" path="res://scenes/hold_box.tscn" id="12_c3cha"]
 
@@ -20,7 +25,6 @@ font = ExtResource("7_dkgbi")
 font_size = 24
 
 [node name="Main" type="Node2D"]
-script = ExtResource("1_ahlpl")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0
@@ -28,21 +32,39 @@ zoom = Vector2(0.5, 0.5)
 
 [node name="Sounds" type="Node2D" parent="."]
 
+[node name="Hold" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("1_6p8t6")
+
+[node name="Drop" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("2_6se06")
+
+[node name="Rotate" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("1_q8bov")
+
+[node name="Move" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("2_dhxxm")
+
 [node name="Land" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("2_0tjit")
 
-[node name="Clear1" type="AudioStreamPlayer" parent="Sounds"]
+[node name="Clear" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("4_5abv5")
 
 [node name="Music" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("4_gehqj")
-volume_db = -18.795
+volume_db = -20.0
+
+[node name="Clear 2" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("8_gfis2")
+
+[node name="Clear 3" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("9_nkkwi")
 
 [node name="Spawner" type="Node" parent="."]
 script = ExtResource("4_edpkq")
 blockScene = ExtResource("3_yjmfd")
 
-[node name="Main Area" type="Control" parent="." node_paths=PackedStringArray("_spawner", "_grid", "_nextGrid", "_holdGrid", "music", "landSound", "clear1Sound")]
+[node name="Main Area" type="Control" parent="." node_paths=PackedStringArray("_spawner", "_grid", "_nextGrid", "_holdGrid", "_lblLines", "music", "landSound", "clearSound", "clear2Sound", "clear3Sound", "holdSound", "dropSound", "moveSound", "rotateSound")]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 16.0
@@ -54,9 +76,16 @@ _spawner = NodePath("../Spawner")
 _grid = NodePath("Border/Grid")
 _nextGrid = NodePath("../NextBox")
 _holdGrid = NodePath("../HoldBox")
+_lblLines = NodePath("../ScoreBox/NumLines")
 music = NodePath("../Sounds/Music")
 landSound = NodePath("../Sounds/Land")
-clear1Sound = NodePath("../Sounds/Clear1")
+clearSound = NodePath("../Sounds/Clear")
+clear2Sound = NodePath("../Sounds/Clear 2")
+clear3Sound = NodePath("../Sounds/Clear 3")
+holdSound = NodePath("../Sounds/Hold")
+dropSound = NodePath("../Sounds/Drop")
+moveSound = NodePath("../Sounds/Move")
+rotateSound = NodePath("../Sounds/Rotate")
 
 [node name="Player 1" type="Label" parent="Main Area"]
 layout_mode = 0
@@ -120,6 +149,25 @@ offset_bottom = -4.0
 text = "SCORE"
 label_settings = ExtResource("5_nx2xu")
 horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="NumLines" type="Label" parent="ScoreBox"]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 26.0
+offset_right = 284.0
+offset_bottom = 59.0
+text = "Lines - 0"
+label_settings = ExtResource("5_nx2xu")
+vertical_alignment = 2
+
+[node name="NumTetris" type="Label" parent="ScoreBox"]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 64.0
+offset_right = 284.0
+offset_bottom = 97.0
+label_settings = ExtResource("5_nx2xu")
 vertical_alignment = 2
 
 [node name="InventoryBox" type="NinePatchRect" parent="."]
@@ -547,12 +595,3 @@ offset_right = 496.0
 offset_bottom = 976.0
 texture = ExtResource("6_x34jm")
 stretch_mode = 1
-
-[node name="Player 13" type="Label" parent="."]
-offset_left = 598.0
-offset_top = 831.0
-offset_right = 854.0
-offset_bottom = 863.0
-text = "Opponent 2"
-label_settings = SubResource("LabelSettings_ay8rd")
-vertical_alignment = 2

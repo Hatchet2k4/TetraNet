@@ -11,10 +11,18 @@ public partial class MainField : Control
 	[Export] private TextureRect _grid;
 	[Export] private NextGrid _nextGrid;
 	[Export] private HoldGrid _holdGrid;
+	[Export] private Label _lblLines;
 
 	[Export] private AudioStreamPlayer music;
 	[Export] private AudioStreamPlayer landSound;
-	[Export] private AudioStreamPlayer clear1Sound;
+	[Export] private AudioStreamPlayer clearSound;
+	[Export] private AudioStreamPlayer clear2Sound;
+	[Export] private AudioStreamPlayer clear3Sound;
+	[Export] private AudioStreamPlayer holdSound;
+	[Export] private AudioStreamPlayer dropSound;
+	[Export] private AudioStreamPlayer moveSound;
+	[Export] private AudioStreamPlayer rotateSound;
+
 
 	private PackedScene _pieceScene = (PackedScene)ResourceLoader.Load("res://scenes/piece.tscn");
 
@@ -41,6 +49,8 @@ public partial class MainField : Control
 
 	public bool swapped;
 
+	public int totalLines;
+
 	public override void _Ready()
 	{
 		_fallTime = 0.5f;
@@ -48,8 +58,14 @@ public partial class MainField : Control
 		_gridData = new Piece[GRID_W, GRID_H];
 		_lines = new();
 		SpawnNewBlock(_spawner.GetNextBlock());
-		swapped = false;
+		NewGame();
 		music.Play();
+	}
+
+	public void NewGame()
+	{
+		swapped = false;
+		totalLines = 0;
 	}
 
 	public void SpawnNewBlock(BlockType t)
@@ -111,22 +127,27 @@ public partial class MainField : Control
 		if (Gamepad.UpPressed())
 		{
 			Rotate(RIGHT);
+			rotateSound.Play();
 		}
 		if (Gamepad.LeftPressed())
 		{
 			Move(LEFT);
+			moveSound.Play();
 		}
 		else if (Gamepad.RightPressed())
 		{
 			Move(RIGHT);
+			moveSound.Play();
 		}
 		else if (Gamepad.PressedB())
 		{
 			FastDrop();
+			dropSound.Play();
 		}
 		else if (Gamepad.PressedA())
 		{
 			SwapBlocks();
+			holdSound.Play();
 		}
 		else if (Gamepad.DownHeld() || Gamepad.RightHeld() || Gamepad.LeftHeld())
 		{
@@ -141,6 +162,7 @@ public partial class MainField : Control
 				if (Gamepad.DownHeld()) Move(DOWN);
 				else if (Gamepad.LeftHeld()) Move(LEFT);
 				else if (Gamepad.RightHeld()) Move(RIGHT);
+				moveSound.Play();
 			}
 			else
 			{
@@ -213,6 +235,7 @@ public partial class MainField : Control
 			_holdGrid.SetBlock(t);
 		}
 		swapped = true;
+
 	}
 
 	public bool CheckGrid(int x, int y)
@@ -311,6 +334,15 @@ public partial class MainField : Control
 				}
 			}
 		}
-		if (numlines > 0) clear1Sound.Play();
+
+		if (numlines > 0)
+		{
+			if (numlines == 1) clearSound.Play();
+			else if (numlines == 2 || numlines == 3) clear2Sound.Play();
+			else clear3Sound.Play();
+		}
+		totalLines += numlines;
+
+		_lblLines.Text = $"Lines - {totalLines}";
 	}
 }

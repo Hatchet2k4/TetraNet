@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://cag0a4qb86rel"]
+
+[ext_resource type="Script" path="res://src/Title.cs" id="1_4v2tq"]
+[ext_resource type="AudioStream" uid="uid://b7did871hdfjk" path="res://music/Electronic Vol4 1080 Intensity 2.mp3" id="2_ckqgx"]
+[ext_resource type="Texture2D" uid="uid://6i3vptfhkrwt" path="res://gfx/Title.png" id="2_wu36l"]
+
+[node name="Title" type="Node2D" node_paths=PackedStringArray("titleMusic")]
+script = ExtResource("1_4v2tq")
+titleMusic = NodePath("TitleMusic")
+
+[node name="Splash" type="TextureRect" parent="."]
+offset_right = 1280.0
+offset_bottom = 720.0
+texture = ExtResource("2_wu36l")
+
+[node name="TitleMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_ckqgx")
+volume_db = -20.0
+autoplay = true
