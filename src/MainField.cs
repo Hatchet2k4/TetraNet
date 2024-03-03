@@ -110,6 +110,10 @@ public partial class MainField : Control
 		{
 			Move(RIGHT);
 		}
+		else if (Gamepad.PressedB())
+		{
+			FastDrop();
+		}
 		else if (Gamepad.DownHeld() || Gamepad.RightHeld() || Gamepad.LeftHeld())
 		{
 			if (!_downHeld && _holdTime == 0d)
@@ -175,6 +179,15 @@ public partial class MainField : Control
 				Land();
 			}
 		}
+	}
+
+	public void FastDrop()
+	{
+		while (CheckCollisions(DOWN) == false)
+		{
+			Move(DOWN);
+		}
+		Land();
 	}
 
 	public bool CheckGrid(int x, int y)
