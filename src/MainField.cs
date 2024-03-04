@@ -187,7 +187,20 @@ public partial class MainField : Control
 
 	public void Rotate(Vector2 direction)
 	{
+		int orientation = _currentBlock.GetOrientation();
 		_currentBlock.Rotate(direction);
+
+		if (CheckCollisions(new Vector2(0, 0))) //colliding with something here!
+		{
+			if (direction == RIGHT)
+			{
+
+			}
+			else
+			{
+
+			}
+		}
 		SetGhostPosition();
 	}
 
