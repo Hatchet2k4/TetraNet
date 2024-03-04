@@ -4,6 +4,8 @@ using Godot;
 using static Data;
 using System.Collections.Generic;
 using System;
+using System.Reflection.Metadata;
+
 
 public partial class MainField : Control
 {
@@ -189,19 +191,36 @@ public partial class MainField : Control
 	{
 		int orientation = _currentBlock.GetOrientation();
 		_currentBlock.Rotate(direction);
+		int test_orientation = _currentBlock.GetOrientation();
 
-		if (CheckCollisions(new Vector2(0, 0))) //colliding with something here!
+		if (CheckCollisions(new Vector2(0, 0))) //colliding with something here, see if we can fix it!
 		{
-			if (direction == RIGHT)
+			int wall_kick_index = test_orientation * 2;
+			if (direction == LEFT) wall_kick_index--;
+			wall_kick_index = wrap(wall_kick_index, 8);
+			List<Vector2> kicks;
+			if(_currentBlock.BlockType==BlockType.I) kicks=wallKicksI[wall_kick_index];
+			else kicks = wallKicks[wall_kick_index];
+			for(int i=0; i<4; i++)
 			{
-
+				if(!CheckCollisions(kicks[i])) 
+				{
+					Move(kicks[i]);
+					SetGhostPosition();
+					return;
+				}
 			}
-			else
-			{
+			_currentBlock.SetOrientation(orientation); //couldn't fix, set back to original orientation
 
-			}
 		}
 		SetGhostPosition();
+	}
+
+	public int wrap(int value, int max)
+	{
+		if(value<0) value+=max;
+		if(value>=max) value+=max;
+		return value;
 	}
 
 	public void Move(Vector2 direction)
