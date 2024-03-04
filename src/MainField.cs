@@ -22,7 +22,7 @@ public partial class MainField : Control
 	[Export] private AudioStreamPlayer dropSound;
 	[Export] private AudioStreamPlayer moveSound;
 	[Export] private AudioStreamPlayer rotateSound;
-
+	private Texture2D _ghostTexture;
 
 	private PackedScene _pieceScene = (PackedScene)ResourceLoader.Load("res://scenes/piece.tscn");
 
@@ -32,6 +32,8 @@ public partial class MainField : Control
 
 	private Signal gameover;
 	private Block _currentBlock;
+	private Block _ghostBlock;
+
 	private double _time;
 	private double _holdTime;
 	private double _holdRate = 0.1f;
@@ -41,6 +43,7 @@ public partial class MainField : Control
 	private bool _downHeld;
 
 	public Vector2 blockPosition;
+	public Vector2 ghostPosition;
 
 	private List<int> _lines = new List<int>(); //stores list of rows for completed lines
 
@@ -53,6 +56,7 @@ public partial class MainField : Control
 
 	public override void _Ready()
 	{
+		_ghostTexture = GD.Load("res://gfx/Ghost.png") as Texture2D;
 		_fallTime = 0.5f;
 		_time = 0;
 		_gridData = new Piece[GRID_W, GRID_H];
@@ -73,10 +77,17 @@ public partial class MainField : Control
 		_currentBlock = _spawner.blockScene.Instantiate() as Block;
 		_currentBlock.Initialize(blockResources[t]);
 
+		_ghostBlock = _spawner.blockScene.Instantiate() as Block;
+		_ghostBlock.Initialize(blockResources[t]);
+		_ghostBlock.SetGhost(_ghostTexture);
+
 		blockPosition = new Vector2(4, 0) + gridSpawnPositions[t];
 		_currentBlock.Position = _grid.Position + (blockPosition * GRID_SIZE);
 
+		SetGhostPosition();
+		AddChild(_ghostBlock);
 		AddChild(_currentBlock);
+
 		_nextGrid.Populate();
 	}
 
@@ -177,6 +188,7 @@ public partial class MainField : Control
 	public void Rotate(Vector2 direction)
 	{
 		_currentBlock.Rotate(direction);
+		SetGhostPosition();
 	}
 
 	public void Move(Vector2 direction)
@@ -185,6 +197,7 @@ public partial class MainField : Control
 		{
 			blockPosition += direction;
 			_currentBlock.Position = _grid.Position + (blockPosition * GRID_SIZE);
+			SetGhostPosition();
 
 			for (int i = 0; i < 4; i++)
 			{
@@ -197,7 +210,6 @@ public partial class MainField : Control
 			{
 				_time = 0f;
 			}
-
 		}
 		else
 		{
@@ -221,6 +233,7 @@ public partial class MainField : Control
 	{
 		if (swapped) return;
 
+		RemoveChild(_ghostBlock);
 		if (!_holdGrid.HasBlock())
 		{
 			RemoveChild(_currentBlock);
@@ -235,7 +248,6 @@ public partial class MainField : Control
 			_holdGrid.SetBlock(t);
 		}
 		swapped = true;
-
 	}
 
 	public bool CheckGrid(int x, int y)
@@ -264,6 +276,37 @@ public partial class MainField : Control
 		return false;
 	}
 
+	public void SetGhostPosition()
+	{
+		ghostPosition = blockPosition;
+		_ghostBlock.SetOrientation(_currentBlock.GetOrientation());
+		GhostDrop();
+		_ghostBlock.Position = _grid.Position + (ghostPosition * GRID_SIZE);
+	}
+
+	public void GhostDrop()
+	{
+		while (CheckGhostCollisions(DOWN) == false)
+		{
+			ghostPosition += DOWN;
+		}
+	}
+
+	public bool CheckGhostCollisions(Vector2 direction)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			Vector2 testPosition = ghostPosition + direction + _ghostBlock.cells[i];
+			int x = (int)testPosition.X;
+			int y = (int)testPosition.Y;
+			if (CheckGrid(x, y))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public void Land()
 	{
 		landSound.Play();
@@ -281,6 +324,7 @@ public partial class MainField : Control
 			_gridData[x, y] = p;
 		}
 		RemoveChild(_currentBlock);
+		RemoveChild(_ghostBlock);
 		CheckLines();
 		if (_lines.Count == 0) SpawnNewBlock(_spawner.GetNextBlock());
 	}

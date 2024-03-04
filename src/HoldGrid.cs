@@ -27,7 +27,7 @@ public partial class HoldGrid : Control
 	{
 		if (HasBlock()) RemoveChild(_holdBlock);
 		_holdBlock = block;
-		_holdBlock.DefaultRotation();
+		_holdBlock.DefaultOrientation();
 		AddChild(_holdBlock);
 		Populate();
 	}

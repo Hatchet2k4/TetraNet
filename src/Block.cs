@@ -12,6 +12,8 @@ public partial class Block : Node2D
 	public Shape shape;
 	public List<Vector2> cells;
 
+
+
 	public BlockType BlockType
 	{
 		get
@@ -22,6 +24,7 @@ public partial class Block : Node2D
 
 	public override void _Ready()
 	{
+
 		SetProcess(false);
 	}
 
@@ -42,6 +45,14 @@ public partial class Block : Node2D
 		}
 	}
 
+	public void SetGhost(Texture2D t)
+	{
+		foreach (Piece p in _pieces)
+		{
+			p.SetTexture(t);
+		}
+	}
+
 	public void Rotate(Vector2 direction)
 	{
 		shape.Rotate(direction);
@@ -49,11 +60,23 @@ public partial class Block : Node2D
 		ResetPositions();
 	}
 
-	public void DefaultRotation()
+	public void DefaultOrientation()
 	{
 		shape.orientation = 0;
 		cells = shape.GetCells();
 		ResetPositions();
+	}
+
+	public void SetOrientation(int orientation)
+	{
+		shape.orientation = orientation;
+		cells = shape.GetCells();
+		ResetPositions();
+	}
+
+	public int GetOrientation()
+	{
+		return shape.orientation;
 	}
 
 	public void ResetPositions()
