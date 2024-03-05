@@ -6,14 +6,41 @@ using Godot;
 public partial class Title : Node2D
 {
 	[Export] private AudioStreamPlayer titleMusic;
+	[Export] private BoxContainer mainMenu;
+	[Export] private Control menuBox;
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		if (Gamepad.PressedStart() || Gamepad.PressedA())
+		if (!menuBox.Visible && (Gamepad.PressedStart() || Gamepad.PressedA()) || Input.IsMouseButtonPressed(MouseButton.Left))
 		{
-			titleMusic.Stop();
-			GetTree().ChangeSceneToFile("res://scenes/main.tscn");
+			menuBox.Visible = true;
 		}
 	}
+
+	public void SoloGame()
+	{
+		titleMusic.Stop();
+		GetTree().ChangeSceneToFile("res://scenes/main.tscn");
+	}
+
+	public void StartServer()
+	{
+
+	}
+
+	public void ConnectToServer()
+	{
+
+	}
+
+	public void Options()
+	{
+
+	}
+
+	public void SetupControls()
+	{
+
+	}
+
 }
