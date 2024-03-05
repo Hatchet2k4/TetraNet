@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://wov6pgf5uroj"
+path="res://.godot/imported/TetriNET Theme Arachno SoundFont.mp3-8dafa0e7ece5bf3eebd91016d9279f0b.mp3str"
+
+[deps]
+
+source_file="res://music/TetriNET Theme Arachno SoundFont.mp3"
+dest_files=["res://.godot/imported/TetriNET Theme Arachno SoundFont.mp3-8dafa0e7ece5bf3eebd91016d9279f0b.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

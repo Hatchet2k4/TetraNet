@@ -56,6 +56,8 @@ public partial class MainField : Control
 
 	public int totalLines;
 
+	public bool processControls = true;
+
 	public override void _Ready()
 	{
 		_ghostTexture = GD.Load("res://gfx/Ghost.png") as Texture2D;
@@ -137,54 +139,57 @@ public partial class MainField : Control
 
 	public void ProcessInput(double delta)
 	{
-		if (Gamepad.UpPressed())
+		if (processControls)
 		{
-			Rotate(RIGHT);
-			rotateSound.Play();
-		}
-		if (Gamepad.LeftPressed())
-		{
-			Move(LEFT);
-			moveSound.Play();
-		}
-		else if (Gamepad.RightPressed())
-		{
-			Move(RIGHT);
-			moveSound.Play();
-		}
-		else if (Gamepad.PressedB())
-		{
-			FastDrop();
-			dropSound.Play();
-		}
-		else if (Gamepad.PressedA())
-		{
-			SwapBlocks();
-			holdSound.Play();
-		}
-		else if (Gamepad.DownHeld() || Gamepad.RightHeld() || Gamepad.LeftHeld())
-		{
-			if (!_downHeld && _holdTime == 0d)
+			if (Gamepad.UpPressed())
 			{
-				_holdTime = _holdRate;
-				_downHeld = true;
+				Rotate(RIGHT);
+				rotateSound.Play();
 			}
-			else if (_holdTime <= 0d)
+			if (Gamepad.LeftPressed())
 			{
-				_holdTime += _holdRate;
-				if (Gamepad.DownHeld()) Move(DOWN);
-				else if (Gamepad.LeftHeld()) Move(LEFT);
-				else if (Gamepad.RightHeld()) Move(RIGHT);
+				Move(LEFT);
 				moveSound.Play();
 			}
-			else
+			else if (Gamepad.RightPressed())
 			{
-				_holdTime -= delta;
+				Move(RIGHT);
+				moveSound.Play();
 			}
-			return;
+			else if (Gamepad.PressedB())
+			{
+				FastDrop();
+				dropSound.Play();
+			}
+			else if (Gamepad.PressedA())
+			{
+				SwapBlocks();
+				holdSound.Play();
+			}
+			else if (Gamepad.DownHeld() || Gamepad.RightHeld() || Gamepad.LeftHeld())
+			{
+				if (!_downHeld && _holdTime == 0d)
+				{
+					_holdTime = _holdRate;
+					_downHeld = true;
+				}
+				else if (_holdTime <= 0d)
+				{
+					_holdTime += _holdRate;
+					if (Gamepad.DownHeld()) Move(DOWN);
+					else if (Gamepad.LeftHeld()) Move(LEFT);
+					else if (Gamepad.RightHeld()) Move(RIGHT);
+					moveSound.Play();
+				}
+				else
+				{
+					_holdTime -= delta;
+				}
+				return;
+			}
+			_downHeld = false;
+			_holdTime = 0d;
 		}
-		_downHeld = false;
-		_holdTime = 0d;
 	}
 
 	public void Rotate(Vector2 direction)
@@ -199,11 +204,11 @@ public partial class MainField : Control
 			if (direction == LEFT) wall_kick_index--;
 			wall_kick_index = wrap(wall_kick_index, 8);
 			List<Vector2> kicks;
-			if(_currentBlock.BlockType==BlockType.I) kicks=wallKicksI[wall_kick_index];
+			if (_currentBlock.BlockType == BlockType.I) kicks = wallKicksI[wall_kick_index];
 			else kicks = wallKicks[wall_kick_index];
-			for(int i=0; i<4; i++)
+			for (int i = 0; i < 4; i++)
 			{
-				if(!CheckCollisions(kicks[i])) 
+				if (!CheckCollisions(kicks[i]))
 				{
 					Move(kicks[i]);
 					SetGhostPosition();
@@ -218,8 +223,8 @@ public partial class MainField : Control
 
 	public int wrap(int value, int max)
 	{
-		if(value<0) value+=max;
-		if(value>=max) value+=max;
+		if (value < 0) value += max;
+		if (value >= max) value += max;
 		return value;
 	}
 

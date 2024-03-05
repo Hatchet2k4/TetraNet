@@ -1,0 +1,44 @@
+[gd_scene load_steps=5 format=3 uid="uid://bnb8crh7p8br1"]
+
+[ext_resource type="Texture2D" uid="uid://c1h3o60r1yrwa" path="res://gfx/HighlightBorder.png" id="1_7lyed"]
+[ext_resource type="Texture2D" uid="uid://smxnw8u1gp0k" path="res://gfx/HoldBorder.png" id="1_52rox"]
+[ext_resource type="Script" path="res://src/TextEntry.cs" id="2_21dpf"]
+[ext_resource type="FontFile" path="res://fonts/kirifont/Kirifont.tres" id="3_83nce"]
+
+[node name="TextEntry" type="NinePatchRect"]
+offset_right = 1972.0
+offset_bottom = 80.0
+focus_mode = 1
+texture = ExtResource("1_52rox")
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+
+[node name="Highlight" type="NinePatchRect" parent="."]
+visible = false
+layout_mode = 0
+offset_right = 1972.0
+offset_bottom = 80.0
+texture = ExtResource("1_7lyed")
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+
+[node name="TextEdit" type="TextEdit" parent="." node_paths=PackedStringArray("_highlight")]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 1988.0
+offset_bottom = 64.0
+theme_override_constants/line_spacing = 2
+theme_override_fonts/font = ExtResource("3_83nce")
+theme_override_font_sizes/font_size = 20
+placeholder_text = "Test text this is a lot of placeholder text whee whee I am typing a lot of text to get two lines woot soot adfajhjkhasjkh akjdfh akjh lakjh "
+wrap_mode = 1
+caret_blink = true
+script = ExtResource("2_21dpf")
+_highlight = NodePath("../Highlight")
+
+[connection signal="gui_input" from="TextEdit" to="TextEdit" method="_on_gui_input"]
