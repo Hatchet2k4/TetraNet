@@ -1,16 +1,19 @@
-[gd_scene load_steps=6 format=3 uid="uid://cag0a4qb86rel"]
+[gd_scene load_steps=9 format=3 uid="uid://cag0a4qb86rel"]
 
 [ext_resource type="Script" path="res://src/Title.cs" id="1_4v2tq"]
 [ext_resource type="AudioStream" uid="uid://b7did871hdfjk" path="res://music/Electronic Vol4 1080 Intensity 2.mp3" id="2_ckqgx"]
 [ext_resource type="Texture2D" uid="uid://6i3vptfhkrwt" path="res://gfx/Title.png" id="2_wu36l"]
 [ext_resource type="Texture2D" uid="uid://smxnw8u1gp0k" path="res://gfx/HoldBorder.png" id="4_i4pbo"]
 [ext_resource type="FontFile" path="res://fonts/xolonium/Xolonium.tres" id="5_edd4o"]
+[ext_resource type="Theme" uid="uid://dewu86uod5qnt" path="res://resources/menuTextTheme.tres" id="6_gkvc4"]
+[ext_resource type="FontFile" path="res://fonts/kirifont/Kirifont.tres" id="7_oseos"]
+[ext_resource type="FontFile" uid="uid://cksjotvc3wafa" path="res://fonts/kirifont/KiriFont.otf" id="8_q0175"]
 
 [node name="Title" type="Node2D" node_paths=PackedStringArray("titleMusic", "mainMenu", "menuBox")]
 script = ExtResource("1_4v2tq")
 titleMusic = NodePath("TitleMusic")
-mainMenu = NodePath("MenuBox/MainMenu")
-menuBox = NodePath("MenuBox")
+mainMenu = NodePath("MainMenu/MainMenuBox")
+menuBox = NodePath("MainMenu")
 
 [node name="Splash" type="TextureRect" parent="."]
 offset_right = 1280.0
@@ -22,13 +25,14 @@ stream = ExtResource("2_ckqgx")
 volume_db = -20.0
 autoplay = true
 
-[node name="MenuBox" type="Control" parent="."]
+[node name="MainMenu" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="NinePatchRect" type="NinePatchRect" parent="MenuBox"]
+[node name="MainMenuRect" type="NinePatchRect" parent="MainMenu"]
+layout_mode = 0
 offset_left = 368.0
 offset_top = 324.0
 offset_right = 912.0
@@ -39,7 +43,8 @@ patch_margin_top = 16
 patch_margin_right = 16
 patch_margin_bottom = 16
 
-[node name="MainMenu" type="VBoxContainer" parent="MenuBox"]
+[node name="MainMenuBox" type="VBoxContainer" parent="MainMenu"]
+layout_mode = 0
 offset_left = 400.0
 offset_top = 340.0
 offset_right = 880.0
@@ -47,28 +52,28 @@ offset_bottom = 700.0
 theme_override_constants/separation = 10
 alignment = 1
 
-[node name="Solo Game" type="Button" parent="MenuBox/MainMenu"]
+[node name="Solo Game" type="Button" parent="MainMenu/MainMenuBox"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("5_edd4o")
 theme_override_font_sizes/font_size = 40
 action_mode = 0
 text = "Solo Game"
 
-[node name="Start Server" type="Button" parent="MenuBox/MainMenu"]
+[node name="Start Server" type="Button" parent="MainMenu/MainMenuBox"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("5_edd4o")
 theme_override_font_sizes/font_size = 40
 action_mode = 0
 text = "Start Server"
 
-[node name="Connect to Server" type="Button" parent="MenuBox/MainMenu"]
+[node name="Connect to Server" type="Button" parent="MainMenu/MainMenuBox"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("5_edd4o")
 theme_override_font_sizes/font_size = 40
 action_mode = 0
 text = "Connect to Server"
 
-[node name="Game Options" type="Button" parent="MenuBox/MainMenu"]
+[node name="Game Options" type="Button" parent="MainMenu/MainMenuBox"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("5_edd4o")
 theme_override_font_sizes/font_size = 40
@@ -76,15 +81,165 @@ action_mode = 0
 text = "Game Options
 "
 
-[node name="Controls" type="Button" parent="MenuBox/MainMenu"]
+[node name="Controls" type="Button" parent="MainMenu/MainMenuBox"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("5_edd4o")
 theme_override_font_sizes/font_size = 40
 action_mode = 0
 text = "Setup Controls"
 
-[connection signal="pressed" from="MenuBox/MainMenu/Solo Game" to="." method="SoloGame"]
-[connection signal="pressed" from="MenuBox/MainMenu/Start Server" to="." method="StartServer"]
-[connection signal="pressed" from="MenuBox/MainMenu/Connect to Server" to="." method="ConnectToServer"]
-[connection signal="pressed" from="MenuBox/MainMenu/Game Options" to="." method="Options"]
-[connection signal="pressed" from="MenuBox/MainMenu/Controls" to="." method="SetupControls"]
+[node name="HostMenu" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Team" type="Label" parent="HostMenu"]
+offset_left = 830.0
+offset_top = 354.0
+offset_right = 1004.0
+offset_bottom = 378.0
+theme = ExtResource("6_gkvc4")
+theme_override_fonts/font = ExtResource("7_oseos")
+theme_override_font_sizes/font_size = 24
+text = "Name:"
+
+[node name="HostMenuRect" type="NinePatchRect" parent="HostMenu"]
+layout_mode = 0
+offset_left = 228.0
+offset_top = 324.0
+offset_right = 1052.0
+offset_bottom = 716.0
+texture = ExtResource("4_i4pbo")
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+
+[node name="NameText" type="LineEdit" parent="HostMenu"]
+clip_contents = true
+layout_mode = 0
+offset_left = 444.0
+offset_top = 349.0
+offset_right = 764.0
+offset_bottom = 381.0
+theme = ExtResource("6_gkvc4")
+theme_override_fonts/font = ExtResource("8_q0175")
+theme_override_font_sizes/font_size = 24
+max_length = 20
+
+[node name="NameLabel" type="Label" parent="HostMenu"]
+layout_mode = 2
+offset_left = 256.0
+offset_top = 354.0
+offset_right = 430.0
+offset_bottom = 378.0
+theme = ExtResource("6_gkvc4")
+theme_override_fonts/font = ExtResource("7_oseos")
+theme_override_font_sizes/font_size = 24
+text = "Name:"
+
+[node name="ConnectedLabel" type="Label" parent="HostMenu"]
+offset_left = 256.0
+offset_top = 400.0
+offset_right = 433.0
+offset_bottom = 424.0
+theme = ExtResource("6_gkvc4")
+theme_override_fonts/font = ExtResource("7_oseos")
+theme_override_font_sizes/font_size = 24
+text = "Connected:"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HostMenu"]
+layout_mode = 0
+offset_left = 257.0
+offset_top = 632.0
+offset_right = 1025.0
+offset_bottom = 689.0
+
+[node name="StartStopServer" type="Button" parent="HostMenu/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("5_edd4o")
+theme_override_font_sizes/font_size = 40
+action_mode = 0
+text = "Start Server"
+
+[node name="Start Game" type="Button" parent="HostMenu/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("5_edd4o")
+theme_override_font_sizes/font_size = 40
+disabled = true
+action_mode = 0
+text = "Start Game"
+
+[node name="OptionButton" type="OptionButton" parent="HostMenu"]
+layout_mode = 0
+offset_left = 867.0
+offset_top = 351.0
+offset_right = 1032.0
+offset_bottom = 383.0
+theme = ExtResource("6_gkvc4")
+item_count = 7
+selected = 0
+popup/item_0/text = "None"
+popup/item_0/id = 0
+popup/item_1/text = "Red"
+popup/item_1/id = 1
+popup/item_2/text = "Green"
+popup/item_2/id = 2
+popup/item_3/text = "Blue"
+popup/item_3/id = 3
+popup/item_4/text = "Yellow"
+popup/item_4/id = 4
+popup/item_5/text = "Orange"
+popup/item_5/id = 5
+popup/item_6/text = "Purple"
+popup/item_6/id = 6
+
+[node name="NameLabel2" type="Label" parent="HostMenu"]
+offset_left = 771.0
+offset_top = 354.0
+offset_right = 864.0
+offset_bottom = 378.0
+theme = ExtResource("6_gkvc4")
+text = "Team:"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="HostMenu"]
+clip_contents = false
+layout_mode = 0
+offset_left = 444.0
+offset_top = 400.0
+offset_right = 766.0
+offset_bottom = 624.0
+theme = ExtResource("6_gkvc4")
+theme_override_constants/line_separation = 4
+text = "Opponent 1
+Opponent 2
+Opponent 3
+Opponent 4"
+scroll_following = true
+shortcut_keys_enabled = false
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="HostMenu"]
+clip_contents = false
+offset_left = 773.0
+offset_top = 400.0
+offset_right = 930.0
+offset_bottom = 624.0
+theme = ExtResource("6_gkvc4")
+theme_override_constants/line_separation = 4
+bbcode_enabled = true
+text = "[color=red]Red[/color]
+[color=blue]Blue[/color]
+[color=purple]Purple[/color]
+No Team"
+deselect_on_focus_loss_enabled = false
+drag_and_drop_selection_enabled = false
+
+[connection signal="pressed" from="MainMenu/MainMenuBox/Solo Game" to="." method="SoloGame"]
+[connection signal="pressed" from="MainMenu/MainMenuBox/Start Server" to="." method="StartServer"]
+[connection signal="pressed" from="MainMenu/MainMenuBox/Connect to Server" to="." method="ConnectToServer"]
+[connection signal="pressed" from="MainMenu/MainMenuBox/Game Options" to="." method="Options"]
+[connection signal="pressed" from="MainMenu/MainMenuBox/Controls" to="." method="SetupControls"]
