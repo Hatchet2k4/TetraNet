@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://dba4ubxkab2hi"]
+[gd_scene load_steps=26 format=3 uid="uid://dba4ubxkab2hi"]
 
 [ext_resource type="AudioStream" uid="uid://3gt8y2muyuuy" path="res://sfx/hold.wav" id="1_6p8t6"]
 [ext_resource type="Script" path="res://src/CatchFocus.cs" id="1_me42g"]
@@ -19,9 +19,11 @@
 [ext_resource type="PackedScene" uid="uid://dijfdnwe6x7tn" path="res://scenes/next_box.tscn" id="8_l0fyc"]
 [ext_resource type="AudioStream" uid="uid://ce72ygwwhwpon" path="res://sfx/clear 3.wav" id="9_nkkwi"]
 [ext_resource type="Texture2D" uid="uid://smxnw8u1gp0k" path="res://gfx/HoldBorder.png" id="10_w3jrr"]
+[ext_resource type="AudioStream" uid="uid://slvt36mfn0q1" path="res://sfx/chat 1.wav" id="11_tq570"]
 [ext_resource type="PackedScene" uid="uid://c8i7yj12e7n14" path="res://scenes/hold_box.tscn" id="12_c3cha"]
 [ext_resource type="Texture2D" uid="uid://c1h3o60r1yrwa" path="res://gfx/HighlightBorder.png" id="18_f4pp5"]
 [ext_resource type="Script" path="res://src/TextEntry.cs" id="20_8e7c1"]
+[ext_resource type="FontFile" uid="uid://cksjotvc3wafa" path="res://fonts/kirifont/KiriFont.otf" id="20_wh82m"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ay8rd"]
 font = ExtResource("7_dkgbi")
@@ -68,6 +70,9 @@ stream = ExtResource("8_gfis2")
 
 [node name="Clear 3" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("9_nkkwi")
+
+[node name="ChatSound" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("11_tq570")
 
 [node name="Spawner" type="Node" parent="."]
 script = ExtResource("4_edpkq")
@@ -225,6 +230,10 @@ offset_left = 16.0
 offset_top = 16.0
 offset_right = 1956.0
 offset_bottom = 224.0
+theme_override_constants/line_spacing = 2
+theme_override_fonts/font = ExtResource("20_wh82m")
+theme_override_font_sizes/font_size = 20
+wrap_mode = 1
 
 [node name="TextEntry" type="NinePatchRect" parent="."]
 layout_mode = 0
@@ -251,7 +260,7 @@ patch_margin_top = 16
 patch_margin_right = 16
 patch_margin_bottom = 16
 
-[node name="TextEdit" type="TextEdit" parent="TextEntry" node_paths=PackedStringArray("_highlight", "_mainField")]
+[node name="TextEdit" type="TextEdit" parent="TextEntry" node_paths=PackedStringArray("_highlight", "_mainField", "_chatBox", "_chatSound")]
 layout_mode = 0
 offset_left = 16.0
 offset_top = 16.0
@@ -266,6 +275,8 @@ caret_blink = true
 script = ExtResource("20_8e7c1")
 _highlight = NodePath("../Highlight")
 _mainField = NodePath("../../Main Area")
+_chatBox = NodePath("../../ChatBox/TextEdit")
+_chatSound = NodePath("../../Sounds/ChatSound")
 
 [node name="Player 2" type="Label" parent="."]
 layout_mode = 0

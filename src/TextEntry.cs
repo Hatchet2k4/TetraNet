@@ -6,6 +6,9 @@ public partial class TextEntry : TextEdit
 {
 	[Export] private NinePatchRect _highlight;
 	[Export] private MainField _mainField;
+	[Export] private TextEdit _chatBox;
+
+	[Export] private AudioStreamPlayer _chatSound;
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
@@ -14,6 +17,13 @@ public partial class TextEntry : TextEdit
 
 	public void OnGuiInput(InputEvent @event)
 	{
+		if (@event is InputEventKey keyEvent && keyEvent.Keycode == Key.Enter)
+		{
+			_chatBox.Text += Text;
+			Text = "";
+			_chatSound.Play();
+		}
+
 		/*
 		if (@event is InputEventMouseButton mouseEvent && mouseEvent.ButtonIndex == MouseButton.Left && mouseEvent.Pressed)
 		{
@@ -55,3 +65,4 @@ public partial class TextEntry : TextEdit
 		Editable = false;
 	}
 }
+
