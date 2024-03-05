@@ -189,6 +189,15 @@ offset_bottom = 97.0
 label_settings = ExtResource("5_nx2xu")
 vertical_alignment = 2
 
+[node name="NumLines2" type="Label" parent="ScoreBox"]
+offset_left = 28.0
+offset_top = 66.0
+offset_right = 284.0
+offset_bottom = 99.0
+text = "KO's  - 0"
+label_settings = ExtResource("5_nx2xu")
+vertical_alignment = 2
+
 [node name="InventoryBox" type="NinePatchRect" parent="."]
 layout_mode = 0
 offset_left = 16.0
