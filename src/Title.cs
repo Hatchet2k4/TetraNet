@@ -6,14 +6,18 @@ using Godot;
 public partial class Title : Node2D
 {
 	[Export] private AudioStreamPlayer titleMusic;
-	[Export] private BoxContainer mainMenu;
-	[Export] private Control menuBox;
+	[Export] private Control mainMenu;
+	[Export] private Control hostMenu;
+	[Export] private Control joinMenu;
+
+	private bool started=false;
 
 	public override void _Process(double delta)
 	{
-		if (!menuBox.Visible && (Gamepad.PressedStart() || Gamepad.PressedA()) || Input.IsMouseButtonPressed(MouseButton.Left))
+		if (!started && !mainMenu.Visible && (Gamepad.PressedStart() || Gamepad.PressedA()) || Input.IsMouseButtonPressed(MouseButton.Left))
 		{
-			menuBox.Visible = true;
+			mainMenu.Show();
+			started=true;
 		}
 	}
 
@@ -25,12 +29,14 @@ public partial class Title : Node2D
 
 	public void StartServer()
 	{
-
+		mainMenu.Hide();
+		hostMenu.Show();
 	}
 
 	public void ConnectToServer()
 	{
-
+		mainMenu.Hide();
+		joinMenu.Show();
 	}
 
 	public void Options()
