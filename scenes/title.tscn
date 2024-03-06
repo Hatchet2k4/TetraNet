@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cag0a4qb86rel"]
+[gd_scene load_steps=20 format=3 uid="uid://cag0a4qb86rel"]
 
 [ext_resource type="Script" path="res://src/Title.cs" id="1_4v2tq"]
 [ext_resource type="PackedScene" uid="uid://cafudqe5o8fnt" path="res://scenes/connection_handler.tscn" id="2_c4arj"]
@@ -8,7 +8,17 @@
 [ext_resource type="FontFile" path="res://fonts/xolonium/Xolonium.tres" id="5_edd4o"]
 [ext_resource type="Theme" uid="uid://dewu86uod5qnt" path="res://resources/menuTextTheme.tres" id="6_gkvc4"]
 [ext_resource type="FontFile" path="res://fonts/kirifont/Kirifont.tres" id="7_oseos"]
+[ext_resource type="Script" path="res://src/HostMenu.cs" id="7_vspt8"]
 [ext_resource type="FontFile" uid="uid://cksjotvc3wafa" path="res://fonts/kirifont/KiriFont.otf" id="8_q0175"]
+[ext_resource type="Texture2D" uid="uid://b08i17xwe36xo" path="res://gfx/RedIcon.png" id="10_ey3m3"]
+[ext_resource type="Texture2D" uid="uid://oxa8o28l35w4" path="res://gfx/GreenIcon.png" id="11_3vqiq"]
+[ext_resource type="Texture2D" uid="uid://db7rj66iapeuk" path="res://gfx/NoneIcon.png" id="11_tdfau"]
+[ext_resource type="Texture2D" uid="uid://dooxoywd28pon" path="res://gfx/BlueIcon.png" id="12_ybxr2"]
+[ext_resource type="Texture2D" uid="uid://b0bd3sj5gjdea" path="res://gfx/YellowIcon.png" id="13_7rkwo"]
+[ext_resource type="Texture2D" uid="uid://dmr5u27b0dsd1" path="res://gfx/OrangeIcon.png" id="14_2h7ju"]
+[ext_resource type="Texture2D" uid="uid://ci4ou1pdme5de" path="res://gfx/PurpleIcon.png" id="15_lnqci"]
+[ext_resource type="Texture2D" uid="uid://bsdf64sy2loeo" path="res://gfx/SmallBorder.png" id="18_aftuu"]
+[ext_resource type="PackedScene" uid="uid://dtfk0amxadmus" path="res://scenes/connected_row.tscn" id="19_pydle"]
 
 [node name="Title" type="Node2D" node_paths=PackedStringArray("titleMusic", "mainMenu", "hostMenu", "joinMenu")]
 script = ExtResource("1_4v2tq")
@@ -30,6 +40,7 @@ volume_db = -20.0
 autoplay = true
 
 [node name="MainMenu" type="Control" parent="."]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -96,15 +107,18 @@ text = "Setup Controls"
 visible = false
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 228.0
+offset_top = 324.0
+offset_right = 1052.0
+offset_bottom = 716.0
+script = ExtResource("7_vspt8")
 
 [node name="Team" type="Label" parent="HostMenu"]
 layout_mode = 0
-offset_left = 830.0
-offset_top = 354.0
-offset_right = 1004.0
-offset_bottom = 378.0
+offset_left = 602.0
+offset_top = 30.0
+offset_right = 776.0
+offset_bottom = 54.0
 theme = ExtResource("6_gkvc4")
 theme_override_fonts/font = ExtResource("7_oseos")
 theme_override_font_sizes/font_size = 24
@@ -112,10 +126,8 @@ text = "Name:"
 
 [node name="HostMenuRect" type="NinePatchRect" parent="HostMenu"]
 layout_mode = 0
-offset_left = 228.0
-offset_top = 324.0
-offset_right = 1052.0
-offset_bottom = 716.0
+offset_right = 824.0
+offset_bottom = 392.0
 texture = ExtResource("4_i4pbo")
 patch_margin_left = 16
 patch_margin_top = 16
@@ -125,21 +137,21 @@ patch_margin_bottom = 16
 [node name="NameText" type="LineEdit" parent="HostMenu"]
 clip_contents = true
 layout_mode = 0
-offset_left = 444.0
-offset_top = 349.0
-offset_right = 764.0
-offset_bottom = 381.0
+offset_left = 216.0
+offset_top = 25.0
+offset_right = 516.0
+offset_bottom = 57.0
 theme = ExtResource("6_gkvc4")
 theme_override_fonts/font = ExtResource("8_q0175")
 theme_override_font_sizes/font_size = 24
 max_length = 20
 
 [node name="NameLabel" type="Label" parent="HostMenu"]
-layout_mode = 2
-offset_left = 256.0
-offset_top = 354.0
-offset_right = 430.0
-offset_bottom = 378.0
+layout_mode = 0
+offset_left = 28.0
+offset_top = 30.0
+offset_right = 202.0
+offset_bottom = 54.0
 theme = ExtResource("6_gkvc4")
 theme_override_fonts/font = ExtResource("7_oseos")
 theme_override_font_sizes/font_size = 24
@@ -147,23 +159,23 @@ text = "Name:"
 
 [node name="ConnectedLabel" type="Label" parent="HostMenu"]
 layout_mode = 0
-offset_left = 256.0
-offset_top = 400.0
-offset_right = 433.0
-offset_bottom = 424.0
+offset_left = 28.0
+offset_top = 76.0
+offset_right = 205.0
+offset_bottom = 100.0
 theme = ExtResource("6_gkvc4")
 theme_override_fonts/font = ExtResource("7_oseos")
 theme_override_font_sizes/font_size = 24
 text = "Connected:"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HostMenu"]
+[node name="GameButtons" type="HBoxContainer" parent="HostMenu"]
 layout_mode = 0
-offset_left = 257.0
-offset_top = 632.0
-offset_right = 1025.0
-offset_bottom = 689.0
+offset_left = 29.0
+offset_top = 308.0
+offset_right = 797.0
+offset_bottom = 365.0
 
-[node name="StartStopServer" type="Button" parent="HostMenu/HBoxContainer"]
+[node name="StartStopServer" type="Button" parent="HostMenu/GameButtons"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = ExtResource("5_edd4o")
@@ -171,7 +183,7 @@ theme_override_font_sizes/font_size = 40
 action_mode = 0
 text = "Start Server"
 
-[node name="Start Game" type="Button" parent="HostMenu/HBoxContainer"]
+[node name="Start Game" type="Button" parent="HostMenu/GameButtons"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = ExtResource("5_edd4o")
@@ -180,71 +192,207 @@ disabled = true
 action_mode = 0
 text = "Start Game"
 
-[node name="OptionButton" type="OptionButton" parent="HostMenu"]
+[node name="TeamOption" type="OptionButton" parent="HostMenu"]
 layout_mode = 0
-offset_left = 867.0
-offset_top = 351.0
-offset_right = 1032.0
-offset_bottom = 383.0
+offset_left = 614.0
+offset_top = 27.0
+offset_right = 798.0
+offset_bottom = 67.0
 theme = ExtResource("6_gkvc4")
 item_count = 7
 selected = 0
+fit_to_longest_item = false
 popup/item_0/text = "None"
+popup/item_0/icon = ExtResource("11_tdfau")
 popup/item_0/id = 0
 popup/item_1/text = "Red"
+popup/item_1/icon = ExtResource("10_ey3m3")
 popup/item_1/id = 1
 popup/item_2/text = "Green"
+popup/item_2/icon = ExtResource("11_3vqiq")
 popup/item_2/id = 2
 popup/item_3/text = "Blue"
+popup/item_3/icon = ExtResource("12_ybxr2")
 popup/item_3/id = 3
 popup/item_4/text = "Yellow"
+popup/item_4/icon = ExtResource("13_7rkwo")
 popup/item_4/id = 4
 popup/item_5/text = "Orange"
+popup/item_5/icon = ExtResource("14_2h7ju")
 popup/item_5/id = 5
 popup/item_6/text = "Purple"
+popup/item_6/icon = ExtResource("15_lnqci")
 popup/item_6/id = 6
 
-[node name="NameLabel2" type="Label" parent="HostMenu"]
+[node name="TeamLabel" type="Label" parent="HostMenu"]
 layout_mode = 0
-offset_left = 771.0
-offset_top = 354.0
-offset_right = 864.0
-offset_bottom = 378.0
+offset_left = 520.0
+offset_top = 30.0
+offset_right = 610.0
+offset_bottom = 54.0
 theme = ExtResource("6_gkvc4")
 text = "Team:"
 
-[node name="RichTextLabel" type="RichTextLabel" parent="HostMenu"]
-clip_contents = false
+[node name="ConnectedBox" type="NinePatchRect" parent="HostMenu"]
 layout_mode = 0
-offset_left = 444.0
-offset_top = 400.0
-offset_right = 766.0
-offset_bottom = 624.0
-theme = ExtResource("6_gkvc4")
-theme_override_constants/line_separation = 4
-text = "Opponent 1
-Opponent 2
-Opponent 3
-Opponent 4"
-scroll_following = true
-shortcut_keys_enabled = false
+offset_left = 216.0
+offset_top = 68.0
+offset_right = 788.0
+offset_bottom = 298.0
+texture = ExtResource("18_aftuu")
+patch_margin_left = 6
+patch_margin_top = 6
+patch_margin_right = 6
+patch_margin_bottom = 6
 
-[node name="RichTextLabel2" type="RichTextLabel" parent="HostMenu"]
+[node name="HeaderRow" type="Control" parent="HostMenu/ConnectedBox"]
+layout_mode = 2
+anchors_preset = 0
+offset_left = 6.0
+offset_top = 6.0
+offset_right = 6.0
+offset_bottom = 6.0
+theme = ExtResource("6_gkvc4")
+
+[node name="NameLabel" type="RichTextLabel" parent="HostMenu/ConnectedBox/HeaderRow"]
 clip_contents = false
 layout_mode = 0
-offset_left = 773.0
-offset_top = 400.0
-offset_right = 930.0
-offset_bottom = 624.0
-theme = ExtResource("6_gkvc4")
-theme_override_constants/line_separation = 4
+offset_top = 4.0
+offset_right = 300.0
+offset_bottom = 28.0
+theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
-text = "[color=red]Red[/color]
-[color=blue]Blue[/color]
-[color=purple]Purple[/color]
-No Team"
-deselect_on_focus_loss_enabled = false
-drag_and_drop_selection_enabled = false
+text = "[center]Name[/center]"
+scroll_active = false
+
+[node name="TeamLabel" type="RichTextLabel" parent="HostMenu/ConnectedBox/HeaderRow"]
+clip_contents = false
+layout_mode = 0
+offset_left = 300.0
+offset_top = 4.0
+offset_right = 430.0
+offset_bottom = 28.0
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+text = "[center]Team[/center]"
+
+[node name="ReadyLabel" type="RichTextLabel" parent="HostMenu/ConnectedBox/HeaderRow"]
+clip_contents = false
+layout_mode = 0
+offset_left = 430.0
+offset_top = 4.0
+offset_right = 560.0
+offset_bottom = 28.0
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+text = "[center]Ready[/center]"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HostMenu/ConnectedBox"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 30.0
+offset_right = 566.0
+offset_bottom = 222.0
+follow_focus = true
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+
+[node name="Container" type="Control" parent="HostMenu/ConnectedBox/ScrollContainer"]
+custom_minimum_size = Vector2(0, 288)
+layout_mode = 2
+
+[node name="ConnectedRow" parent="HostMenu/ConnectedBox/ScrollContainer/Container" instance=ExtResource("19_pydle")]
+layout_mode = 1
+offset_right = 0.0
+offset_bottom = -288.0
+
+[node name="ConnectedRow3" parent="HostMenu/ConnectedBox/ScrollContainer/Container" node_paths=PackedStringArray("nameLabel", "teamLabel") instance=ExtResource("19_pydle")]
+layout_mode = 1
+offset_top = 48.0
+offset_right = 0.0
+offset_bottom = -288.0
+nameLabel = NodePath("../ConnectedRow/NameLabel")
+teamLabel = NodePath("../ConnectedRow/TeamLabel")
+
+[node name="ConnectedRow4" parent="HostMenu/ConnectedBox/ScrollContainer/Container" node_paths=PackedStringArray("nameLabel", "teamLabel") instance=ExtResource("19_pydle")]
+layout_mode = 1
+offset_top = 72.0
+offset_right = 0.0
+offset_bottom = -264.0
+nameLabel = NodePath("../ConnectedRow/NameLabel")
+teamLabel = NodePath("../ConnectedRow/TeamLabel")
+
+[node name="ConnectedRow5" parent="HostMenu/ConnectedBox/ScrollContainer/Container" node_paths=PackedStringArray("nameLabel", "teamLabel") instance=ExtResource("19_pydle")]
+layout_mode = 1
+offset_top = 96.0
+offset_right = 0.0
+offset_bottom = -240.0
+nameLabel = NodePath("../ConnectedRow/NameLabel")
+teamLabel = NodePath("../ConnectedRow/TeamLabel")
+
+[node name="ConnectedRow6" parent="HostMenu/ConnectedBox/ScrollContainer/Container" node_paths=PackedStringArray("nameLabel", "teamLabel") instance=ExtResource("19_pydle")]
+layout_mode = 1
+offset_top = 120.0
+offset_right = 0.0
+offset_bottom = -216.0
+nameLabel = NodePath("../ConnectedRow/NameLabel")
+teamLabel = NodePath("../ConnectedRow/TeamLabel")
+
+[node name="ConnectedRow7" parent="HostMenu/ConnectedBox/ScrollContainer/Container" node_paths=PackedStringArray("nameLabel", "teamLabel") instance=ExtResource("19_pydle")]
+layout_mode = 1
+offset_top = 144.0
+offset_right = 0.0
+offset_bottom = -192.0
+nameLabel = NodePath("../ConnectedRow/NameLabel")
+teamLabel = NodePath("../ConnectedRow/TeamLabel")
+
+[node name="ConnectedRow8" parent="HostMenu/ConnectedBox/ScrollContainer/Container" node_paths=PackedStringArray("nameLabel", "teamLabel") instance=ExtResource("19_pydle")]
+layout_mode = 1
+offset_top = 168.0
+offset_right = 0.0
+offset_bottom = -168.0
+nameLabel = NodePath("../ConnectedRow/NameLabel")
+teamLabel = NodePath("../ConnectedRow/TeamLabel")
+
+[node name="ConnectedRow9" parent="HostMenu/ConnectedBox/ScrollContainer/Container" node_paths=PackedStringArray("nameLabel", "teamLabel") instance=ExtResource("19_pydle")]
+layout_mode = 1
+offset_top = 192.0
+offset_right = 0.0
+offset_bottom = -144.0
+nameLabel = NodePath("../ConnectedRow/NameLabel")
+teamLabel = NodePath("../ConnectedRow/TeamLabel")
+
+[node name="ConnectedRow10" parent="HostMenu/ConnectedBox/ScrollContainer/Container" node_paths=PackedStringArray("nameLabel", "teamLabel") instance=ExtResource("19_pydle")]
+layout_mode = 1
+offset_top = 216.0
+offset_right = 0.0
+offset_bottom = -120.0
+nameLabel = NodePath("../ConnectedRow/NameLabel")
+teamLabel = NodePath("../ConnectedRow/TeamLabel")
+
+[node name="ConnectedRow11" parent="HostMenu/ConnectedBox/ScrollContainer/Container" node_paths=PackedStringArray("nameLabel", "teamLabel") instance=ExtResource("19_pydle")]
+layout_mode = 1
+offset_top = 240.0
+offset_right = 0.0
+offset_bottom = -96.0
+nameLabel = NodePath("../ConnectedRow/NameLabel")
+teamLabel = NodePath("../ConnectedRow/TeamLabel")
+
+[node name="ConnectedRow12" parent="HostMenu/ConnectedBox/ScrollContainer/Container" node_paths=PackedStringArray("nameLabel", "teamLabel") instance=ExtResource("19_pydle")]
+layout_mode = 1
+offset_top = 264.0
+offset_right = 0.0
+offset_bottom = -72.0
+nameLabel = NodePath("../ConnectedRow/NameLabel")
+teamLabel = NodePath("../ConnectedRow/TeamLabel")
+
+[node name="ConnectedRow13" parent="HostMenu/ConnectedBox/ScrollContainer/Container" node_paths=PackedStringArray("nameLabel", "teamLabel") instance=ExtResource("19_pydle")]
+layout_mode = 1
+offset_top = 264.0
+offset_right = 0.0
+offset_bottom = -24.0
+nameLabel = NodePath("../ConnectedRow/NameLabel")
+teamLabel = NodePath("../ConnectedRow/TeamLabel")
 
 [node name="JoinMenu" type="Control" parent="."]
 visible = false

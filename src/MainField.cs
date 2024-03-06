@@ -139,8 +139,10 @@ public partial class MainField : Control
 
 	public void ProcessInput(double delta)
 	{
+
 		if (processControls)
 		{
+			//if(Input. )
 			if (Gamepad.UpPressed())
 			{
 				Rotate(RIGHT);

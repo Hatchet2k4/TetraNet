@@ -10,14 +10,19 @@ public partial class Title : Node2D
 	[Export] private Control hostMenu;
 	[Export] private Control joinMenu;
 
-	private bool started=false;
+	private bool started = false;
+
+	public override void _Ready()
+	{
+
+	}
 
 	public override void _Process(double delta)
 	{
 		if (!started && !mainMenu.Visible && (Gamepad.PressedStart() || Gamepad.PressedA()) || Input.IsMouseButtonPressed(MouseButton.Left))
 		{
 			mainMenu.Show();
-			started=true;
+			started = true;
 		}
 	}
 
