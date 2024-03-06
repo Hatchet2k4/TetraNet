@@ -1,9 +1,10 @@
-[gd_scene load_steps=26 format=3 uid="uid://dba4ubxkab2hi"]
+[gd_scene load_steps=27 format=3 uid="uid://dba4ubxkab2hi"]
 
 [ext_resource type="AudioStream" uid="uid://3gt8y2muyuuy" path="res://sfx/hold.wav" id="1_6p8t6"]
 [ext_resource type="Script" path="res://src/CatchFocus.cs" id="1_me42g"]
 [ext_resource type="AudioStream" uid="uid://chp35s7nn3l18" path="res://sfx/rotate.wav" id="1_q8bov"]
 [ext_resource type="AudioStream" uid="uid://dgv7fq4c7f832" path="res://sfx/land.wav" id="2_0tjit"]
+[ext_resource type="PackedScene" uid="uid://cafudqe5o8fnt" path="res://scenes/connection_handler.tscn" id="2_4sag1"]
 [ext_resource type="AudioStream" uid="uid://1grl13fln84y" path="res://sfx/drop.wav" id="2_6se06"]
 [ext_resource type="Script" path="res://src/MainField.cs" id="2_515ng"]
 [ext_resource type="AudioStream" uid="uid://cks47ttfmj3ww" path="res://sfx/move.wav" id="2_dhxxm"]
@@ -36,6 +37,8 @@ offset_right = 2560.0
 offset_bottom = 1440.0
 script = ExtResource("1_me42g")
 mainField = NodePath("Main Area")
+
+[node name="ConnectionHandler" parent="." instance=ExtResource("2_4sag1")]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0
