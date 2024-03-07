@@ -2,6 +2,7 @@ namespace TetraNet;
 
 using System;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Godot;
@@ -15,9 +16,7 @@ public partial class HostJoinMenu : Control
 	[Export] private CheckBox _observerBox;
 	[Export] private LineEdit _addressBox;
 	[Export] private Button _StartJoinServer;
-	[Export] private int _port = 13370;
 
-	private string _name;
 	private string _publicIP = "";
 	private ConnectionMode _mode;
 
@@ -28,6 +27,9 @@ public partial class HostJoinMenu : Control
 
 	public async void SetMode(ConnectionMode mode)
 	{
+		_nameBox.Text = ConfigData.PlayerName;
+		_portBox.Text = ConfigData.Port.ToString();
+
 		_mode = mode;
 		if (mode == ConnectionMode.Host)
 		{
@@ -42,8 +44,9 @@ public partial class HostJoinMenu : Control
 		else
 		{
 			_addressBox.Editable = true;
-			_addressBox.Text = "";
+			_addressBox.Text = ConfigData.JoinAddress;
 			_StartJoinServer.Text = "Join Server";
+
 		}
 	}
 
@@ -83,4 +86,39 @@ public partial class HostJoinMenu : Control
 		}
 	}
 
+	public void NameChanged(string newName)
+	{
+		ConfigData.PlayerName = newName;
+	}
+
+	public void TeamChanged()
+	{
+
+	}
+	public void ObserverChanged()
+	{
+
+	}
+	public void PortChanged(string newPort)
+	{
+		//newPort = string.Concat(newPort.Where(Char.IsDigit));
+		//_portBox.Text = newPort;
+		ConfigData.Port = Int32.Parse(newPort);
+	}
+
+	public void AddressChanged(string newAddress)
+	{
+		ConfigData.JoinAddress = newAddress;
+	}
+
+	public void ReturnToMenu()
+	{
+		ConfigData.Save();
+		_title.ReturnFromSubMenu();
+	}
+
+	public void JoinLobby()
+	{
+		ConfigData.Save();
+	}
 }

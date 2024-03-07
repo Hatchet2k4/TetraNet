@@ -15,7 +15,7 @@
 [ext_resource type="LabelSettings" uid="uid://d0u2fihvoi8b4" path="res://resources/mainfont.tres" id="5_nx2xu"]
 [ext_resource type="Texture2D" uid="uid://j5rbu80ek0x4" path="res://gfx/Border.png" id="5_rpy1o"]
 [ext_resource type="Texture2D" uid="uid://fpd1ccvyusfn" path="res://gfx/Grid.png" id="6_x34jm"]
-[ext_resource type="FontFile" path="res://fonts/kirifont/Kirifont.tres" id="7_dkgbi"]
+[ext_resource type="FontFile" uid="uid://cj7wvtcdatui1" path="res://fonts/kirifont/Kirifont.tres" id="7_dkgbi"]
 [ext_resource type="AudioStream" uid="uid://dsrusdrhw1laa" path="res://sfx/clear 2.wav" id="8_gfis2"]
 [ext_resource type="PackedScene" uid="uid://dijfdnwe6x7tn" path="res://scenes/next_box.tscn" id="8_l0fyc"]
 [ext_resource type="AudioStream" uid="uid://ce72ygwwhwpon" path="res://sfx/clear 3.wav" id="9_nkkwi"]

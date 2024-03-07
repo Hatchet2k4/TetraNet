@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://c1h3o60r1yrwa" path="res://gfx/HighlightBorder.png" id="1_7lyed"]
 [ext_resource type="Texture2D" uid="uid://smxnw8u1gp0k" path="res://gfx/HoldBorder.png" id="1_52rox"]
 [ext_resource type="Script" path="res://src/TextEntry.cs" id="2_21dpf"]
-[ext_resource type="FontFile" path="res://fonts/kirifont/Kirifont.tres" id="3_83nce"]
+[ext_resource type="FontFile" uid="uid://cj7wvtcdatui1" path="res://fonts/kirifont/Kirifont.tres" id="3_83nce"]
 
 [node name="TextEntry" type="NinePatchRect"]
 offset_right = 1972.0

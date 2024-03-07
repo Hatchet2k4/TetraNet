@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://cag0a4qb86rel"]
+[gd_scene load_steps=24 format=3 uid="uid://cag0a4qb86rel"]
 
 [ext_resource type="Script" path="res://src/Title.cs" id="1_4v2tq"]
 [ext_resource type="PackedScene" uid="uid://cafudqe5o8fnt" path="res://scenes/connection_handler.tscn" id="2_c4arj"]
@@ -8,7 +8,7 @@
 [ext_resource type="FontFile" path="res://fonts/xolonium/Xolonium.tres" id="5_edd4o"]
 [ext_resource type="AudioStream" uid="uid://slvt36mfn0q1" path="res://sfx/chat 1.wav" id="5_h61js"]
 [ext_resource type="Theme" uid="uid://dewu86uod5qnt" path="res://resources/menuTextTheme.tres" id="6_gkvc4"]
-[ext_resource type="FontFile" path="res://fonts/kirifont/Kirifont.tres" id="7_oseos"]
+[ext_resource type="FontFile" uid="uid://cj7wvtcdatui1" path="res://fonts/kirifont/Kirifont.tres" id="7_oseos"]
 [ext_resource type="FontFile" uid="uid://cksjotvc3wafa" path="res://fonts/kirifont/KiriFont.otf" id="8_q0175"]
 [ext_resource type="Script" path="res://src/HostJoinMenu.cs" id="9_0otmw"]
 [ext_resource type="Texture2D" uid="uid://b08i17xwe36xo" path="res://gfx/RedIcon.png" id="10_ey3m3"]
@@ -20,6 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://ci4ou1pdme5de" path="res://gfx/PurpleIcon.png" id="15_lnqci"]
 [ext_resource type="Texture2D" uid="uid://bsdf64sy2loeo" path="res://gfx/SmallBorder.png" id="18_aftuu"]
 [ext_resource type="PackedScene" uid="uid://dtfk0amxadmus" path="res://scenes/connected_row.tscn" id="19_pydle"]
+[ext_resource type="Script" path="res://src/Lobby.cs" id="19_wijlx"]
 [ext_resource type="Texture2D" uid="uid://c1h3o60r1yrwa" path="res://gfx/HighlightBorder.png" id="20_et1mw"]
 [ext_resource type="Script" path="res://src/TextEntry.cs" id="21_brwkw"]
 
@@ -158,6 +159,7 @@ theme = ExtResource("6_gkvc4")
 theme_override_fonts/font = ExtResource("8_q0175")
 theme_override_font_sizes/font_size = 24
 max_length = 20
+text_direction = 1
 
 [node name="TeamLabel" type="Label" parent="HostJoinMenu"]
 layout_mode = 0
@@ -209,14 +211,16 @@ offset_bottom = 178.0
 text = "Port:"
 
 [node name="Port" type="LineEdit" parent="HostJoinMenu"]
-layout_mode = 2
-offset_left = 128.0
+layout_mode = 0
+offset_left = 120.0
 offset_top = 150.0
-offset_right = 248.0
+offset_right = 240.0
 offset_bottom = 182.0
-text = "13370"
+max_length = 5
+text_direction = 1
 
 [node name="ObserverLabel" type="Label" parent="HostJoinMenu"]
+layout_mode = 0
 offset_left = 28.0
 offset_top = 114.0
 offset_right = 311.0
@@ -226,11 +230,12 @@ text = "Join as Observer:"
 [node name="Observer" type="CheckBox" parent="HostJoinMenu"]
 layout_mode = 0
 offset_left = 316.0
-offset_top = 109.0
-offset_right = 620.0
-offset_bottom = 141.0
+offset_top = 113.0
+offset_right = 340.0
+offset_bottom = 137.0
 
 [node name="AddressLabel" type="Label" parent="HostJoinMenu"]
+layout_mode = 0
 offset_left = 28.0
 offset_top = 194.0
 offset_right = 113.0
@@ -238,12 +243,15 @@ offset_bottom = 218.0
 text = "Address:"
 
 [node name="Address" type="LineEdit" parent="HostJoinMenu"]
+layout_mode = 0
 offset_left = 176.0
 offset_top = 188.0
 offset_right = 472.0
 offset_bottom = 220.0
+text_direction = 1
 
 [node name="GameButtons" type="HBoxContainer" parent="HostJoinMenu"]
+layout_mode = 0
 offset_left = 28.0
 offset_top = 308.0
 offset_right = 472.0
@@ -274,6 +282,7 @@ offset_top = 324.0
 offset_right = 824.0
 offset_bottom = 716.0
 theme = ExtResource("6_gkvc4")
+script = ExtResource("19_wijlx")
 
 [node name="Team" type="Label" parent="Lobby"]
 layout_mode = 0
@@ -440,100 +449,76 @@ vertical_scroll_mode = 2
 custom_minimum_size = Vector2(0, 288)
 layout_mode = 2
 
-[node name="ConnectedRow" parent="Lobby/ConnectedBox/ScrollContainer/Container" node_paths=PackedStringArray("nameLabel", "teamLabel") instance=ExtResource("19_pydle")]
+[node name="ConnectedRow" parent="Lobby/ConnectedBox/ScrollContainer/Container" instance=ExtResource("19_pydle")]
 layout_mode = 1
 offset_right = 0.0
 offset_bottom = -288.0
-nameLabel = NodePath("")
-teamLabel = NodePath("")
 
-[node name="ConnectedRow3" parent="Lobby/ConnectedBox/ScrollContainer/Container" node_paths=PackedStringArray("nameLabel", "teamLabel") instance=ExtResource("19_pydle")]
+[node name="ConnectedRow3" parent="Lobby/ConnectedBox/ScrollContainer/Container" instance=ExtResource("19_pydle")]
 layout_mode = 1
 offset_top = 48.0
 offset_right = 0.0
 offset_bottom = -288.0
-nameLabel = NodePath("")
-teamLabel = NodePath("")
 
-[node name="ConnectedRow4" parent="Lobby/ConnectedBox/ScrollContainer/Container" node_paths=PackedStringArray("nameLabel", "teamLabel") instance=ExtResource("19_pydle")]
+[node name="ConnectedRow4" parent="Lobby/ConnectedBox/ScrollContainer/Container" instance=ExtResource("19_pydle")]
 layout_mode = 1
 offset_top = 72.0
 offset_right = 0.0
 offset_bottom = -264.0
-nameLabel = NodePath("")
-teamLabel = NodePath("")
 
-[node name="ConnectedRow5" parent="Lobby/ConnectedBox/ScrollContainer/Container" node_paths=PackedStringArray("nameLabel", "teamLabel") instance=ExtResource("19_pydle")]
+[node name="ConnectedRow5" parent="Lobby/ConnectedBox/ScrollContainer/Container" instance=ExtResource("19_pydle")]
 layout_mode = 1
 offset_top = 96.0
 offset_right = 0.0
 offset_bottom = -240.0
-nameLabel = NodePath("")
-teamLabel = NodePath("")
 
-[node name="ConnectedRow6" parent="Lobby/ConnectedBox/ScrollContainer/Container" node_paths=PackedStringArray("nameLabel", "teamLabel") instance=ExtResource("19_pydle")]
+[node name="ConnectedRow6" parent="Lobby/ConnectedBox/ScrollContainer/Container" instance=ExtResource("19_pydle")]
 layout_mode = 1
 offset_top = 120.0
 offset_right = 0.0
 offset_bottom = -216.0
-nameLabel = NodePath("")
-teamLabel = NodePath("")
 
-[node name="ConnectedRow7" parent="Lobby/ConnectedBox/ScrollContainer/Container" node_paths=PackedStringArray("nameLabel", "teamLabel") instance=ExtResource("19_pydle")]
+[node name="ConnectedRow7" parent="Lobby/ConnectedBox/ScrollContainer/Container" instance=ExtResource("19_pydle")]
 layout_mode = 1
 offset_top = 144.0
 offset_right = 0.0
 offset_bottom = -192.0
-nameLabel = NodePath("")
-teamLabel = NodePath("")
 
-[node name="ConnectedRow8" parent="Lobby/ConnectedBox/ScrollContainer/Container" node_paths=PackedStringArray("nameLabel", "teamLabel") instance=ExtResource("19_pydle")]
+[node name="ConnectedRow8" parent="Lobby/ConnectedBox/ScrollContainer/Container" instance=ExtResource("19_pydle")]
 layout_mode = 1
 offset_top = 168.0
 offset_right = 0.0
 offset_bottom = -168.0
-nameLabel = NodePath("")
-teamLabel = NodePath("")
 
-[node name="ConnectedRow9" parent="Lobby/ConnectedBox/ScrollContainer/Container" node_paths=PackedStringArray("nameLabel", "teamLabel") instance=ExtResource("19_pydle")]
+[node name="ConnectedRow9" parent="Lobby/ConnectedBox/ScrollContainer/Container" instance=ExtResource("19_pydle")]
 layout_mode = 1
 offset_top = 192.0
 offset_right = 0.0
 offset_bottom = -144.0
-nameLabel = NodePath("")
-teamLabel = NodePath("")
 
-[node name="ConnectedRow10" parent="Lobby/ConnectedBox/ScrollContainer/Container" node_paths=PackedStringArray("nameLabel", "teamLabel") instance=ExtResource("19_pydle")]
+[node name="ConnectedRow10" parent="Lobby/ConnectedBox/ScrollContainer/Container" instance=ExtResource("19_pydle")]
 layout_mode = 1
 offset_top = 216.0
 offset_right = 0.0
 offset_bottom = -120.0
-nameLabel = NodePath("")
-teamLabel = NodePath("")
 
-[node name="ConnectedRow11" parent="Lobby/ConnectedBox/ScrollContainer/Container" node_paths=PackedStringArray("nameLabel", "teamLabel") instance=ExtResource("19_pydle")]
+[node name="ConnectedRow11" parent="Lobby/ConnectedBox/ScrollContainer/Container" instance=ExtResource("19_pydle")]
 layout_mode = 1
 offset_top = 240.0
 offset_right = 0.0
 offset_bottom = -96.0
-nameLabel = NodePath("")
-teamLabel = NodePath("")
 
-[node name="ConnectedRow12" parent="Lobby/ConnectedBox/ScrollContainer/Container" node_paths=PackedStringArray("nameLabel", "teamLabel") instance=ExtResource("19_pydle")]
+[node name="ConnectedRow12" parent="Lobby/ConnectedBox/ScrollContainer/Container" instance=ExtResource("19_pydle")]
 layout_mode = 1
 offset_top = 264.0
 offset_right = 0.0
 offset_bottom = -72.0
-nameLabel = NodePath("")
-teamLabel = NodePath("")
 
-[node name="ConnectedRow13" parent="Lobby/ConnectedBox/ScrollContainer/Container" node_paths=PackedStringArray("nameLabel", "teamLabel") instance=ExtResource("19_pydle")]
+[node name="ConnectedRow13" parent="Lobby/ConnectedBox/ScrollContainer/Container" instance=ExtResource("19_pydle")]
 layout_mode = 1
 offset_top = 264.0
 offset_right = 0.0
 offset_bottom = -24.0
-nameLabel = NodePath("")
-teamLabel = NodePath("")
 
 [node name="PortLabel" type="Label" parent="Lobby"]
 layout_mode = 2
@@ -631,7 +616,7 @@ patch_margin_top = 16
 patch_margin_right = 16
 patch_margin_bottom = 16
 
-[node name="TextEdit" type="TextEdit" parent="Lobby/TextEntry" node_paths=PackedStringArray("_highlight", "_chatBox", "_chatSound")]
+[node name="TextEdit" type="TextEdit" parent="Lobby/TextEntry" node_paths=PackedStringArray("_chatSound")]
 layout_mode = 0
 offset_left = 16.0
 offset_top = 16.0
@@ -644,8 +629,6 @@ theme_override_font_sizes/font_size = 20
 wrap_mode = 1
 caret_blink = true
 script = ExtResource("21_brwkw")
-_highlight = NodePath("")
-_chatBox = NodePath("")
 _chatSound = NodePath("../../../ChatSound")
 
 [connection signal="pressed" from="MainMenu/MainMenuBox/Solo Game" to="." method="SoloGame"]
@@ -653,7 +636,10 @@ _chatSound = NodePath("../../../ChatSound")
 [connection signal="pressed" from="MainMenu/MainMenuBox/Connect to Server" to="." method="ConnectToServer"]
 [connection signal="pressed" from="MainMenu/MainMenuBox/Game Options" to="." method="Options"]
 [connection signal="pressed" from="MainMenu/MainMenuBox/Controls" to="." method="SetupControls"]
-[connection signal="pressed" from="HostJoinMenu/GameButtons/MainMenu" to="." method="ReturnFromSubMenu"]
+[connection signal="text_changed" from="HostJoinMenu/NameText" to="HostJoinMenu" method="NameChanged"]
+[connection signal="text_changed" from="HostJoinMenu/Port" to="HostJoinMenu" method="PortChanged"]
+[connection signal="text_changed" from="HostJoinMenu/Address" to="HostJoinMenu" method="AddressChanged"]
+[connection signal="pressed" from="HostJoinMenu/GameButtons/MainMenu" to="HostJoinMenu" method="ReturnToMenu"]
 [connection signal="focus_entered" from="Lobby/TextEntry/TextEdit" to="Lobby/TextEntry/TextEdit" method="OnFocusEntered"]
 [connection signal="focus_exited" from="Lobby/TextEntry/TextEdit" to="Lobby/TextEntry/TextEdit" method="OnFocusExited"]
 [connection signal="gui_input" from="Lobby/TextEntry/TextEdit" to="Lobby/TextEntry/TextEdit" method="OnGuiInput"]

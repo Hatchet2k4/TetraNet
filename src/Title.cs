@@ -20,7 +20,7 @@ public partial class Title : Node2D
 
 	public override void _Ready()
 	{
-
+		ConfigData.Load();
 	}
 
 	public override void _Process(double delta)
