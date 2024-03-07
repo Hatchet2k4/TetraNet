@@ -1,0 +1,167 @@
+[gd_scene load_steps=4 format=3 uid="uid://bkwxhyf4it4kb"]
+
+[ext_resource type="Texture2D" uid="uid://bsdf64sy2loeo" path="res://gfx/SmallBorder.png" id="1_mcdkx"]
+[ext_resource type="Theme" uid="uid://dewu86uod5qnt" path="res://resources/menuTextTheme.tres" id="2_jfgr0"]
+[ext_resource type="PackedScene" uid="uid://dtfk0amxadmus" path="res://scenes/connected_row.tscn" id="3_ogww4"]
+
+[node name="ConnectedBox" type="NinePatchRect"]
+offset_left = 216.0
+offset_top = 68.0
+offset_right = 788.0
+offset_bottom = 298.0
+texture = ExtResource("1_mcdkx")
+patch_margin_left = 6
+patch_margin_top = 6
+patch_margin_right = 6
+patch_margin_bottom = 6
+
+[node name="HeaderRow" type="Control" parent="."]
+layout_mode = 2
+anchors_preset = 0
+offset_left = 6.0
+offset_top = 6.0
+offset_right = 6.0
+offset_bottom = 6.0
+theme = ExtResource("2_jfgr0")
+
+[node name="NameLabel" type="RichTextLabel" parent="HeaderRow"]
+clip_contents = false
+layout_mode = 0
+offset_top = 4.0
+offset_right = 300.0
+offset_bottom = 28.0
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+text = "[center]Name[/center]"
+scroll_active = false
+
+[node name="TeamLabel" type="RichTextLabel" parent="HeaderRow"]
+clip_contents = false
+layout_mode = 0
+offset_left = 300.0
+offset_top = 4.0
+offset_right = 430.0
+offset_bottom = 28.0
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+text = "[center]Team[/center]"
+
+[node name="ReadyLabel" type="RichTextLabel" parent="HeaderRow"]
+clip_contents = false
+layout_mode = 0
+offset_left = 430.0
+offset_top = 4.0
+offset_right = 560.0
+offset_bottom = 28.0
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+text = "[center]Ready[/center]"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 30.0
+offset_right = 566.0
+offset_bottom = 222.0
+follow_focus = true
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+
+[node name="Container" type="Control" parent="ScrollContainer"]
+custom_minimum_size = Vector2(0, 288)
+layout_mode = 2
+
+[node name="ConnectedRow" parent="ScrollContainer/Container" node_paths=PackedStringArray("nameLabel", "teamLabel") instance=ExtResource("3_ogww4")]
+layout_mode = 1
+offset_right = 0.0
+offset_bottom = -288.0
+nameLabel = NodePath("")
+teamLabel = NodePath("")
+
+[node name="ConnectedRow3" parent="ScrollContainer/Container" node_paths=PackedStringArray("nameLabel", "teamLabel") instance=ExtResource("3_ogww4")]
+layout_mode = 1
+offset_top = 48.0
+offset_right = 0.0
+offset_bottom = -288.0
+nameLabel = NodePath("")
+teamLabel = NodePath("")
+
+[node name="ConnectedRow4" parent="ScrollContainer/Container" node_paths=PackedStringArray("nameLabel", "teamLabel") instance=ExtResource("3_ogww4")]
+layout_mode = 1
+offset_top = 72.0
+offset_right = 0.0
+offset_bottom = -264.0
+nameLabel = NodePath("")
+teamLabel = NodePath("")
+
+[node name="ConnectedRow5" parent="ScrollContainer/Container" node_paths=PackedStringArray("nameLabel", "teamLabel") instance=ExtResource("3_ogww4")]
+layout_mode = 1
+offset_top = 96.0
+offset_right = 0.0
+offset_bottom = -240.0
+nameLabel = NodePath("")
+teamLabel = NodePath("")
+
+[node name="ConnectedRow6" parent="ScrollContainer/Container" node_paths=PackedStringArray("nameLabel", "teamLabel") instance=ExtResource("3_ogww4")]
+layout_mode = 1
+offset_top = 120.0
+offset_right = 0.0
+offset_bottom = -216.0
+nameLabel = NodePath("")
+teamLabel = NodePath("")
+
+[node name="ConnectedRow7" parent="ScrollContainer/Container" node_paths=PackedStringArray("nameLabel", "teamLabel") instance=ExtResource("3_ogww4")]
+layout_mode = 1
+offset_top = 144.0
+offset_right = 0.0
+offset_bottom = -192.0
+nameLabel = NodePath("")
+teamLabel = NodePath("")
+
+[node name="ConnectedRow8" parent="ScrollContainer/Container" node_paths=PackedStringArray("nameLabel", "teamLabel") instance=ExtResource("3_ogww4")]
+layout_mode = 1
+offset_top = 168.0
+offset_right = 0.0
+offset_bottom = -168.0
+nameLabel = NodePath("")
+teamLabel = NodePath("")
+
+[node name="ConnectedRow9" parent="ScrollContainer/Container" node_paths=PackedStringArray("nameLabel", "teamLabel") instance=ExtResource("3_ogww4")]
+layout_mode = 1
+offset_top = 192.0
+offset_right = 0.0
+offset_bottom = -144.0
+nameLabel = NodePath("")
+teamLabel = NodePath("")
+
+[node name="ConnectedRow10" parent="ScrollContainer/Container" node_paths=PackedStringArray("nameLabel", "teamLabel") instance=ExtResource("3_ogww4")]
+layout_mode = 1
+offset_top = 216.0
+offset_right = 0.0
+offset_bottom = -120.0
+nameLabel = NodePath("")
+teamLabel = NodePath("")
+
+[node name="ConnectedRow11" parent="ScrollContainer/Container" node_paths=PackedStringArray("nameLabel", "teamLabel") instance=ExtResource("3_ogww4")]
+layout_mode = 1
+offset_top = 240.0
+offset_right = 0.0
+offset_bottom = -96.0
+nameLabel = NodePath("")
+teamLabel = NodePath("")
+
+[node name="ConnectedRow12" parent="ScrollContainer/Container" node_paths=PackedStringArray("nameLabel", "teamLabel") instance=ExtResource("3_ogww4")]
+layout_mode = 1
+offset_top = 264.0
+offset_right = 0.0
+offset_bottom = -72.0
+nameLabel = NodePath("")
+teamLabel = NodePath("")
+
+[node name="ConnectedRow13" parent="ScrollContainer/Container" node_paths=PackedStringArray("nameLabel", "teamLabel") instance=ExtResource("3_ogww4")]
+layout_mode = 1
+offset_top = 264.0
+offset_right = 0.0
+offset_bottom = -24.0
+nameLabel = NodePath("")
+teamLabel = NodePath("")
