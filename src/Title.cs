@@ -2,15 +2,21 @@ namespace TetraNet;
 
 using Godot;
 
+public enum ConnectionMode
+{
+	None,
+	Host,
+	Join
+}
 
 public partial class Title : Node2D
 {
 	[Export] private AudioStreamPlayer titleMusic;
 	[Export] private Control mainMenu;
-	[Export] private Control hostMenu;
-	[Export] private Control joinMenu;
+	[Export] private HostJoinMenu hostJoinMenu;
 
 	private bool started = false;
+	private double timer;
 
 	public override void _Ready()
 	{
@@ -19,11 +25,20 @@ public partial class Title : Node2D
 
 	public override void _Process(double delta)
 	{
-		if (!started && !mainMenu.Visible && (Gamepad.PressedStart() || Gamepad.PressedA()) || Input.IsMouseButtonPressed(MouseButton.Left))
+		timer += delta;
+		if (!started && !mainMenu.Visible && (timer > 2f || Gamepad.PressedStart() || Gamepad.PressedA() || Input.IsMouseButtonPressed(MouseButton.Left)))
 		{
 			mainMenu.Show();
 			started = true;
+			SetProcess(false);
 		}
+
+	}
+
+	public void ReturnFromSubMenu()
+	{
+		hostJoinMenu.Hide();
+		mainMenu.Show();
 	}
 
 	public void SoloGame()
@@ -35,13 +50,15 @@ public partial class Title : Node2D
 	public void StartServer()
 	{
 		mainMenu.Hide();
-		hostMenu.Show();
+		hostJoinMenu.SetMode(ConnectionMode.Host);
+		hostJoinMenu.Show();
 	}
 
 	public void ConnectToServer()
 	{
 		mainMenu.Hide();
-		joinMenu.Show();
+		hostJoinMenu.SetMode(ConnectionMode.Join);
+		hostJoinMenu.Show();
 	}
 
 	public void Options()
