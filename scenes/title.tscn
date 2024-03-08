@@ -109,7 +109,7 @@ theme_override_font_sizes/font_size = 40
 action_mode = 0
 text = "Setup Controls"
 
-[node name="HostJoinMenu" type="Control" parent="." node_paths=PackedStringArray("_title", "_nameBox", "_teamOption", "_portBox", "_observerBox", "_addressBox", "_StartJoinServer", "connection", "status")]
+[node name="HostJoinMenu" type="Control" parent="." node_paths=PackedStringArray("_title", "_nameBox", "_teamOption", "_portBox", "_observerBox", "_addressBox", "_StartJoinServer", "_connection", "_lobby", "_status")]
 visible = false
 layout_mode = 3
 anchors_preset = 0
@@ -126,8 +126,9 @@ _portBox = NodePath("Port")
 _observerBox = NodePath("Observer")
 _addressBox = NodePath("Address")
 _StartJoinServer = NodePath("GameButtons/StartJoinServer")
-connection = NodePath("../ConnectionHandler")
-status = NodePath("StatusLabel")
+_connection = NodePath("../ConnectionHandler")
+_lobby = NodePath("../Lobby")
+_status = NodePath("StatusLabel")
 
 [node name="HostMenuRect" type="NinePatchRect" parent="HostJoinMenu"]
 layout_mode = 0
