@@ -11,7 +11,7 @@ using Godot;
 public partial class HostJoinMenu : Control
 {
 	[Export] private Title _title;
-	[Export] private LineEdit _nameBox;
+	[Export] public LineEdit nameBox;
 	[Export] private OptionButton _teamOption;
 	[Export] private LineEdit _portBox;
 	[Export] private CheckBox _observerBox;
@@ -30,7 +30,7 @@ public partial class HostJoinMenu : Control
 
 	public async void SetMode(ConnectionMode mode)
 	{
-		_nameBox.Text = ConfigData.PlayerName;
+		nameBox.Text = ConfigData.PlayerName;
 		_portBox.Text = ConfigData.Port.ToString();
 		_status.Text = "";
 
@@ -131,7 +131,7 @@ public partial class HostJoinMenu : Control
 
 	public void ValidateData()
 	{
-		_StartJoinServer.Disabled = !(_nameBox.Text.Length > 0 && _portBox.Text.Length > 0 && _addressBox.Text.Length > 0);
+		_StartJoinServer.Disabled = !(nameBox.Text.Length > 0 && _portBox.Text.Length > 0 && _addressBox.Text.Length > 0);
 	}
 
 	public void JoinLobby()
@@ -154,6 +154,5 @@ public partial class HostJoinMenu : Control
 			Hide();
 			_lobby.Show();
 		}
-
 	}
 }

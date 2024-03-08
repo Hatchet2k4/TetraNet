@@ -109,7 +109,7 @@ theme_override_font_sizes/font_size = 40
 action_mode = 0
 text = "Setup Controls"
 
-[node name="HostJoinMenu" type="Control" parent="." node_paths=PackedStringArray("_title", "_nameBox", "_teamOption", "_portBox", "_observerBox", "_addressBox", "_StartJoinServer", "_connection", "_lobby", "_status")]
+[node name="HostJoinMenu" type="Control" parent="." node_paths=PackedStringArray("_title", "nameBox", "_teamOption", "_portBox", "_observerBox", "_addressBox", "_StartJoinServer", "_connection", "_lobby", "_status")]
 visible = false
 layout_mode = 3
 anchors_preset = 0
@@ -120,7 +120,7 @@ offset_bottom = 716.0
 theme = ExtResource("8_bhpob")
 script = ExtResource("9_0otmw")
 _title = NodePath("..")
-_nameBox = NodePath("NameText")
+nameBox = NodePath("NameText")
 _teamOption = NodePath("TeamOption")
 _portBox = NodePath("Port")
 _observerBox = NodePath("Observer")
@@ -276,7 +276,7 @@ offset_top = 265.0
 offset_right = 474.0
 offset_bottom = 295.0
 
-[node name="Lobby" type="Control" parent="." node_paths=PackedStringArray("_title", "hostJoinMenu", "connection")]
+[node name="Lobby" type="Control" parent="." node_paths=PackedStringArray("_title", "hostJoinMenu", "connection", "_nameBox", "_teamOption")]
 visible = false
 layout_mode = 3
 anchors_preset = 0
@@ -288,6 +288,8 @@ script = ExtResource("19_wijlx")
 _title = NodePath("..")
 hostJoinMenu = NodePath("../HostJoinMenu")
 connection = NodePath("../ConnectionHandler")
+_nameBox = NodePath("NameText")
+_teamOption = NodePath("TeamOption")
 
 [node name="Team" type="Label" parent="Lobby"]
 layout_mode = 0
@@ -317,8 +319,7 @@ offset_left = 216.0
 offset_top = 25.0
 offset_right = 516.0
 offset_bottom = 57.0
-theme_override_fonts/font = ExtResource("8_q0175")
-theme_override_font_sizes/font_size = 24
+text = "Hatchet2k4"
 max_length = 20
 
 [node name="NameLabel" type="Label" parent="Lobby"]
