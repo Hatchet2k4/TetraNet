@@ -111,7 +111,6 @@ action_mode = 0
 text = "Setup Controls"
 
 [node name="HostJoinMenu" type="Control" parent="." node_paths=PackedStringArray("_title", "_nameBox", "_teamOption", "_portBox", "_observerBox", "_addressBox", "_StartJoinServer")]
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = 390.0
@@ -267,7 +266,15 @@ theme_override_font_sizes/font_size = 32
 action_mode = 0
 text = "Start Server"
 
+[node name="StatusLabel" type="Label" parent="HostJoinMenu"]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 265.0
+offset_right = 474.0
+offset_bottom = 295.0
+
 [node name="Lobby" type="Control" parent="."]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_top = 324.0
@@ -541,6 +548,8 @@ text = "Ready"
 [connection signal="text_changed" from="HostJoinMenu/Port" to="HostJoinMenu" method="PortChanged"]
 [connection signal="text_changed" from="HostJoinMenu/Address" to="HostJoinMenu" method="AddressChanged"]
 [connection signal="pressed" from="HostJoinMenu/GameButtons/MainMenu" to="HostJoinMenu" method="ReturnToMenu"]
+[connection signal="pressed" from="HostJoinMenu/GameButtons/StartJoinServer" to="HostJoinMenu" method="JoinLobby"]
+[connection signal="pressed" from="Lobby/GameButtons/Disconnect" to="Lobby" method="Disconnect"]
 [connection signal="focus_entered" from="Lobby/TextEntry/TextEdit" to="Lobby/TextEntry/TextEdit" method="OnFocusEntered"]
 [connection signal="focus_exited" from="Lobby/TextEntry/TextEdit" to="Lobby/TextEntry/TextEdit" method="OnFocusExited"]
 [connection signal="gui_input" from="Lobby/TextEntry/TextEdit" to="Lobby/TextEntry/TextEdit" method="OnGuiInput"]
