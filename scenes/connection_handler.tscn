@@ -2,9 +2,5 @@
 
 [ext_resource type="Script" path="res://src/ConnectionHandler.cs" id="1_vq5vi"]
 
-[node name="ConnectionHandler" type="Control"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="ConnectionHandler" type="Node"]
 script = ExtResource("1_vq5vi")

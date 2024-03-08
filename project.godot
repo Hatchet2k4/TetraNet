@@ -20,6 +20,7 @@ config/icon="res://gfx/icon.png"
 [autoload]
 
 Data="*res://src/Data.cs"
+ConnectionHandler="res://src/ConnectionHandler.cs"
 
 [display]
 

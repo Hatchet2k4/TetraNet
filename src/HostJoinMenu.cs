@@ -35,6 +35,8 @@ public partial class HostJoinMenu : Control
 		_status.Text = "";
 
 		_mode = mode;
+
+
 		if (mode == ConnectionMode.Host)
 		{
 			_addressBox.Editable = false;
@@ -143,6 +145,8 @@ public partial class HostJoinMenu : Control
 			_status.Text = "Starting server...";
 			_connection.StartServer(ConfigData.Port);
 			_status.Text = "Server started.";
+			_connection.SendPlayerInfo(ConfigData.PlayerName, Multiplayer.GetUniqueId(), "None");
+
 			Hide();
 			_lobby.Show();
 		}
@@ -151,6 +155,7 @@ public partial class HostJoinMenu : Control
 			_status.Text = "Joining server...";
 			_connection.ConnectToServer(ConfigData.JoinAddress, ConfigData.Port);
 			_status.Text = "Connected.";
+			_connection.SendPlayerInfo(ConfigData.PlayerName, Multiplayer.GetUniqueId(), "None");
 			Hide();
 			_lobby.Show();
 		}

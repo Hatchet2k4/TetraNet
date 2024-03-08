@@ -10,4 +10,10 @@ public partial class ConnectedRow : Control
 	public override void _Ready()
 	{
 	}
+
+	public void Populate(string name, string team)
+	{
+		nameLabel.Text = name;
+		teamLabel.Text = team;
+	}
 }

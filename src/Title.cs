@@ -2,13 +2,6 @@ namespace TetraNet;
 
 using Godot;
 
-public enum ConnectionMode
-{
-	None,
-	Host,
-	Join
-}
-
 public partial class Title : Node2D
 {
 	[Export] private AudioStreamPlayer titleMusic;

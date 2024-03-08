@@ -20,30 +20,33 @@
 [ext_resource type="Texture2D" uid="uid://dmr5u27b0dsd1" path="res://gfx/OrangeIcon.png" id="14_2h7ju"]
 [ext_resource type="Texture2D" uid="uid://ci4ou1pdme5de" path="res://gfx/PurpleIcon.png" id="15_lnqci"]
 [ext_resource type="Texture2D" uid="uid://bsdf64sy2loeo" path="res://gfx/SmallBorder.png" id="18_aftuu"]
+[ext_resource type="PackedScene" uid="uid://dtfk0amxadmus" path="res://scenes/connected_row.tscn" id="18_b2d67"]
 [ext_resource type="Script" path="res://src/Lobby.cs" id="19_wijlx"]
 [ext_resource type="Texture2D" uid="uid://c1h3o60r1yrwa" path="res://gfx/HighlightBorder.png" id="20_et1mw"]
 [ext_resource type="Script" path="res://src/TextEntry.cs" id="21_brwkw"]
-[ext_resource type="Script" path="res://src/ConnectedList.cs" id="21_r0p6i"]
 
 [node name="Title" type="Node2D" node_paths=PackedStringArray("titleMusic", "mainMenu", "hostJoinMenu")]
 script = ExtResource("1_4v2tq")
-titleMusic = NodePath("TitleMusic")
+titleMusic = NodePath("CommonObjects/TitleMusic")
 mainMenu = NodePath("MainMenu")
 hostJoinMenu = NodePath("HostJoinMenu")
 
-[node name="ConnectionHandler" parent="." instance=ExtResource("2_c4arj")]
+[node name="CommonObjects" type="Node" parent="."]
+
+[node name="ConnectionHandler" parent="CommonObjects" node_paths=PackedStringArray("_lobby") instance=ExtResource("2_c4arj")]
+_lobby = NodePath("../../Lobby")
+
+[node name="TitleMusic" type="AudioStreamPlayer" parent="CommonObjects"]
+stream = ExtResource("2_ckqgx")
+volume_db = -20.0
+
+[node name="ChatSound" type="AudioStreamPlayer" parent="CommonObjects"]
+stream = ExtResource("5_h61js")
 
 [node name="Splash" type="TextureRect" parent="."]
 offset_right = 1280.0
 offset_bottom = 720.0
 texture = ExtResource("2_wu36l")
-
-[node name="TitleMusic" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("2_ckqgx")
-volume_db = -20.0
-
-[node name="ChatSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("5_h61js")
 
 [node name="MainMenu" type="Control" parent="."]
 visible = false
@@ -126,7 +129,7 @@ _portBox = NodePath("Port")
 _observerBox = NodePath("Observer")
 _addressBox = NodePath("Address")
 _StartJoinServer = NodePath("GameButtons/StartJoinServer")
-_connection = NodePath("../ConnectionHandler")
+_connection = NodePath("../CommonObjects/ConnectionHandler")
 _lobby = NodePath("../Lobby")
 _status = NodePath("StatusLabel")
 
@@ -276,7 +279,7 @@ offset_top = 265.0
 offset_right = 474.0
 offset_bottom = 295.0
 
-[node name="Lobby" type="Control" parent="." node_paths=PackedStringArray("_title", "hostJoinMenu", "connection", "_nameBox", "_teamOption")]
+[node name="Lobby" type="Control" parent="." node_paths=PackedStringArray("_title", "hostJoinMenu", "connection", "_nameBox", "_teamOption", "_rowListNode")]
 visible = false
 layout_mode = 3
 anchors_preset = 0
@@ -287,9 +290,11 @@ theme = ExtResource("8_bhpob")
 script = ExtResource("19_wijlx")
 _title = NodePath("..")
 hostJoinMenu = NodePath("../HostJoinMenu")
-connection = NodePath("../ConnectionHandler")
+connection = NodePath("../CommonObjects/ConnectionHandler")
 _nameBox = NodePath("NameText")
 _teamOption = NodePath("TeamOption")
+_connectedRow = ExtResource("18_b2d67")
+_rowListNode = NodePath("ConnectedList/ScrollContainer/RowList")
 
 [node name="Team" type="Label" parent="Lobby"]
 layout_mode = 0
@@ -389,7 +394,6 @@ patch_margin_left = 6
 patch_margin_top = 6
 patch_margin_right = 6
 patch_margin_bottom = 6
-script = ExtResource("21_r0p6i")
 
 [node name="HeaderRow" type="Control" parent="Lobby/ConnectedList"]
 layout_mode = 2
@@ -447,7 +451,7 @@ follow_focus = true
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 2
 
-[node name="Container" type="Control" parent="Lobby/ConnectedList/ScrollContainer"]
+[node name="RowList" type="Control" parent="Lobby/ConnectedList/ScrollContainer"]
 custom_minimum_size = Vector2(0, 288)
 layout_mode = 2
 
@@ -536,7 +540,7 @@ theme_override_font_sizes/font_size = 20
 wrap_mode = 1
 caret_blink = true
 script = ExtResource("21_brwkw")
-_chatSound = NodePath("../../../ChatSound")
+_chatSound = NodePath("../../../CommonObjects/ChatSound")
 
 [node name="CheckBox" type="CheckBox" parent="Lobby"]
 layout_mode = 0
