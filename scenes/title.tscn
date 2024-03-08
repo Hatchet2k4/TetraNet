@@ -41,7 +41,6 @@ texture = ExtResource("2_wu36l")
 [node name="TitleMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_ckqgx")
 volume_db = -20.0
-autoplay = true
 
 [node name="ChatSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_h61js")
@@ -110,7 +109,8 @@ theme_override_font_sizes/font_size = 40
 action_mode = 0
 text = "Setup Controls"
 
-[node name="HostJoinMenu" type="Control" parent="." node_paths=PackedStringArray("_title", "_nameBox", "_teamOption", "_portBox", "_observerBox", "_addressBox", "_StartJoinServer")]
+[node name="HostJoinMenu" type="Control" parent="." node_paths=PackedStringArray("_title", "_nameBox", "_teamOption", "_portBox", "_observerBox", "_addressBox", "_StartJoinServer", "connection", "status")]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = 390.0
@@ -126,6 +126,8 @@ _portBox = NodePath("Port")
 _observerBox = NodePath("Observer")
 _addressBox = NodePath("Address")
 _StartJoinServer = NodePath("GameButtons/StartJoinServer")
+connection = NodePath("../ConnectionHandler")
+status = NodePath("StatusLabel")
 
 [node name="HostMenuRect" type="NinePatchRect" parent="HostJoinMenu"]
 layout_mode = 0
@@ -273,7 +275,7 @@ offset_top = 265.0
 offset_right = 474.0
 offset_bottom = 295.0
 
-[node name="Lobby" type="Control" parent="."]
+[node name="Lobby" type="Control" parent="." node_paths=PackedStringArray("_title", "hostJoinMenu", "connection")]
 visible = false
 layout_mode = 3
 anchors_preset = 0
@@ -282,6 +284,9 @@ offset_right = 824.0
 offset_bottom = 716.0
 theme = ExtResource("8_bhpob")
 script = ExtResource("19_wijlx")
+_title = NodePath("..")
+hostJoinMenu = NodePath("../HostJoinMenu")
+connection = NodePath("../ConnectionHandler")
 
 [node name="Team" type="Label" parent="Lobby"]
 layout_mode = 0

@@ -17,7 +17,8 @@ public partial class HostJoinMenu : Control
 	[Export] private CheckBox _observerBox;
 	[Export] private LineEdit _addressBox;
 	[Export] private Button _StartJoinServer;
-
+	[Export] private ConnectionHandler connection;
+	[Export] private Label status;
 	private string _publicIP = "";
 	private ConnectionMode _mode;
 
@@ -30,6 +31,7 @@ public partial class HostJoinMenu : Control
 	{
 		_nameBox.Text = ConfigData.PlayerName;
 		_portBox.Text = ConfigData.Port.ToString();
+		status.Text = "";
 
 		_mode = mode;
 		if (mode == ConnectionMode.Host)
@@ -47,7 +49,6 @@ public partial class HostJoinMenu : Control
 			_addressBox.Editable = true;
 			_addressBox.Text = ConfigData.JoinAddress;
 			_StartJoinServer.Text = "Join Server";
-
 		}
 	}
 
@@ -135,5 +136,19 @@ public partial class HostJoinMenu : Control
 	public void JoinLobby()
 	{
 		ConfigData.Save();
+
+		if (_mode == ConnectionMode.Host)
+		{
+			status.Text = "Starting server...";
+			connection.StartServer(ConfigData.Port);
+			status.Text = "Server started.";
+		}
+		else
+		{
+			status.Text = "Joining server...";
+			connection.ConnectToServer(ConfigData.JoinAddress, ConfigData.Port);
+			status.Text = "Connected.";
+		}
+
 	}
 }
