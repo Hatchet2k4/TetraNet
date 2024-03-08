@@ -1,6 +1,5 @@
-[gd_scene load_steps=4 format=3 uid="uid://dtfk0amxadmus"]
+[gd_scene load_steps=3 format=3 uid="uid://dtfk0amxadmus"]
 
-[ext_resource type="Theme" uid="uid://dewu86uod5qnt" path="res://resources/menuTextTheme.tres" id="1_ddd5a"]
 [ext_resource type="Script" path="res://src/ConnectedRow.cs" id="2_gjwiv"]
 [ext_resource type="Texture2D" uid="uid://db7rj66iapeuk" path="res://gfx/NoneIcon.png" id="3_d1one"]
 
@@ -23,7 +22,6 @@ layout_mode = 0
 offset_top = 4.0
 offset_right = 300.0
 offset_bottom = 28.0
-theme = ExtResource("1_ddd5a")
 theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 text = "[center]Name[/center]"
@@ -34,12 +32,12 @@ clip_contents = false
 layout_mode = 0
 offset_left = 300.0
 offset_top = 4.0
-offset_right = 430.0
+offset_right = 439.0
 offset_bottom = 28.0
-theme = ExtResource("1_ddd5a")
 theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 text = "[center]None[/center]"
+scroll_active = false
 
 [node name="TeamIcon" type="TextureRect" parent="."]
 visible = false

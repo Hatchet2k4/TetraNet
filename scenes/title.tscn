@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://cag0a4qb86rel"]
+[gd_scene load_steps=25 format=3 uid="uid://cag0a4qb86rel"]
 
 [ext_resource type="Script" path="res://src/Title.cs" id="1_4v2tq"]
 [ext_resource type="PackedScene" uid="uid://cafudqe5o8fnt" path="res://scenes/connection_handler.tscn" id="2_c4arj"]
@@ -9,6 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://slvt36mfn0q1" path="res://sfx/chat 1.wav" id="5_h61js"]
 [ext_resource type="Theme" uid="uid://dewu86uod5qnt" path="res://resources/menuTextTheme.tres" id="6_gkvc4"]
 [ext_resource type="FontFile" uid="uid://cj7wvtcdatui1" path="res://fonts/kirifont/Kirifont.tres" id="7_oseos"]
+[ext_resource type="Theme" uid="uid://dcvi35wnn0w4a" path="res://resources/new_theme.tres" id="8_bhpob"]
 [ext_resource type="FontFile" uid="uid://cksjotvc3wafa" path="res://fonts/kirifont/KiriFont.otf" id="8_q0175"]
 [ext_resource type="Script" path="res://src/HostJoinMenu.cs" id="9_0otmw"]
 [ext_resource type="Texture2D" uid="uid://b08i17xwe36xo" path="res://gfx/RedIcon.png" id="10_ey3m3"]
@@ -19,10 +20,10 @@
 [ext_resource type="Texture2D" uid="uid://dmr5u27b0dsd1" path="res://gfx/OrangeIcon.png" id="14_2h7ju"]
 [ext_resource type="Texture2D" uid="uid://ci4ou1pdme5de" path="res://gfx/PurpleIcon.png" id="15_lnqci"]
 [ext_resource type="Texture2D" uid="uid://bsdf64sy2loeo" path="res://gfx/SmallBorder.png" id="18_aftuu"]
-[ext_resource type="PackedScene" uid="uid://dtfk0amxadmus" path="res://scenes/connected_row.tscn" id="19_pydle"]
 [ext_resource type="Script" path="res://src/Lobby.cs" id="19_wijlx"]
 [ext_resource type="Texture2D" uid="uid://c1h3o60r1yrwa" path="res://gfx/HighlightBorder.png" id="20_et1mw"]
 [ext_resource type="Script" path="res://src/TextEntry.cs" id="21_brwkw"]
+[ext_resource type="Script" path="res://src/ConnectedList.cs" id="21_r0p6i"]
 
 [node name="Title" type="Node2D" node_paths=PackedStringArray("titleMusic", "mainMenu", "hostJoinMenu")]
 script = ExtResource("1_4v2tq")
@@ -117,7 +118,7 @@ offset_left = 390.0
 offset_top = 324.0
 offset_right = 890.0
 offset_bottom = 716.0
-theme = ExtResource("6_gkvc4")
+theme = ExtResource("8_bhpob")
 script = ExtResource("9_0otmw")
 _title = NodePath("..")
 _nameBox = NodePath("NameText")
@@ -143,9 +144,6 @@ offset_left = 28.0
 offset_top = 30.0
 offset_right = 202.0
 offset_bottom = 54.0
-theme = ExtResource("6_gkvc4")
-theme_override_fonts/font = ExtResource("7_oseos")
-theme_override_font_sizes/font_size = 24
 text = "Name:"
 
 [node name="NameText" type="LineEdit" parent="HostJoinMenu"]
@@ -155,28 +153,23 @@ offset_left = 128.0
 offset_top = 25.0
 offset_right = 472.0
 offset_bottom = 57.0
-theme = ExtResource("6_gkvc4")
-theme_override_fonts/font = ExtResource("8_q0175")
-theme_override_font_sizes/font_size = 24
 max_length = 20
 text_direction = 1
 
 [node name="TeamLabel" type="Label" parent="HostJoinMenu"]
 layout_mode = 0
 offset_left = 28.0
-offset_top = 70.0
+offset_top = 78.0
 offset_right = 118.0
-offset_bottom = 94.0
-theme = ExtResource("6_gkvc4")
+offset_bottom = 108.0
 text = "Team:"
 
 [node name="TeamOption" type="OptionButton" parent="HostJoinMenu"]
 layout_mode = 0
 offset_left = 128.0
-offset_top = 63.0
+offset_top = 71.0
 offset_right = 326.0
-offset_bottom = 103.0
-theme = ExtResource("6_gkvc4")
+offset_bottom = 111.0
 item_count = 7
 selected = 0
 fit_to_longest_item = false
@@ -205,49 +198,49 @@ popup/item_6/id = 6
 [node name="PortLabel" type="Label" parent="HostJoinMenu"]
 layout_mode = 2
 offset_left = 28.0
-offset_top = 154.0
+offset_top = 170.0
 offset_right = 113.0
-offset_bottom = 178.0
+offset_bottom = 200.0
 text = "Port:"
 
 [node name="Port" type="LineEdit" parent="HostJoinMenu"]
 layout_mode = 0
 offset_left = 120.0
-offset_top = 150.0
+offset_top = 166.0
 offset_right = 240.0
-offset_bottom = 182.0
+offset_bottom = 207.0
 max_length = 5
 text_direction = 1
 
 [node name="ObserverLabel" type="Label" parent="HostJoinMenu"]
 layout_mode = 0
 offset_left = 28.0
-offset_top = 114.0
+offset_top = 126.0
 offset_right = 311.0
-offset_bottom = 138.0
+offset_bottom = 156.0
 text = "Join as Observer:"
 
 [node name="Observer" type="CheckBox" parent="HostJoinMenu"]
 layout_mode = 0
-offset_left = 316.0
-offset_top = 113.0
-offset_right = 340.0
-offset_bottom = 137.0
+offset_left = 266.0
+offset_top = 131.0
+offset_right = 290.0
+offset_bottom = 155.0
 
 [node name="AddressLabel" type="Label" parent="HostJoinMenu"]
 layout_mode = 0
 offset_left = 28.0
-offset_top = 194.0
-offset_right = 113.0
-offset_bottom = 218.0
+offset_top = 222.0
+offset_right = 139.0
+offset_bottom = 252.0
 text = "Address:"
 
 [node name="Address" type="LineEdit" parent="HostJoinMenu"]
 layout_mode = 0
-offset_left = 176.0
-offset_top = 188.0
+offset_left = 155.0
+offset_top = 216.0
 offset_right = 472.0
-offset_bottom = 220.0
+offset_bottom = 254.0
 text_direction = 1
 
 [node name="GameButtons" type="HBoxContainer" parent="HostJoinMenu"]
@@ -275,13 +268,12 @@ action_mode = 0
 text = "Start Server"
 
 [node name="Lobby" type="Control" parent="."]
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_top = 324.0
 offset_right = 824.0
 offset_bottom = 716.0
-theme = ExtResource("6_gkvc4")
+theme = ExtResource("8_bhpob")
 script = ExtResource("19_wijlx")
 
 [node name="Team" type="Label" parent="Lobby"]
@@ -312,7 +304,6 @@ offset_left = 216.0
 offset_top = 25.0
 offset_right = 516.0
 offset_bottom = 57.0
-theme = ExtResource("6_gkvc4")
 theme_override_fonts/font = ExtResource("8_q0175")
 theme_override_font_sizes/font_size = 24
 max_length = 20
@@ -323,9 +314,6 @@ offset_left = 28.0
 offset_top = 30.0
 offset_right = 202.0
 offset_bottom = 54.0
-theme = ExtResource("6_gkvc4")
-theme_override_fonts/font = ExtResource("7_oseos")
-theme_override_font_sizes/font_size = 24
 text = "Name:"
 
 [node name="ConnectedLabel" type="Label" parent="Lobby"]
@@ -334,18 +322,14 @@ offset_left = 28.0
 offset_top = 76.0
 offset_right = 205.0
 offset_bottom = 100.0
-theme = ExtResource("6_gkvc4")
-theme_override_fonts/font = ExtResource("7_oseos")
-theme_override_font_sizes/font_size = 24
 text = "Connected:"
 
 [node name="TeamOption" type="OptionButton" parent="Lobby"]
 layout_mode = 0
 offset_left = 614.0
-offset_top = 27.0
+offset_top = 23.0
 offset_right = 798.0
-offset_bottom = 67.0
-theme = ExtResource("6_gkvc4")
+offset_bottom = 63.0
 item_count = 7
 selected = 0
 fit_to_longest_item = false
@@ -377,10 +361,9 @@ offset_left = 520.0
 offset_top = 30.0
 offset_right = 610.0
 offset_bottom = 54.0
-theme = ExtResource("6_gkvc4")
 text = "Team:"
 
-[node name="ConnectedBox" type="NinePatchRect" parent="Lobby"]
+[node name="ConnectedList" type="NinePatchRect" parent="Lobby"]
 clip_contents = true
 layout_mode = 0
 offset_left = 216.0
@@ -392,17 +375,17 @@ patch_margin_left = 6
 patch_margin_top = 6
 patch_margin_right = 6
 patch_margin_bottom = 6
+script = ExtResource("21_r0p6i")
 
-[node name="HeaderRow" type="Control" parent="Lobby/ConnectedBox"]
+[node name="HeaderRow" type="Control" parent="Lobby/ConnectedList"]
 layout_mode = 2
 anchors_preset = 0
 offset_left = 6.0
 offset_top = 6.0
 offset_right = 6.0
 offset_bottom = 6.0
-theme = ExtResource("6_gkvc4")
 
-[node name="NameLabel" type="RichTextLabel" parent="Lobby/ConnectedBox/HeaderRow"]
+[node name="NameLabel" type="RichTextLabel" parent="Lobby/ConnectedList/HeaderRow"]
 clip_contents = false
 layout_mode = 0
 offset_top = 4.0
@@ -411,20 +394,23 @@ offset_bottom = 28.0
 theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 text = "[center]Name[/center]"
+fit_content = true
 scroll_active = false
 
-[node name="TeamLabel" type="RichTextLabel" parent="Lobby/ConnectedBox/HeaderRow"]
+[node name="TeamLabel" type="RichTextLabel" parent="Lobby/ConnectedList/HeaderRow"]
 clip_contents = false
 layout_mode = 0
 offset_left = 300.0
 offset_top = 4.0
-offset_right = 430.0
+offset_right = 440.0
 offset_bottom = 28.0
 theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 text = "[center]Team[/center]"
+fit_content = true
+scroll_active = false
 
-[node name="ReadyLabel" type="RichTextLabel" parent="Lobby/ConnectedBox/HeaderRow"]
+[node name="ReadyLabel" type="RichTextLabel" parent="Lobby/ConnectedList/HeaderRow"]
 clip_contents = false
 layout_mode = 0
 offset_left = 430.0
@@ -434,8 +420,10 @@ offset_bottom = 28.0
 theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 text = "[center]Ready[/center]"
+fit_content = true
+scroll_active = false
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Lobby/ConnectedBox"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Lobby/ConnectedList"]
 layout_mode = 0
 offset_left = 6.0
 offset_top = 30.0
@@ -445,96 +433,9 @@ follow_focus = true
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 2
 
-[node name="Container" type="Control" parent="Lobby/ConnectedBox/ScrollContainer"]
+[node name="Container" type="Control" parent="Lobby/ConnectedList/ScrollContainer"]
 custom_minimum_size = Vector2(0, 288)
 layout_mode = 2
-
-[node name="ConnectedRow" parent="Lobby/ConnectedBox/ScrollContainer/Container" instance=ExtResource("19_pydle")]
-layout_mode = 1
-offset_right = 0.0
-offset_bottom = -288.0
-
-[node name="ConnectedRow3" parent="Lobby/ConnectedBox/ScrollContainer/Container" instance=ExtResource("19_pydle")]
-layout_mode = 1
-offset_top = 48.0
-offset_right = 0.0
-offset_bottom = -288.0
-
-[node name="ConnectedRow4" parent="Lobby/ConnectedBox/ScrollContainer/Container" instance=ExtResource("19_pydle")]
-layout_mode = 1
-offset_top = 72.0
-offset_right = 0.0
-offset_bottom = -264.0
-
-[node name="ConnectedRow5" parent="Lobby/ConnectedBox/ScrollContainer/Container" instance=ExtResource("19_pydle")]
-layout_mode = 1
-offset_top = 96.0
-offset_right = 0.0
-offset_bottom = -240.0
-
-[node name="ConnectedRow6" parent="Lobby/ConnectedBox/ScrollContainer/Container" instance=ExtResource("19_pydle")]
-layout_mode = 1
-offset_top = 120.0
-offset_right = 0.0
-offset_bottom = -216.0
-
-[node name="ConnectedRow7" parent="Lobby/ConnectedBox/ScrollContainer/Container" instance=ExtResource("19_pydle")]
-layout_mode = 1
-offset_top = 144.0
-offset_right = 0.0
-offset_bottom = -192.0
-
-[node name="ConnectedRow8" parent="Lobby/ConnectedBox/ScrollContainer/Container" instance=ExtResource("19_pydle")]
-layout_mode = 1
-offset_top = 168.0
-offset_right = 0.0
-offset_bottom = -168.0
-
-[node name="ConnectedRow9" parent="Lobby/ConnectedBox/ScrollContainer/Container" instance=ExtResource("19_pydle")]
-layout_mode = 1
-offset_top = 192.0
-offset_right = 0.0
-offset_bottom = -144.0
-
-[node name="ConnectedRow10" parent="Lobby/ConnectedBox/ScrollContainer/Container" instance=ExtResource("19_pydle")]
-layout_mode = 1
-offset_top = 216.0
-offset_right = 0.0
-offset_bottom = -120.0
-
-[node name="ConnectedRow11" parent="Lobby/ConnectedBox/ScrollContainer/Container" instance=ExtResource("19_pydle")]
-layout_mode = 1
-offset_top = 240.0
-offset_right = 0.0
-offset_bottom = -96.0
-
-[node name="ConnectedRow12" parent="Lobby/ConnectedBox/ScrollContainer/Container" instance=ExtResource("19_pydle")]
-layout_mode = 1
-offset_top = 264.0
-offset_right = 0.0
-offset_bottom = -72.0
-
-[node name="ConnectedRow13" parent="Lobby/ConnectedBox/ScrollContainer/Container" instance=ExtResource("19_pydle")]
-layout_mode = 1
-offset_top = 264.0
-offset_right = 0.0
-offset_bottom = -24.0
-
-[node name="PortLabel" type="Label" parent="Lobby"]
-layout_mode = 2
-offset_left = 28.0
-offset_top = 236.0
-offset_right = 113.0
-offset_bottom = 260.0
-text = "Port"
-
-[node name="Port" type="LineEdit" parent="Lobby"]
-layout_mode = 2
-offset_left = 111.0
-offset_top = 231.0
-offset_right = 215.0
-offset_bottom = 263.0
-text = "13370"
 
 [node name="GameButtons" type="HBoxContainer" parent="Lobby"]
 layout_mode = 0
@@ -543,21 +444,13 @@ offset_top = 308.0
 offset_right = 797.0
 offset_bottom = 365.0
 
-[node name="Cancel2" type="Button" parent="Lobby/GameButtons"]
+[node name="Disconnect" type="Button" parent="Lobby/GameButtons"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = ExtResource("5_edd4o")
 theme_override_font_sizes/font_size = 36
 action_mode = 0
-text = "Main Menu"
-
-[node name="Cancel" type="Button" parent="Lobby/GameButtons"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_fonts/font = ExtResource("5_edd4o")
-theme_override_font_sizes/font_size = 36
-action_mode = 0
-text = "Start Server"
+text = "Disconnect"
 
 [node name="Start Game" type="Button" parent="Lobby/GameButtons"]
 layout_mode = 2
@@ -630,6 +523,14 @@ wrap_mode = 1
 caret_blink = true
 script = ExtResource("21_brwkw")
 _chatSound = NodePath("../../../ChatSound")
+
+[node name="CheckBox" type="CheckBox" parent="Lobby"]
+layout_mode = 0
+offset_left = 28.0
+offset_top = 262.0
+offset_right = 135.0
+offset_bottom = 300.0
+text = "Ready"
 
 [connection signal="pressed" from="MainMenu/MainMenuBox/Solo Game" to="." method="SoloGame"]
 [connection signal="pressed" from="MainMenu/MainMenuBox/Start Server" to="." method="StartServer"]

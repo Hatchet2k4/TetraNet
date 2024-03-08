@@ -1,6 +1,6 @@
+namespace TetraNet;
+
 using Godot;
-using System;
-using System.IO.Compression;
 
 public partial class ConnectionHandler : Control
 {
@@ -17,34 +17,34 @@ public partial class ConnectionHandler : Control
 		Multiplayer.ConnectionFailed += ConnectionFailed;
 	}
 
-    private void ConnectionFailed()
-    {
-        GD.Print("Connection failed.");
-    }
+	private void ConnectionFailed()
+	{
+		GD.Print("Connection failed.");
+	}
 
 
-    private void ConnectedToServer()
-    {
-        GD.Print("Connected to server.");
-    }
+	private void ConnectedToServer()
+	{
+		GD.Print("Connected to server.");
+	}
 
 
-    private void PeerConnected(long id)
-    {
-        GD.Print($"Peer {id} connected.");
-    }
+	private void PeerConnected(long id)
+	{
+		GD.Print($"Peer {id} connected.");
+	}
 
 
-    private void PeerDisconnected(long id)
-    {
-        GD.Print($"Peer {id} disconnected.");
-    }
+	private void PeerDisconnected(long id)
+	{
+		GD.Print($"Peer {id} disconnected.");
+	}
 
 	private void StartServer()
 	{
 		_peer = new ENetMultiplayerPeer();
 		var error = _peer.CreateServer(_port, 24);
-		if(error != Error.Ok)
+		if (error != Error.Ok)
 		{
 			GD.Print($"Hosting error: {error}.");
 			return;
@@ -63,8 +63,8 @@ public partial class ConnectionHandler : Control
 		GD.Print("Joining server.");
 	}
 
-    // Called every frame. 'delta' is the elapsed time since the previous frame.
-    public override void _Process(double delta)
+	// Called every frame. 'delta' is the elapsed time since the previous frame.
+	public override void _Process(double delta)
 	{
 	}
 }

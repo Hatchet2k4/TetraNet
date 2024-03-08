@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Godot;
 
@@ -89,6 +90,7 @@ public partial class HostJoinMenu : Control
 	public void NameChanged(string newName)
 	{
 		ConfigData.PlayerName = newName;
+		ValidateData();
 	}
 
 	public void TeamChanged()
@@ -101,20 +103,33 @@ public partial class HostJoinMenu : Control
 	}
 	public void PortChanged(string newPort)
 	{
-		//newPort = string.Concat(newPort.Where(Char.IsDigit));
-		//_portBox.Text = newPort;
-		ConfigData.Port = Int32.Parse(newPort);
+		int position = _portBox.CaretColumn;
+		string stripped = Regex.Replace(newPort, "[^0-9]", "");
+		int difference = newPort.Length - stripped.Length;
+		_portBox.Text = stripped;
+		_portBox.CaretColumn = position - difference;
+		if (stripped.Length > 0)
+		{
+			ConfigData.Port = Int32.Parse(stripped);
+		}
+		ValidateData();
 	}
 
 	public void AddressChanged(string newAddress)
 	{
 		ConfigData.JoinAddress = newAddress;
+		ValidateData();
 	}
 
 	public void ReturnToMenu()
 	{
 		ConfigData.Save();
 		_title.ReturnFromSubMenu();
+	}
+
+	public void ValidateData()
+	{
+		_StartJoinServer.Disabled = !(_nameBox.Text.Length > 0 && _portBox.Text.Length > 0 && _addressBox.Text.Length > 0);
 	}
 
 	public void JoinLobby()

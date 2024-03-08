@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://dcvi35wnn0w4a"]
+
+[ext_resource type="FontFile" path="res://fonts/xolonium/Xolonium.tres" id="1_ceyok"]
+
+[resource]
+default_font = ExtResource("1_ceyok")
+default_font_size = 24
