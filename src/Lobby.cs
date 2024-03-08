@@ -13,10 +13,9 @@ public partial class Lobby : Control
 	[Export] private OptionButton _teamOption;
 	[Export] private PackedScene _connectedRow;
 	[Export] private Control _rowListNode;
-
 	private int _maxRows = 12;
-
 	private List<ConnectedRow> _rowList;
+	public double refreshTimer;
 
 	public string PlayerName
 	{
@@ -44,9 +43,19 @@ public partial class Lobby : Control
 		}
 	}
 
+	public override void _Process(double delta)
+	{
+		refreshTimer += delta;
+		if (refreshTimer >= 1f)
+		{
+			refreshTimer -= 1f;
+			Populate();
+		}
+	}
+
 	private void VisibleChanged()
 	{
-		_nameBox.Text = hostJoinMenu.nameBox.Text; // ConfigData.PlayerName;
+		_nameBox.Text = hostJoinMenu.nameBox.Text;
 	}
 
 	public void Disconnect()
@@ -56,14 +65,18 @@ public partial class Lobby : Control
 
 	public void Populate()
 	{
+		if (connection.Mode == ConnectionMode.Host) GD.Print("Populate " + connection.AllPlayers.Count.ToString());
+		List<long> keyList = new List<long>(connection.AllPlayers.Keys);
+		keyList.Sort();
 		for (int i = 0; i < _maxRows; i++)
 		{
 			if (i < connection.AllPlayers.Count)
 			{
-				PlayerInfo p = connection.AllPlayers[i];
+				PlayerInfo p = connection.AllPlayers[keyList[i]];
 				_rowList[i].Populate(p.Name, p.Team);
+				if (connection.Mode == ConnectionMode.Host) GD.Print(p.Name);
 			}
-			else _rowList[i].Hide();
+			//else _rowList[i].Hide();
 		}
 	}
 }

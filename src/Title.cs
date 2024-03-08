@@ -50,7 +50,7 @@ public partial class Title : Node2D
 	public void ConnectToServer()
 	{
 		mainMenu.Hide();
-		hostJoinMenu.SetMode(ConnectionMode.Join);
+		hostJoinMenu.SetMode(ConnectionMode.Client);
 		hostJoinMenu.Show();
 	}
 

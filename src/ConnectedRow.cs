@@ -13,7 +13,7 @@ public partial class ConnectedRow : Control
 
 	public void Populate(string name, string team)
 	{
-		nameLabel.Text = name;
-		teamLabel.Text = team;
+		nameLabel.Text = $"[center]{name}[/center]";
+		teamLabel.Text = $"[center]{team}[/center]";
 	}
 }
