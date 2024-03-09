@@ -5,4 +5,7 @@
 [node name="GameData" type="Node"]
 script = ExtResource("1_rb408")
 
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+spawn_path = NodePath("../Players")
+
+[node name="Players" type="Node" parent="."]

@@ -1,8 +1,9 @@
-[gd_scene load_steps=25 format=3 uid="uid://cag0a4qb86rel"]
+[gd_scene load_steps=26 format=3 uid="uid://cag0a4qb86rel"]
 
 [ext_resource type="Script" path="res://src/Title.cs" id="1_4v2tq"]
 [ext_resource type="PackedScene" uid="uid://cafudqe5o8fnt" path="res://scenes/connection_handler.tscn" id="2_c4arj"]
 [ext_resource type="AudioStream" uid="uid://b7did871hdfjk" path="res://music/Electronic Vol4 1080 Intensity 2.mp3" id="2_ckqgx"]
+[ext_resource type="PackedScene" uid="uid://xq8ebx1nx2hd" path="res://scenes/game_data.tscn" id="2_pjf8f"]
 [ext_resource type="Texture2D" uid="uid://6i3vptfhkrwt" path="res://gfx/Title.png" id="2_wu36l"]
 [ext_resource type="Texture2D" uid="uid://smxnw8u1gp0k" path="res://gfx/HoldBorder.png" id="4_i4pbo"]
 [ext_resource type="FontFile" path="res://fonts/xolonium/Xolonium.tres" id="5_edd4o"]
@@ -33,8 +34,11 @@ hostJoinMenu = NodePath("HostJoinMenu")
 
 [node name="CommonObjects" type="Node" parent="."]
 
-[node name="ConnectionHandler" parent="CommonObjects" node_paths=PackedStringArray("_lobby") instance=ExtResource("2_c4arj")]
+[node name="GameData" parent="CommonObjects" instance=ExtResource("2_pjf8f")]
+
+[node name="ConnectionHandler" parent="CommonObjects" node_paths=PackedStringArray("_lobby", "gameData") instance=ExtResource("2_c4arj")]
 _lobby = NodePath("../../Lobby")
+gameData = NodePath("../GameData")
 
 [node name="TitleMusic" type="AudioStreamPlayer" parent="CommonObjects"]
 stream = ExtResource("2_ckqgx")

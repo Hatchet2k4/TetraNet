@@ -13,16 +13,17 @@ public enum ConnectionMode
 public partial class PlayerInfo : GodotObject
 {
 	public string Name;
-	public long Id;
 	public string Team = "None";
 }
 
 public partial class ConnectionHandler : Node
 {
 	[Export] private Lobby _lobby;
+	[Export] public GameData gameData;
+
 	private ENetMultiplayerPeer _peer;
 	public ConnectionMode Mode = ConnectionMode.None;
-	public Godot.Collections.Dictionary<long, PlayerInfo> AllPlayers = new();
+
 
 	public string PlayerName;
 	public long Id;
@@ -55,15 +56,14 @@ public partial class ConnectionHandler : Node
 		GD.Print($"({Multiplayer.GetUniqueId()}) Peer {id} connected.");
 		if (Mode == ConnectionMode.Host)
 		{
-			AllPlayers.Remove(id);
-			Rpc("SyncPlayersToClients", AllPlayers);
+			gameData.AllPlayers.Remove(id);
+			//Rpc("SyncPlayersToClients", AllPlayers);
 		}
 	}
 
 	private void PeerDisconnected(long id)
 	{
 		GD.Print($"({Multiplayer.GetUniqueId()}) Peer {id} disconnected.");
-
 	}
 
 	public void StartServer(int port)
@@ -101,24 +101,21 @@ public partial class ConnectionHandler : Node
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
 	public void SendPlayerInfo(string name, long id, string team)
 	{
+		/*
 		PlayerInfo player = new()
 		{
-			Id = id,
 			Name = name,
 			Team = team
 		};
+		*/
 
-		if (!AllPlayers.ContainsKey(id))
+		if (!gameData.AllPlayers.ContainsKey(id))
 		{
-			AllPlayers[id] = player;
-		}
-
-		if (Mode == ConnectionMode.Host)
-		{
-			Rpc("SyncPlayersToClients", AllPlayers);
+			gameData.AllPlayers[id] = name;
 		}
 	}
 
+	/*
 	[Rpc(MultiplayerApi.RpcMode.Authority, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
 	public void SyncPlayersToClients(Godot.Collections.Dictionary<long, PlayerInfo> players)
 	{
@@ -127,5 +124,6 @@ public partial class ConnectionHandler : Node
 			AllPlayers = players;
 		}
 	}
+	*/
 
 }

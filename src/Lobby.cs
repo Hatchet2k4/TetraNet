@@ -38,7 +38,7 @@ public partial class Lobby : Control
 		{
 			var row = _connectedRow.Instantiate() as ConnectedRow;
 			_rowListNode.AddChild(row);
-			row.Position = new Vector2(0, row.Size.Y * i);
+			row.Position = new Vector2(0, 24 * i);
 			_rowList.Add(row);
 		}
 	}
@@ -65,18 +65,23 @@ public partial class Lobby : Control
 
 	public void Populate()
 	{
-		if (connection.Mode == ConnectionMode.Host) GD.Print("Populate " + connection.AllPlayers.Count.ToString());
-		List<long> keyList = new List<long>(connection.AllPlayers.Keys);
+		if (connection.Mode == ConnectionMode.Host) GD.Print("Connected: " + connection.gameData.AllPlayers.Count.ToString());
+		List<long> keyList = new List<long>(connection.gameData.AllPlayers.Keys);
 		keyList.Sort();
 		for (int i = 0; i < _maxRows; i++)
 		{
-			if (i < connection.AllPlayers.Count)
+			if (i < connection.gameData.AllPlayers.Count)
 			{
-				PlayerInfo p = connection.AllPlayers[keyList[i]];
-				_rowList[i].Populate(p.Name, p.Team);
-				if (connection.Mode == ConnectionMode.Host) GD.Print(p.Name);
+				//PlayerInfo p = connection.gameData.AllPlayers[keyList[i]];
+				string name = connection.gameData.AllPlayers[keyList[i]];
+				_rowList[i].Populate(name, "None");
+				_rowList[i].Show();
+				if (connection.Mode == ConnectionMode.Host) GD.Print(name);
 			}
-			//else _rowList[i].Hide();
+			else
+			{
+				_rowList[i].Hide();
+			}
 		}
 	}
 }

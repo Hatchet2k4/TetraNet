@@ -5,7 +5,12 @@ using System;
 
 public partial class GameData : Node
 {
-	[Export] public Godot.Collections.Dictionary<long, PlayerInfo> AllPlayers = new();
+	public Godot.Collections.Dictionary<long, string> GetPlayerList()
+	{
+		Godot.Collections.Dictionary<long, string> playerList = new();
 
 
+
+		return playerList;
+	}
 }

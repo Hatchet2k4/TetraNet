@@ -139,14 +139,23 @@ public partial class HostJoinMenu : Control
 	public void JoinLobby()
 	{
 		ConfigData.Save();
+		_connection.gameData.AllPlayers.Clear();
 
 		if (_mode == ConnectionMode.Host)
 		{
 			_status.Text = "Starting server...";
 			_connection.StartServer(ConfigData.Port);
 			_status.Text = "Server started.";
-			_connection.SendPlayerInfo(ConfigData.PlayerName, Multiplayer.GetUniqueId(), "None");
 
+			/*
+			PlayerInfo player = new()
+			{
+				Name = ConfigData.PlayerName,
+				Team = "None"
+			};
+			*/
+
+			_connection.gameData.AllPlayers.Add(1, ConfigData.PlayerName);
 			Hide();
 			_lobby.Show();
 		}
