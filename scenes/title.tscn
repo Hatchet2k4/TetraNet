@@ -34,10 +34,9 @@ hostJoinMenu = NodePath("HostJoinMenu")
 
 [node name="CommonObjects" type="Node" parent="."]
 
-[node name="GameData" type="Node" parent="CommonObjects" node_paths=PackedStringArray("playerNode", "Spawner")]
+[node name="GameData" type="Node" parent="CommonObjects" node_paths=PackedStringArray("playerNode")]
 script = ExtResource("2_2r4o3")
 playerNode = NodePath("Players")
-Spawner = NodePath("MultiplayerSpawner")
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="CommonObjects/GameData"]
 _spawnable_scenes = PackedStringArray("res://scenes/player_data.tscn")

@@ -139,10 +139,11 @@ public partial class HostJoinMenu : Control
 	public void JoinLobby()
 	{
 		ConfigData.Save();
-		//_connection.gameData.AllPlayers.Clear();
+		_connection.gameData.PlayerList.Clear();
 
 		if (_mode == ConnectionMode.Host)
 		{
+			_connection.gameData.AddPlayer(1, ConfigData.PlayerName);
 			_status.Text = "Starting server...";
 			_connection.StartServer(ConfigData.Port);
 			_status.Text = "Server started.";
@@ -155,7 +156,6 @@ public partial class HostJoinMenu : Control
 			};
 			*/
 
-			_connection.gameData.AddPlayer(1, ConfigData.PlayerName);
 			Hide();
 			_lobby.Show();
 		}
@@ -164,7 +164,7 @@ public partial class HostJoinMenu : Control
 			_status.Text = "Joining server...";
 			_connection.ConnectToServer(ConfigData.JoinAddress, ConfigData.Port);
 			_status.Text = "Connected.";
-			_connection.SendPlayerInfo(ConfigData.PlayerName, Multiplayer.GetUniqueId(), "None");
+			//_connection.SendPlayerInfo(ConfigData.PlayerName, Multiplayer.GetUniqueId(), Multiplayer.GetUniqueId().ToString());
 			Hide();
 			_lobby.Show();
 		}

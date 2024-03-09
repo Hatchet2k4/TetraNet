@@ -7,8 +7,6 @@ public partial class GameData : Node
 {
 	public Godot.Collections.Dictionary<long, string> PlayerList = new();
 	[Export] Node playerNode;
-	[Export] MultiplayerSpawner Spawner;
-
 
 
 	public override void _Ready()
@@ -18,25 +16,23 @@ public partial class GameData : Node
 
 	public void AddPlayer(long id, string name)
 	{
-		PlayerData p = new PlayerData
-		{
-			Name = id.ToString(),
-			PlayerName = name
-		};
+		PlayerList[id] = name;
 		//Spawner.Spawn(p);
-		AddChild(p);
-		RefreshPlayerList();
+		//AddChild(p);
+		//RefreshPlayerList();
 	}
 
 	public void RemovePlayer(long id)
 	{
+		PlayerList.Remove(id);
+		/*
 		try
 		{
 			Node p = playerNode.FindChild(id.ToString());
 			p.QueueFree();
 		}
-		catch { }
-		RefreshPlayerList();
+		catch { }*/
+		//RefreshPlayerList();
 	}
 
 	public void RefreshPlayerList()

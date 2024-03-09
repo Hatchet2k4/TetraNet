@@ -65,7 +65,7 @@ public partial class Lobby : Control
 
 	public void Populate()
 	{
-		if (connection.Mode == ConnectionMode.Host) GD.Print("Connected: " + connection.gameData.PlayerList.Count.ToString());
+		if (connection.Mode == ConnectionMode.Client) GD.Print("Connected: " + connection.gameData.PlayerList.Count.ToString());
 		List<long> keyList = new List<long>(connection.gameData.PlayerList.Keys);
 		keyList.Sort();
 		for (int i = 0; i < _maxRows; i++)

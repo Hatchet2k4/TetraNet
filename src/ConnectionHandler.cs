@@ -2,7 +2,7 @@ namespace TetraNet;
 
 using Godot;
 using System.Collections.Generic;
-
+using System.Text.Json;
 public enum ConnectionMode
 {
 	None,
@@ -48,7 +48,7 @@ public partial class ConnectionHandler : Node
 	private void ConnectedToServer() //only runs on clients
 	{
 		GD.Print($"({Multiplayer.GetUniqueId()}) Connected to server.");
-		RpcId(1, "SendPlayerInfo", PlayerName, Id, Team);
+		RpcId(1, "SendPlayerInfo", ConfigData.PlayerName, Multiplayer.GetUniqueId());
 	}
 
 	private void PeerConnected(long id)
@@ -62,8 +62,8 @@ public partial class ConnectionHandler : Node
 		if (Mode == ConnectionMode.Host)
 		{
 			gameData.RemovePlayer(id);
-
-			//Rpc("SyncPlayersToClients", AllPlayers);
+			string json = JsonSerializer.Serialize(gameData.PlayerList);
+			Rpc("SyncPlayersToClients", json);
 		}
 	}
 
@@ -100,23 +100,44 @@ public partial class ConnectionHandler : Node
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
-	public void SendPlayerInfo(string name, long id, string team) //send name data from client to server
+	public void SendPlayerInfo(string name, long id) //send name data from client to server
 	{
+		GD.Print("SendPlayerInfo " + name);
 		if (!gameData.PlayerList.ContainsKey(id))
 		{
 			gameData.AddPlayer(id, name);
 		}
+
+		if (Mode == ConnectionMode.Host)
+		{
+			string json = JsonSerializer.Serialize(gameData.PlayerList);
+			Rpc("SyncPlayersToClients", json);
+		}
 	}
 
-	/*
-	[Rpc(MultiplayerApi.RpcMode.Authority, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
-	public void SyncPlayersToClients(Godot.Collections.Dictionary<long, PlayerInfo> players)
+
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+	public void SyncPlayersToClients(string json)
 	{
 		if (Mode == ConnectionMode.Client)
 		{
-			AllPlayers = players;
+			Godot.Collections.Dictionary<long, string> list = LoadJsonFromString<Godot.Collections.Dictionary<long, string>>(json);
+			GD.Print("SyncPlayersToClients: " + json);
+			gameData.PlayerList = list;
 		}
 	}
-	*/
+
+
+	public static T LoadJsonFromString<T>(string str)
+	{
+		try
+		{
+			return JsonSerializer.Deserialize<T>(str);
+		}
+		catch
+		{
+			return default;
+		}
+	}
 
 }

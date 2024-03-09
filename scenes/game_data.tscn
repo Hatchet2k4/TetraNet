@@ -2,10 +2,9 @@
 
 [ext_resource type="Script" path="res://src/GameData.cs" id="1_rb408"]
 
-[node name="GameData" type="Node" node_paths=PackedStringArray("playerNode", "Spawner")]
+[node name="GameData" type="Node" node_paths=PackedStringArray("playerNode")]
 script = ExtResource("1_rb408")
 playerNode = NodePath("Players")
-Spawner = NodePath("MultiplayerSpawner")
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://scenes/player_data.tscn")
