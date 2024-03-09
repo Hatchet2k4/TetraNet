@@ -65,15 +65,15 @@ public partial class Lobby : Control
 
 	public void Populate()
 	{
-		if (connection.Mode == ConnectionMode.Host) GD.Print("Connected: " + connection.gameData.AllPlayers.Count.ToString());
-		List<long> keyList = new List<long>(connection.gameData.AllPlayers.Keys);
+		if (connection.Mode == ConnectionMode.Host) GD.Print("Connected: " + connection.gameData.PlayerList.Count.ToString());
+		List<long> keyList = new List<long>(connection.gameData.PlayerList.Keys);
 		keyList.Sort();
 		for (int i = 0; i < _maxRows; i++)
 		{
-			if (i < connection.gameData.AllPlayers.Count)
+			if (i < connection.gameData.PlayerList.Count)
 			{
 				//PlayerInfo p = connection.gameData.AllPlayers[keyList[i]];
-				string name = connection.gameData.AllPlayers[keyList[i]];
+				string name = connection.gameData.PlayerList[keyList[i]];
 				_rowList[i].Populate(name, "None");
 				_rowList[i].Show();
 				if (connection.Mode == ConnectionMode.Host) GD.Print(name);

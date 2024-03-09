@@ -54,16 +54,17 @@ public partial class ConnectionHandler : Node
 	private void PeerConnected(long id)
 	{
 		GD.Print($"({Multiplayer.GetUniqueId()}) Peer {id} connected.");
-		if (Mode == ConnectionMode.Host)
-		{
-			gameData.AllPlayers.Remove(id);
-			//Rpc("SyncPlayersToClients", AllPlayers);
-		}
 	}
 
 	private void PeerDisconnected(long id)
 	{
 		GD.Print($"({Multiplayer.GetUniqueId()}) Peer {id} disconnected.");
+		if (Mode == ConnectionMode.Host)
+		{
+			gameData.RemovePlayer(id);
+
+			//Rpc("SyncPlayersToClients", AllPlayers);
+		}
 	}
 
 	public void StartServer(int port)
@@ -99,19 +100,11 @@ public partial class ConnectionHandler : Node
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
-	public void SendPlayerInfo(string name, long id, string team)
+	public void SendPlayerInfo(string name, long id, string team) //send name data from client to server
 	{
-		/*
-		PlayerInfo player = new()
+		if (!gameData.PlayerList.ContainsKey(id))
 		{
-			Name = name,
-			Team = team
-		};
-		*/
-
-		if (!gameData.AllPlayers.ContainsKey(id))
-		{
-			gameData.AllPlayers[id] = name;
+			gameData.AddPlayer(id, name);
 		}
 	}
 
