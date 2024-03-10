@@ -20,8 +20,11 @@ public partial class HostJoinMenu : Control
 	[Export] private ConnectionHandler _connection;
 	[Export] private Lobby _lobby;
 	[Export] private Label _status;
+	[Export] private GameData _gameData;
 	private string _publicIP = "";
 	private ConnectionMode _mode;
+
+
 
 	public override void _Ready()
 	{
@@ -94,12 +97,13 @@ public partial class HostJoinMenu : Control
 	public void NameChanged(string newName)
 	{
 		ConfigData.PlayerName = newName;
+		_gameData.PlayerName = newName;
 		ValidateData();
 	}
 
-	public void TeamChanged()
+	public void TeamSelected(int index)
 	{
-
+		_gameData.Team = Data.TeamMappings[index];
 	}
 	public void ObserverChanged()
 	{
@@ -141,21 +145,13 @@ public partial class HostJoinMenu : Control
 		ConfigData.Save();
 		_connection.gameData.PlayerList.Clear();
 
+
 		if (_mode == ConnectionMode.Host)
 		{
-			_connection.gameData.AddPlayer(1, ConfigData.PlayerName);
+			_connection.gameData.AddPlayer(1, _gameData.PlayerName, _gameData.Team);
 			_status.Text = "Starting server...";
 			_connection.StartServer(ConfigData.Port);
 			_status.Text = "Server started.";
-
-			/*
-			PlayerInfo player = new()
-			{
-				Name = ConfigData.PlayerName,
-				Team = "None"
-			};
-			*/
-
 			Hide();
 			_lobby.Show();
 		}
@@ -164,7 +160,6 @@ public partial class HostJoinMenu : Control
 			_status.Text = "Joining server...";
 			_connection.ConnectToServer(ConfigData.JoinAddress, ConfigData.Port);
 			_status.Text = "Connected.";
-			//_connection.SendPlayerInfo(ConfigData.PlayerName, Multiplayer.GetUniqueId(), Multiplayer.GetUniqueId().ToString());
 			Hide();
 			_lobby.Show();
 		}

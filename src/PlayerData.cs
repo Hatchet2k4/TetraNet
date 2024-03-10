@@ -1,13 +1,8 @@
 using Godot;
 using System;
 
-public partial class PlayerData : Node
+public struct PlayerData
 {
-	[Export] public string PlayerName;
-	[Export] public string Team;
-
-	public override void _Ready()
-	{
-		SetProcess(false);
-	}
+	[Export] public string PlayerName { get; set; }
+	[Export] public string Team { get; set; }
 }

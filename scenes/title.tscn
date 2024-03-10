@@ -26,23 +26,17 @@
 [ext_resource type="Texture2D" uid="uid://c1h3o60r1yrwa" path="res://gfx/HighlightBorder.png" id="20_et1mw"]
 [ext_resource type="Script" path="res://src/TextEntry.cs" id="21_brwkw"]
 
-[node name="Title" type="Node2D" node_paths=PackedStringArray("titleMusic", "mainMenu", "hostJoinMenu")]
+[node name="Title" type="Node2D" node_paths=PackedStringArray("titleMusic", "mainMenu", "hostJoinMenu", "_gameData")]
 script = ExtResource("1_4v2tq")
 titleMusic = NodePath("CommonObjects/TitleMusic")
 mainMenu = NodePath("MainMenu")
 hostJoinMenu = NodePath("HostJoinMenu")
+_gameData = NodePath("CommonObjects/GameData")
 
 [node name="CommonObjects" type="Node" parent="."]
 
-[node name="GameData" type="Node" parent="CommonObjects" node_paths=PackedStringArray("playerNode")]
+[node name="GameData" type="Node" parent="CommonObjects"]
 script = ExtResource("2_2r4o3")
-playerNode = NodePath("Players")
-
-[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="CommonObjects/GameData"]
-_spawnable_scenes = PackedStringArray("res://scenes/player_data.tscn")
-spawn_path = NodePath("../Players")
-
-[node name="Players" type="Node" parent="CommonObjects/GameData"]
 
 [node name="ConnectionHandler" type="Node" parent="CommonObjects" node_paths=PackedStringArray("_lobby", "gameData")]
 script = ExtResource("3_efapg")
@@ -125,7 +119,7 @@ theme_override_font_sizes/font_size = 40
 action_mode = 0
 text = "Setup Controls"
 
-[node name="HostJoinMenu" type="Control" parent="." node_paths=PackedStringArray("_title", "nameBox", "_teamOption", "_portBox", "_observerBox", "_addressBox", "_StartJoinServer", "_connection", "_lobby", "_status")]
+[node name="HostJoinMenu" type="Control" parent="." node_paths=PackedStringArray("_title", "nameBox", "_teamOption", "_portBox", "_observerBox", "_addressBox", "_StartJoinServer", "_connection", "_lobby", "_status", "_gameData")]
 visible = false
 layout_mode = 3
 anchors_preset = 0
@@ -145,6 +139,7 @@ _StartJoinServer = NodePath("GameButtons/StartJoinServer")
 _connection = NodePath("../CommonObjects/ConnectionHandler")
 _lobby = NodePath("../Lobby")
 _status = NodePath("StatusLabel")
+_gameData = NodePath("../CommonObjects/GameData")
 
 [node name="HostMenuRect" type="NinePatchRect" parent="HostJoinMenu"]
 layout_mode = 0
@@ -569,6 +564,7 @@ text = "Ready"
 [connection signal="pressed" from="MainMenu/MainMenuBox/Game Options" to="." method="Options"]
 [connection signal="pressed" from="MainMenu/MainMenuBox/Controls" to="." method="SetupControls"]
 [connection signal="text_changed" from="HostJoinMenu/NameText" to="HostJoinMenu" method="NameChanged"]
+[connection signal="item_selected" from="HostJoinMenu/TeamOption" to="HostJoinMenu" method="TeamSelected"]
 [connection signal="text_changed" from="HostJoinMenu/Port" to="HostJoinMenu" method="PortChanged"]
 [connection signal="text_changed" from="HostJoinMenu/Address" to="HostJoinMenu" method="AddressChanged"]
 [connection signal="pressed" from="HostJoinMenu/GameButtons/MainMenu" to="HostJoinMenu" method="ReturnToMenu"]

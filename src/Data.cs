@@ -16,6 +16,16 @@ public partial class Data : Node
 	public static readonly Vector2 LEFT = Vector2.Left;
 	public static readonly Vector2 RIGHT = Vector2.Right;
 
+	public static Dictionary<int, string> TeamMappings = new()
+	{
+		{0, "None"},
+		{1, "Red"},
+		{2, "Green"},
+		{3, "Blue"},
+		{4, "Yellow"},
+		{5, "Orange"},
+		{6, "Purple"}
+	};
 
 	public enum BlockType
 	{

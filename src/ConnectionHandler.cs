@@ -48,7 +48,7 @@ public partial class ConnectionHandler : Node
 	private void ConnectedToServer() //only runs on clients
 	{
 		GD.Print($"({Multiplayer.GetUniqueId()}) Connected to server.");
-		RpcId(1, "SendPlayerInfo", ConfigData.PlayerName, Multiplayer.GetUniqueId());
+		RpcId(1, "SendPlayerInfo", gameData.PlayerName, Multiplayer.GetUniqueId(), gameData.Team);
 	}
 
 	private void PeerConnected(long id)
@@ -100,12 +100,12 @@ public partial class ConnectionHandler : Node
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
-	public void SendPlayerInfo(string name, long id) //send name data from client to server
+	public void SendPlayerInfo(string name, long id, string team) //send name data from client to server
 	{
 		GD.Print("SendPlayerInfo " + name);
 		if (!gameData.PlayerList.ContainsKey(id))
 		{
-			gameData.AddPlayer(id, name);
+			gameData.AddPlayer(id, name, team);
 		}
 
 		if (Mode == ConnectionMode.Host)
@@ -121,7 +121,7 @@ public partial class ConnectionHandler : Node
 	{
 		if (Mode == ConnectionMode.Client)
 		{
-			Godot.Collections.Dictionary<long, string> list = LoadJsonFromString<Godot.Collections.Dictionary<long, string>>(json);
+			Dictionary<long, PlayerData> list = LoadJsonFromString<Dictionary<long, PlayerData>>(json);
 			GD.Print("SyncPlayersToClients: " + json);
 			gameData.PlayerList = list;
 		}

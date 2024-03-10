@@ -72,11 +72,11 @@ public partial class Lobby : Control
 		{
 			if (i < connection.gameData.PlayerList.Count)
 			{
-				//PlayerInfo p = connection.gameData.AllPlayers[keyList[i]];
-				string name = connection.gameData.PlayerList[keyList[i]];
-				_rowList[i].Populate(name, "None");
+				PlayerData p = connection.gameData.PlayerList[keyList[i]];
+
+				_rowList[i].Populate(p.PlayerName, p.Team);
 				_rowList[i].Show();
-				if (connection.Mode == ConnectionMode.Host) GD.Print(name);
+				//if (connection.Mode == ConnectionMode.Host) GD.Print(p.PlayerName);
 			}
 			else
 			{

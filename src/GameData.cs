@@ -1,52 +1,32 @@
 namespace TetraNet;
 
 using Godot;
-using System.Linq;
+using System.Collections.Generic;
 
 public partial class GameData : Node
 {
-	public Godot.Collections.Dictionary<long, string> PlayerList = new();
-	[Export] Node playerNode;
+	public Dictionary<long, PlayerData> PlayerList = new();
 
+	public string PlayerName;
+	public string Team;
 
 	public override void _Ready()
 	{
 
 	}
 
-	public void AddPlayer(long id, string name)
+	public void AddPlayer(long id, string name, string team)
 	{
-		PlayerList[id] = name;
-		//Spawner.Spawn(p);
-		//AddChild(p);
-		//RefreshPlayerList();
+		PlayerData p = new()
+		{
+			PlayerName = name,
+			Team = team
+		};
+		PlayerList[id] = p;
 	}
 
 	public void RemovePlayer(long id)
 	{
 		PlayerList.Remove(id);
-		/*
-		try
-		{
-			Node p = playerNode.FindChild(id.ToString());
-			p.QueueFree();
-		}
-		catch { }*/
-		//RefreshPlayerList();
-	}
-
-	public void RefreshPlayerList()
-	{
-		PlayerList.Clear();
-
-		System.Collections.Generic.IEnumerable<PlayerData> playerNodes = playerNode.GetChildren()
-			.Where(child => child is PlayerData)
-			.Select(child => child)
-			.Cast<PlayerData>();
-
-		foreach (PlayerData p in playerNodes)
-		{
-			PlayerList[long.Parse(p.Name)] = p.PlayerName;
-		}
 	}
 }

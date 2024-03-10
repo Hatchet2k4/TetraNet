@@ -7,6 +7,7 @@ public partial class Title : Node2D
 	[Export] private AudioStreamPlayer titleMusic;
 	[Export] private Control mainMenu;
 	[Export] private HostJoinMenu hostJoinMenu;
+	[Export] private GameData _gameData;
 
 	private bool started = false;
 	private double timer;
@@ -14,6 +15,7 @@ public partial class Title : Node2D
 	public override void _Ready()
 	{
 		ConfigData.Load();
+		_gameData.PlayerName = ConfigData.PlayerName;
 	}
 
 	public override void _Process(double delta)
