@@ -3,17 +3,17 @@ namespace TetraNet;
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 
 public partial class Lobby : Control
 {
 	[Export] private Title _title;
 	[Export] private HostJoinMenu hostJoinMenu;
 	[Export] private ConnectionHandler connection;
-	[Export] private LineEdit _nameBox;
-	[Export] private OptionButton _teamOption;
+	[Export] public LineEdit _nameBox;
+	[Export] public OptionButton _teamOption;
 	[Export] private PackedScene _connectedRow;
 	[Export] private Control _rowListNode;
-
 	[Export] public GameData gameData;
 
 	private int _maxRows = 12;
@@ -59,18 +59,43 @@ public partial class Lobby : Control
 	private void UpdateName(string newName)
 	{
 		gameData.PlayerName = newName;
+		if (connection.Mode == ConnectionMode.Host)
+		{
+			gameData.UpdatePlayer(1, newName, gameData.Team);
+		}
 
+		UpdateInfo();
+		Populate();
 	}
 
 	private void UpdateTeam(int index)
 	{
 		gameData.Team = Data.TeamMappings[index];
+		if (connection.Mode == ConnectionMode.Host)
+		{
+			gameData.UpdatePlayer(1, gameData.PlayerName, gameData.Team);
+		}
+		UpdateInfo();
+		Populate();
+	}
 
+	public void UpdateInfo()
+	{
+		if (connection.Mode == ConnectionMode.Client)
+		{
+			connection.Update();
+		}
+		else
+		{
+			connection.Sync();
+		}
 	}
 
 	private void VisibleChanged()
 	{
-		_nameBox.Text = hostJoinMenu.nameBox.Text;
+		_nameBox.Text = gameData.PlayerName;
+		_teamOption.Selected = hostJoinMenu.teamOption.Selected;
+		Populate();
 	}
 
 	public void Disconnect()
@@ -80,18 +105,17 @@ public partial class Lobby : Control
 
 	public void Populate()
 	{
-		if (connection.Mode == ConnectionMode.Client) GD.Print("Connected: " + connection.gameData.PlayerList.Count.ToString());
-		List<long> keyList = new List<long>(connection.gameData.PlayerList.Keys);
+		List<long> keyList = new List<long>(gameData.PlayerList.Keys);
 		keyList.Sort();
 		for (int i = 0; i < _maxRows; i++)
 		{
-			if (i < connection.gameData.PlayerList.Count)
+			if (i < gameData.PlayerList.Count)
 			{
-				PlayerData p = connection.gameData.PlayerList[keyList[i]];
+				PlayerData p = gameData.PlayerList[keyList[i]];
 
 				_rowList[i].Populate(p.PlayerName, p.Team);
 				_rowList[i].Show();
-				//if (connection.Mode == ConnectionMode.Host) GD.Print(p.PlayerName);
+				if (connection.Mode == ConnectionMode.Host) GD.Print("Populate: " + p.PlayerName);
 			}
 			else
 			{

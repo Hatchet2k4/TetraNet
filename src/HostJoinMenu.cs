@@ -12,7 +12,7 @@ public partial class HostJoinMenu : Control
 {
 	[Export] private Title _title;
 	[Export] public LineEdit nameBox;
-	[Export] private OptionButton _teamOption;
+	[Export] public OptionButton teamOption;
 	[Export] private LineEdit _portBox;
 	[Export] private CheckBox _observerBox;
 	[Export] private LineEdit _addressBox;

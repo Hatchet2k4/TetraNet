@@ -46,6 +46,7 @@ gameData = NodePath("../GameData")
 [node name="TitleMusic" type="AudioStreamPlayer" parent="CommonObjects"]
 stream = ExtResource("2_ckqgx")
 volume_db = -20.0
+autoplay = true
 
 [node name="ChatSound" type="AudioStreamPlayer" parent="CommonObjects"]
 stream = ExtResource("5_h61js")
@@ -119,7 +120,7 @@ theme_override_font_sizes/font_size = 40
 action_mode = 0
 text = "Setup Controls"
 
-[node name="HostJoinMenu" type="Control" parent="." node_paths=PackedStringArray("_title", "nameBox", "_teamOption", "_portBox", "_observerBox", "_addressBox", "_StartJoinServer", "_connection", "_lobby", "_status", "_gameData")]
+[node name="HostJoinMenu" type="Control" parent="." node_paths=PackedStringArray("_title", "nameBox", "teamOption", "_portBox", "_observerBox", "_addressBox", "_StartJoinServer", "_connection", "_lobby", "_status", "_gameData")]
 visible = false
 layout_mode = 3
 anchors_preset = 0
@@ -131,7 +132,7 @@ theme = ExtResource("8_bhpob")
 script = ExtResource("9_0otmw")
 _title = NodePath("..")
 nameBox = NodePath("NameText")
-_teamOption = NodePath("TeamOption")
+teamOption = NodePath("TeamOption")
 _portBox = NodePath("Port")
 _observerBox = NodePath("Observer")
 _addressBox = NodePath("Address")
@@ -287,7 +288,7 @@ offset_top = 265.0
 offset_right = 474.0
 offset_bottom = 295.0
 
-[node name="Lobby" type="Control" parent="." node_paths=PackedStringArray("_title", "hostJoinMenu", "connection", "_nameBox", "_teamOption", "_rowListNode")]
+[node name="Lobby" type="Control" parent="." node_paths=PackedStringArray("_title", "hostJoinMenu", "connection", "_nameBox", "_teamOption", "_rowListNode", "gameData")]
 visible = false
 layout_mode = 3
 anchors_preset = 0
@@ -303,6 +304,7 @@ _nameBox = NodePath("NameText")
 _teamOption = NodePath("TeamOption")
 _connectedRow = ExtResource("18_b2d67")
 _rowListNode = NodePath("ConnectedList/ScrollContainer/RowList")
+gameData = NodePath("../CommonObjects/GameData")
 
 [node name="Team" type="Label" parent="Lobby"]
 layout_mode = 0
@@ -569,6 +571,8 @@ text = "Ready"
 [connection signal="text_changed" from="HostJoinMenu/Address" to="HostJoinMenu" method="AddressChanged"]
 [connection signal="pressed" from="HostJoinMenu/GameButtons/MainMenu" to="HostJoinMenu" method="ReturnToMenu"]
 [connection signal="pressed" from="HostJoinMenu/GameButtons/StartJoinServer" to="HostJoinMenu" method="JoinLobby"]
+[connection signal="text_changed" from="Lobby/NameText" to="Lobby" method="UpdateName"]
+[connection signal="item_selected" from="Lobby/TeamOption" to="Lobby" method="UpdateTeam"]
 [connection signal="pressed" from="Lobby/GameButtons/Disconnect" to="Lobby" method="Disconnect"]
 [connection signal="focus_entered" from="Lobby/TextEntry/TextEdit" to="Lobby/TextEntry/TextEdit" method="OnFocusEntered"]
 [connection signal="focus_exited" from="Lobby/TextEntry/TextEdit" to="Lobby/TextEntry/TextEdit" method="OnFocusExited"]

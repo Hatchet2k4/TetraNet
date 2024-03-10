@@ -100,7 +100,20 @@ public partial class ConnectionHandler : Node
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
-	public void SendPlayerInfo(string name, long id, string team) //send name data from client to server
+	public void Update()
+	{
+		RpcId(1, "UpdatePlayerInfo", gameData.PlayerName, Multiplayer.GetUniqueId(), gameData.Team);
+	}
+
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+	public void Sync()
+	{
+		string json = JsonSerializer.Serialize(gameData.PlayerList);
+		Rpc("SyncPlayersToClients", json);
+	}
+
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+	private void SendPlayerInfo(string name, long id, string team) //send name data from client to server
 	{
 		if (!gameData.PlayerList.ContainsKey(id))
 		{
@@ -115,18 +128,17 @@ public partial class ConnectionHandler : Node
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
-	public void UpdatePlayerInfo(string name, long id, string team) //send name data from client to server
+	private void UpdatePlayerInfo(string name, long id, string team) //send name data from client to server
 	{
 		gameData.UpdatePlayer(id, name, team);
 		if (Mode == ConnectionMode.Host)
 		{
-			string json = JsonSerializer.Serialize(gameData.PlayerList);
-			Rpc("SyncPlayersToClients", json);
+			Sync();
 		}
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
-	public void SyncPlayersToClients(string json)
+	private void SyncPlayersToClients(string json)
 	{
 		if (Mode == ConnectionMode.Client)
 		{
