@@ -11,6 +11,8 @@ public partial class ConfigData : Node
 	public static string PlayerName { get; set; }
 	public static int Port { get; set; }
 	public static string JoinAddress { get; set; }
+	public static float MusicVolume { get; set; }
+	public static float SoundVolume { get; set; }
 
 	private static readonly string CFName = "settings.cfg";
 	private static ConfigFile CF = new ConfigFile();
@@ -20,6 +22,8 @@ public partial class ConfigData : Node
 		CF.SetValue("Settings", "PlayerName", PlayerName);
 		CF.SetValue("Settings", "Port", Port);
 		CF.SetValue("Settings", "JoinAddress", JoinAddress);
+		CF.SetValue("Settings", "MusicVolume", MusicVolume);
+		CF.SetValue("Settings", "SoundVolume", SoundVolume);
 		GD.Print($"Saving settings: {OS.GetUserDataDir()}/{CFName}");
 		CF.Save($"user://{CFName}");
 	}
@@ -32,6 +36,8 @@ public partial class ConfigData : Node
 			PlayerName = (string)CF.GetValue("Settings", "PlayerName", "");
 			Port = (int)CF.GetValue("Settings", "Port", 13370);
 			JoinAddress = (string)CF.GetValue("Settings", "JoinAddress", "");
+			MusicVolume = (float)CF.GetValue("Settings", "MusicVolume", Mathf.LinearToDb(0.8f));
+			SoundVolume = (float)CF.GetValue("Settings", "SoundVolume", Mathf.LinearToDb(0.8f));
 		}
 		else
 		{

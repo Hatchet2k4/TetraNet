@@ -1,29 +1,40 @@
 namespace TetraNet;
 
+using System.Collections.Generic;
 using Godot;
 
 public partial class Title : Node2D
 {
-	[Export] private AudioStreamPlayer titleMusic;
-	[Export] private Control mainMenu;
-	[Export] private HostJoinMenu hostJoinMenu;
+	[Export] private AudioStreamPlayer _titleMusic;
+	[Export] private Control _mainMenu;
+	[Export] private HostJoinMenu _hostJoinMenu;
+	[Export] private OptionsMenu _optionsMenu;
 	[Export] private GameData _gameData;
+
+	private List<Control> _menuList;
 
 	private bool started = false;
 	private double timer;
 
 	public override void _Ready()
 	{
+		_menuList = new() {
+			_mainMenu,
+			_hostJoinMenu,
+			_optionsMenu
+		};
+
 		ConfigData.Load();
+		_titleMusic.VolumeDb = ConfigData.MusicVolume;
 		_gameData.PlayerName = ConfigData.PlayerName;
 	}
 
 	public override void _Process(double delta)
 	{
 		timer += delta;
-		if (!started && !mainMenu.Visible && (timer > 2f || Gamepad.PressedStart() || Gamepad.PressedA() || Input.IsMouseButtonPressed(MouseButton.Left)))
+		if (!started && !_mainMenu.Visible && (timer > 2f || Gamepad.PressedStart() || Gamepad.PressedA() || Input.IsMouseButtonPressed(MouseButton.Left)))
 		{
-			mainMenu.Show();
+			_mainMenu.Show();
 			started = true;
 			SetProcess(false);
 		}
@@ -32,33 +43,35 @@ public partial class Title : Node2D
 
 	public void ReturnFromSubMenu()
 	{
-		hostJoinMenu.Hide();
-		mainMenu.Show();
+		_hostJoinMenu.Hide();
+		_optionsMenu.Hide();
+		_mainMenu.Show();
 	}
 
 	public void SoloGame()
 	{
-		titleMusic.Stop();
+		_titleMusic.Stop();
 		GetTree().ChangeSceneToFile("res://scenes/main.tscn");
 	}
 
 	public void StartServer()
 	{
-		mainMenu.Hide();
-		hostJoinMenu.SetMode(ConnectionMode.Host);
-		hostJoinMenu.Show();
+		_mainMenu.Hide();
+		_hostJoinMenu.SetMode(ConnectionMode.Host);
+		_hostJoinMenu.Show();
 	}
 
 	public void ConnectToServer()
 	{
-		mainMenu.Hide();
-		hostJoinMenu.SetMode(ConnectionMode.Client);
-		hostJoinMenu.Show();
+		_mainMenu.Hide();
+		_hostJoinMenu.SetMode(ConnectionMode.Client);
+		_hostJoinMenu.Show();
 	}
 
 	public void Options()
 	{
-
+		_mainMenu.Hide();
+		_optionsMenu.Show();
 	}
 
 	public void SetupControls()
