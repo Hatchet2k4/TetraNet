@@ -13,6 +13,9 @@ public partial class Lobby : Control
 	[Export] private OptionButton _teamOption;
 	[Export] private PackedScene _connectedRow;
 	[Export] private Control _rowListNode;
+
+	[Export] public GameData gameData;
+
 	private int _maxRows = 12;
 	private List<ConnectedRow> _rowList;
 	public double refreshTimer;
@@ -51,6 +54,18 @@ public partial class Lobby : Control
 			refreshTimer -= 1f;
 			Populate();
 		}
+	}
+
+	private void UpdateName(string newName)
+	{
+		gameData.PlayerName = newName;
+
+	}
+
+	private void UpdateTeam(int index)
+	{
+		gameData.Team = Data.TeamMappings[index];
+
 	}
 
 	private void VisibleChanged()

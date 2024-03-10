@@ -102,7 +102,6 @@ public partial class ConnectionHandler : Node
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
 	public void SendPlayerInfo(string name, long id, string team) //send name data from client to server
 	{
-		GD.Print("SendPlayerInfo " + name);
 		if (!gameData.PlayerList.ContainsKey(id))
 		{
 			gameData.AddPlayer(id, name, team);
@@ -115,6 +114,16 @@ public partial class ConnectionHandler : Node
 		}
 	}
 
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+	public void UpdatePlayerInfo(string name, long id, string team) //send name data from client to server
+	{
+		gameData.UpdatePlayer(id, name, team);
+		if (Mode == ConnectionMode.Host)
+		{
+			string json = JsonSerializer.Serialize(gameData.PlayerList);
+			Rpc("SyncPlayersToClients", json);
+		}
+	}
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
 	public void SyncPlayersToClients(string json)

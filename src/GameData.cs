@@ -15,6 +15,14 @@ public partial class GameData : Node
 
 	}
 
+	public void UpdatePlayer(long id, string name, string team)
+	{
+		var pd = PlayerList[id];
+		pd.PlayerName = name;
+		pd.Team = team;
+		PlayerList[id] = pd;
+	}
+
 	public void AddPlayer(long id, string name, string team)
 	{
 		PlayerData p = new()
