@@ -25,7 +25,7 @@ public partial class Title : Node2D
 		};
 
 		ConfigData.Load();
-		_titleMusic.VolumeDb = ConfigData.MusicVolume;
+		_optionsMenu.SetVolumes();
 		_gameData.PlayerName = ConfigData.PlayerName;
 	}
 
