@@ -10,6 +10,8 @@ public partial class ChatLog : RichTextLabel
 	[Export] private GameData _gameData;
 	private int chatCount;
 
+	[Export] private AudioStreamPlayer _chatSound;
+
 	public override void _Ready()
 	{
 	}
@@ -27,6 +29,7 @@ public partial class ChatLog : RichTextLabel
 
 	public void RefreshChat()
 	{
+		_chatSound.Play();
 		StringBuilder fullText = new();
 		for (int i = 0; i < _gameData.ChatLog.Count; i++)
 		{

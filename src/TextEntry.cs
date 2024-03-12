@@ -31,7 +31,6 @@ public partial class TextEntry : TextEdit
 				string text = _gameData.PlayerName + ": " + Text;
 				_gameData.AddChat(_gameData.Id, text);
 				Text = "";
-				_chatSound.Play();
 				_chatBox.RefreshChat();
 				_connection.AddChat(_gameData.Id, text);
 

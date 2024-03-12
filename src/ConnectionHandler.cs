@@ -96,6 +96,11 @@ public partial class ConnectionHandler : Node
 		GD.Print("Joining server.");
 	}
 
+	public void Disconnect()
+	{
+		_peer.Close();
+	}
+
 	public void StartGame()
 	{
 

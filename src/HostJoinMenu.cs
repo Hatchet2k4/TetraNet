@@ -105,6 +105,18 @@ public partial class HostJoinMenu : Control
 	{
 		_gameData.Team = Data.TeamMappings[index];
 	}
+
+	public void ReadySelected()
+	{
+
+	}
+
+	public void ReturnFromLobby()
+	{
+		_lobby.Hide();
+		Show();
+	}
+
 	public void ObserverChanged()
 	{
 

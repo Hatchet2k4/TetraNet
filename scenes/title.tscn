@@ -511,7 +511,7 @@ patch_margin_top = 16
 patch_margin_right = 16
 patch_margin_bottom = 16
 
-[node name="ChatLog" type="RichTextLabel" parent="Lobby/ChatBox" node_paths=PackedStringArray("_gameData")]
+[node name="ChatLog" type="RichTextLabel" parent="Lobby/ChatBox" node_paths=PackedStringArray("_gameData", "_chatSound")]
 layout_mode = 0
 offset_left = 16.0
 offset_top = 16.0
@@ -522,6 +522,7 @@ theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 script = ExtResource("25_d15cb")
 _gameData = NodePath("../../../CommonObjects/GameData")
+_chatSound = NodePath("../../../CommonObjects/ChatSound")
 
 [node name="TextEntry" type="NinePatchRect" parent="Lobby"]
 layout_mode = 0
@@ -557,6 +558,7 @@ offset_bottom = 96.0
 focus_mode = 1
 theme = ExtResource("8_bhpob")
 theme_override_font_sizes/font_size = 20
+wrap_mode = 1
 caret_blink = true
 text_direction = 1
 script = ExtResource("21_brwkw")

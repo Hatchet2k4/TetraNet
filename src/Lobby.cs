@@ -103,7 +103,8 @@ public partial class Lobby : Control
 
 	public void Disconnect()
 	{
-
+		_connection.Disconnect();
+		hostJoinMenu.ReturnFromLobby();
 	}
 
 	public void Populate()
