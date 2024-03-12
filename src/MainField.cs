@@ -15,6 +15,7 @@ public partial class MainField : Control
 	[Export] private HoldGrid _holdGrid;
 	[Export] private Label _lblLines;
 
+	[Export] private Countdown _countdown;
 	[Export] private AudioStreamPlayer music;
 	[Export] private AudioStreamPlayer landSound;
 	[Export] private AudioStreamPlayer clearSound;
@@ -58,6 +59,8 @@ public partial class MainField : Control
 
 	public bool processControls = true;
 
+
+
 	public override void _Ready()
 	{
 		_ghostTexture = GD.Load("res://gfx/Ghost.png") as Texture2D;
@@ -68,12 +71,14 @@ public partial class MainField : Control
 		SpawnNewBlock(_spawner.GetNextBlock());
 		NewGame();
 		music.Play();
+		
 	}
 
 	public void NewGame()
 	{
 		swapped = false;
 		totalLines = 0;
+		_countdown.Start();
 	}
 
 	public void SpawnNewBlock(BlockType t)

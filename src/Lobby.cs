@@ -126,4 +126,9 @@ public partial class Lobby : Control
 			}
 		}
 	}
+
+	public void StartGame()
+	{
+		
+	}
 }
