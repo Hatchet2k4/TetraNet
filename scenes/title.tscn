@@ -12,7 +12,6 @@
 [ext_resource type="AudioStream" uid="uid://chp35s7nn3l18" path="res://sfx/rotate.wav" id="6_gvqgc"]
 [ext_resource type="FontFile" uid="uid://cj7wvtcdatui1" path="res://fonts/kirifont/Kirifont.tres" id="7_oseos"]
 [ext_resource type="Theme" uid="uid://dcvi35wnn0w4a" path="res://resources/new_theme.tres" id="8_bhpob"]
-[ext_resource type="FontFile" uid="uid://cksjotvc3wafa" path="res://fonts/kirifont/KiriFont.otf" id="8_q0175"]
 [ext_resource type="Script" path="res://src/HostJoinMenu.cs" id="9_0otmw"]
 [ext_resource type="Texture2D" uid="uid://b08i17xwe36xo" path="res://gfx/RedIcon.png" id="10_ey3m3"]
 [ext_resource type="Texture2D" uid="uid://oxa8o28l35w4" path="res://gfx/GreenIcon.png" id="11_3vqiq"]
@@ -26,6 +25,7 @@
 [ext_resource type="Script" path="res://src/Lobby.cs" id="19_wijlx"]
 [ext_resource type="Texture2D" uid="uid://c1h3o60r1yrwa" path="res://gfx/HighlightBorder.png" id="20_et1mw"]
 [ext_resource type="Script" path="res://src/TextEntry.cs" id="21_brwkw"]
+[ext_resource type="Script" path="res://src/ChatLog.cs" id="25_d15cb"]
 [ext_resource type="Script" path="res://src/OptionsMenu.cs" id="26_7ytwf"]
 
 [node name="Title" type="Node2D" node_paths=PackedStringArray("_titleMusic", "_mainMenu", "_hostJoinMenu", "_optionsMenu", "_gameData")]
@@ -298,7 +298,6 @@ offset_right = 474.0
 offset_bottom = 295.0
 
 [node name="Lobby" type="Control" parent="." node_paths=PackedStringArray("_title", "hostJoinMenu", "connection", "_nameBox", "_teamOption", "_rowListNode", "gameData")]
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_top = 324.0
@@ -510,16 +509,15 @@ patch_margin_top = 16
 patch_margin_right = 16
 patch_margin_bottom = 16
 
-[node name="TextEdit" type="TextEdit" parent="Lobby/ChatBox"]
+[node name="ChatLog" type="RichTextLabel" parent="Lobby/ChatBox" node_paths=PackedStringArray("_gameData")]
 layout_mode = 0
 offset_left = 16.0
 offset_top = 16.0
 offset_right = 438.0
 offset_bottom = 264.0
-theme_override_constants/line_spacing = 2
-theme_override_fonts/font = ExtResource("8_q0175")
-theme_override_font_sizes/font_size = 20
-wrap_mode = 1
+bbcode_enabled = true
+script = ExtResource("25_d15cb")
+_gameData = NodePath("../../../CommonObjects/GameData")
 
 [node name="TextEntry" type="NinePatchRect" parent="Lobby"]
 layout_mode = 0
@@ -546,20 +544,22 @@ patch_margin_top = 16
 patch_margin_right = 16
 patch_margin_bottom = 16
 
-[node name="TextEdit" type="TextEdit" parent="Lobby/TextEntry" node_paths=PackedStringArray("_chatSound")]
+[node name="TextEdit" type="TextEdit" parent="Lobby/TextEntry" node_paths=PackedStringArray("_highlight", "_chatBox", "_chatSound", "_gameData")]
 layout_mode = 0
 offset_left = 16.0
 offset_top = 16.0
 offset_right = 438.0
 offset_bottom = 96.0
 focus_mode = 1
-theme_override_constants/line_spacing = 2
 theme_override_fonts/font = ExtResource("7_oseos")
 theme_override_font_sizes/font_size = 20
-wrap_mode = 1
 caret_blink = true
+text_direction = 1
 script = ExtResource("21_brwkw")
+_highlight = NodePath("../Highlight")
+_chatBox = NodePath("../../ChatBox/ChatLog")
 _chatSound = NodePath("../../../CommonObjects/ChatSound")
+_gameData = NodePath("../../../CommonObjects/GameData")
 
 [node name="CheckBox" type="CheckBox" parent="Lobby"]
 layout_mode = 0
@@ -658,6 +658,7 @@ text = "Main Menu"
 [connection signal="focus_entered" from="Lobby/TextEntry/TextEdit" to="Lobby/TextEntry/TextEdit" method="OnFocusEntered"]
 [connection signal="focus_exited" from="Lobby/TextEntry/TextEdit" to="Lobby/TextEntry/TextEdit" method="OnFocusExited"]
 [connection signal="gui_input" from="Lobby/TextEntry/TextEdit" to="Lobby/TextEntry/TextEdit" method="OnGuiInput"]
+[connection signal="text_changed" from="Lobby/TextEntry/TextEdit" to="Lobby/TextEntry/TextEdit" method="OnTextChanged"]
 [connection signal="value_changed" from="Options/OptionsBox/MasterSlider" to="Options" method="MasterChanged"]
 [connection signal="value_changed" from="Options/OptionsBox/MusicSlider" to="Options" method="MusicChanged"]
 [connection signal="value_changed" from="Options/OptionsBox/SoundSlider" to="Options" method="SoundChanged"]

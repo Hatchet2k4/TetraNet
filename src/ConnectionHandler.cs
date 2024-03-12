@@ -16,6 +16,8 @@ public partial class PlayerInfo : GodotObject
 	public string Team = "None";
 }
 
+
+
 public partial class ConnectionHandler : Node
 {
 	[Export] private Lobby _lobby;
@@ -80,7 +82,7 @@ public partial class ConnectionHandler : Node
 		_peer.Host.Compress(ENetConnection.CompressionMode.RangeCoder);
 		Multiplayer.MultiplayerPeer = _peer;
 		Connected = true;
-		GD.Print($"Server started with id {Multiplayer.GetUniqueId()}. Waiting for players.");
+		GD.Print($"Server started. Waiting for players.");
 	}
 
 	public void ConnectToServer(string address, int port)

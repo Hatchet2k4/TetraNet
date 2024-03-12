@@ -3,16 +3,35 @@ namespace TetraNet;
 using Godot;
 using System.Collections.Generic;
 
+public class ChatEntry
+{
+	public long Id { get; set; }
+	public string Text { get; set; }
+}
+
 public partial class GameData : Node
 {
 	public Dictionary<long, PlayerData> PlayerList = new();
 
 	public string PlayerName;
 	public string Team;
+	public long Id;
+
+	public List<ChatEntry> ChatLog = new();
 
 	public override void _Ready()
 	{
 
+	}
+
+	public void AddChat(long id, string text)
+	{
+		ChatEntry chat = new()
+		{
+			Id = id,
+			Text = text
+		};
+		ChatLog.Add(chat);
 	}
 
 	public void UpdatePlayer(long id, string name, string team)
