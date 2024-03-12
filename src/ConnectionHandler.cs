@@ -114,6 +114,12 @@ public partial class ConnectionHandler : Node
 		Rpc("SyncPlayersToClients", json);
 	}
 
+	public void AddChat(long id, string text)
+	{
+		Rpc("RPCAddChat", id, text);
+	}
+
+
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
 	private void SendPlayerInfo(string name, long id, string team) //send name data from client to server
 	{
@@ -127,6 +133,12 @@ public partial class ConnectionHandler : Node
 			string json = JsonSerializer.Serialize(gameData.PlayerList);
 			Rpc("SyncPlayersToClients", json);
 		}
+	}
+
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+	private void RPCAddChat(long id, string text) //send name data from client to server
+	{
+		gameData.AddChat(id, text);
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]

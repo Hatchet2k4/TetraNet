@@ -11,6 +11,7 @@ public partial class TextEntry : TextEdit
 	[Export] private ChatLog _chatBox;
 	[Export] private AudioStreamPlayer _chatSound;
 	[Export] private GameData _gameData;
+	[Export] private ConnectionHandler _connection;
 
 	public void OnTextChanged()
 	{
@@ -23,7 +24,6 @@ public partial class TextEntry : TextEdit
 
 	public void OnGuiInput(InputEvent @event)
 	{
-
 		if (Text.Length > 0)
 		{
 			if (@event is InputEventKey keyEvent && keyEvent.Pressed && (keyEvent.Keycode == Key.Enter || keyEvent.Keycode == Key.KpEnter))
@@ -33,13 +33,14 @@ public partial class TextEntry : TextEdit
 				Text = "";
 				_chatSound.Play();
 				_chatBox.RefreshChat();
+				_connection.AddChat(_gameData.Id, text);
+
 			}
 		}
 	}
 
 	public void OnFocusEntered()
 	{
-		//GD.Print("Focused!");
 		_highlight.Visible = true;
 		_highlight.Modulate = new Color(0.9f, 0.9f, 0f, 0.9f);
 		Editable = true;
@@ -48,7 +49,6 @@ public partial class TextEntry : TextEdit
 
 	public void OnFocusExited()
 	{
-		//GD.Print("UnFocused!");
 		_highlight.Visible = false;
 		Editable = false;
 	}

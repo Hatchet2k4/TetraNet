@@ -8,15 +8,21 @@ using System.Text;
 public partial class ChatLog : RichTextLabel
 {
 	[Export] private GameData _gameData;
+	private int chatCount;
 
 	public override void _Ready()
 	{
-		SetProcess(false);
 	}
 
 
 	public override void _Process(double delta)
 	{
+		if (chatCount < _gameData.ChatLog.Count)
+		{
+			RefreshChat();
+			chatCount = _gameData.ChatLog.Count;
+		}
+
 	}
 
 	public void RefreshChat()
@@ -32,6 +38,5 @@ public partial class ChatLog : RichTextLabel
 			else fullText.AppendLine(line.Text);
 		}
 		Text = fullText.ToString();
-		GD.Print(Text);
 	}
 }

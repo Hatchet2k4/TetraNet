@@ -143,8 +143,7 @@ public partial class HostJoinMenu : Control
 	public void JoinLobby()
 	{
 		ConfigData.Save();
-		_connection.gameData.PlayerList.Clear();
-
+		_gameData.PlayerList.Clear();
 
 		if (_mode == ConnectionMode.Host)
 		{

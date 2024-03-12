@@ -297,7 +297,8 @@ offset_top = 265.0
 offset_right = 474.0
 offset_bottom = 295.0
 
-[node name="Lobby" type="Control" parent="." node_paths=PackedStringArray("_title", "hostJoinMenu", "connection", "_nameBox", "_teamOption", "_rowListNode", "gameData")]
+[node name="Lobby" type="Control" parent="." node_paths=PackedStringArray("_title", "hostJoinMenu", "_connection", "_nameBox", "_teamOption", "_rowListNode", "_gameData", "_StartButton")]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_top = 324.0
@@ -307,12 +308,13 @@ theme = ExtResource("8_bhpob")
 script = ExtResource("19_wijlx")
 _title = NodePath("..")
 hostJoinMenu = NodePath("../HostJoinMenu")
-connection = NodePath("../CommonObjects/ConnectionHandler")
+_connection = NodePath("../CommonObjects/ConnectionHandler")
 _nameBox = NodePath("NameText")
 _teamOption = NodePath("TeamOption")
 _connectedRow = ExtResource("18_b2d67")
 _rowListNode = NodePath("ConnectedList/ScrollContainer/RowList")
-gameData = NodePath("../CommonObjects/GameData")
+_gameData = NodePath("../CommonObjects/GameData")
+_StartButton = NodePath("GameButtons/Start Game")
 
 [node name="Team" type="Label" parent="Lobby"]
 layout_mode = 0
@@ -515,6 +517,8 @@ offset_left = 16.0
 offset_top = 16.0
 offset_right = 438.0
 offset_bottom = 264.0
+theme = ExtResource("8_bhpob")
+theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 script = ExtResource("25_d15cb")
 _gameData = NodePath("../../../CommonObjects/GameData")
@@ -536,22 +540,22 @@ patch_margin_bottom = 16
 [node name="Highlight" type="NinePatchRect" parent="Lobby/TextEntry"]
 visible = false
 layout_mode = 0
-offset_right = 1972.0
-offset_bottom = 80.0
+offset_right = 454.0
+offset_bottom = 112.0
 texture = ExtResource("20_et1mw")
 patch_margin_left = 16
 patch_margin_top = 16
 patch_margin_right = 16
 patch_margin_bottom = 16
 
-[node name="TextEdit" type="TextEdit" parent="Lobby/TextEntry" node_paths=PackedStringArray("_highlight", "_chatBox", "_chatSound", "_gameData")]
+[node name="TextEdit" type="TextEdit" parent="Lobby/TextEntry" node_paths=PackedStringArray("_highlight", "_chatBox", "_chatSound", "_gameData", "_connection")]
 layout_mode = 0
 offset_left = 16.0
 offset_top = 16.0
 offset_right = 438.0
 offset_bottom = 96.0
 focus_mode = 1
-theme_override_fonts/font = ExtResource("7_oseos")
+theme = ExtResource("8_bhpob")
 theme_override_font_sizes/font_size = 20
 caret_blink = true
 text_direction = 1
@@ -560,6 +564,7 @@ _highlight = NodePath("../Highlight")
 _chatBox = NodePath("../../ChatBox/ChatLog")
 _chatSound = NodePath("../../../CommonObjects/ChatSound")
 _gameData = NodePath("../../../CommonObjects/GameData")
+_connection = NodePath("../../../CommonObjects/ConnectionHandler")
 
 [node name="CheckBox" type="CheckBox" parent="Lobby"]
 layout_mode = 0
