@@ -2,6 +2,7 @@ namespace TetraNet;
 
 using Godot;
 using System.Collections.Generic;
+using System.Linq;
 using static Data;
 
 public partial class Block : Node2D
@@ -38,11 +39,33 @@ public partial class Block : Node2D
 		for (int i = 0; i < 4; i++)
 		{
 			Piece p = _pieceScene.Instantiate() as Piece;
+			AddChild(p);
 			p.Position = cells[i] * GRID_SIZE;
 			p.SetTexture(bd.blockTexture);
+			p.ZIndex = 2;
 			_pieces[i] = p;
-			AddChild(p);
 		}
+	}
+
+	public List<Vector2> GetTopPieces()
+	{
+		Dictionary<float, Vector2> highestPieces = new Dictionary<float, Vector2>();
+
+		foreach (Vector2 position in cells)
+		{
+			if (highestPieces.ContainsKey(position.X))
+			{
+				if (position.Y > highestPieces[position.X].Y)
+				{
+					highestPieces[position.X] = position;
+				}
+			}
+			else
+			{
+				highestPieces.Add(position.X, position);
+			}
+		}
+		return new List<Vector2>(highestPieces.Values);
 	}
 
 	public void SetGhost(Texture2D t)

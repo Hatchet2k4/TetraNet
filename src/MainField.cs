@@ -29,6 +29,8 @@ public partial class MainField : Control
 
 	private PackedScene _pieceScene = (PackedScene)ResourceLoader.Load("res://scenes/piece.tscn");
 
+	private PackedScene _gradientScene = (PackedScene)ResourceLoader.Load("res://scenes/gradient.tscn");
+
 	private double _fallTime;
 
 	private Piece[,] _gridData;
@@ -268,9 +270,26 @@ public partial class MainField : Control
 
 	public void FastDrop()
 	{
+		Vector2 oldPosition = blockPosition;
 		while (CheckCollisions(DOWN) == false)
 		{
 			Move(DOWN);
+		}
+		Vector2 newPosition = blockPosition;
+		if (newPosition.Y - oldPosition.Y != 0)
+		{
+			List<Vector2> topPieceLocations = _currentBlock.GetTopPieces();
+			foreach (Vector2 v in topPieceLocations)
+			{
+				Gradient g = _gradientScene.Instantiate() as Gradient;
+				AddChild(g);
+				g.Position = _grid.Position + (oldPosition + v) * 48;
+
+				g.Size = new Vector2(48, (newPosition.Y - oldPosition.Y) * 48);
+				GD.Print(g.Size);
+
+				//GD.Print(g.Position);
+			}
 		}
 		Land();
 	}
