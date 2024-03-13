@@ -8,7 +8,7 @@ public partial class Countdown : TextureRect
 	[Export] private AudioStreamPlayer doneSound;
 
 	private float count;
-	private bool started=false;
+	public bool Started = false;
 	private int curdigit;
 
 	public override void _Ready()
@@ -17,24 +17,26 @@ public partial class Countdown : TextureRect
 
 	public override void _Process(double delta)
 	{
-		count+=(float)delta;
-		if(started)
+		count += (float)delta;
+		if (Started)
 		{
-			if(count<3f)
+			if (count < 3f)
 			{
 				int digit = (int)Math.Truncate(count);
 				float fraction = count - digit;
-				Modulate = new Color(1f,1f,1f,1f-fraction);
-				Scale = new Vector2(2-fraction, 2-fraction);
-				if(digit>curdigit)
+				Modulate = new Color(1f, 1f, 1f, 1f - fraction);
+				Scale = new Vector2(2 - fraction, 2 - fraction);
+				if (digit > curdigit)
 				{
 					curdigit++;
 					Texture = Numbers[digit];
+					beepSound.Play();
 				}
 			}
 			else
 			{
-				started=false;
+				Started = false;
+				doneSound.Play();
 			}
 
 		}
@@ -43,8 +45,9 @@ public partial class Countdown : TextureRect
 	public void Start()
 	{
 		Texture = Numbers[0];
-		count=0f;
-		curdigit=0;
-		started=true;
+		count = 0f;
+		curdigit = 0;
+		Started = true;
+		beepSound.Play();
 	}
 }

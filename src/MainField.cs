@@ -71,7 +71,7 @@ public partial class MainField : Control
 		SpawnNewBlock(_spawner.GetNextBlock());
 		NewGame();
 		music.Play();
-		
+
 	}
 
 	public void NewGame()
@@ -102,6 +102,8 @@ public partial class MainField : Control
 
 	public override void _Process(double delta)
 	{
+		if (_countdown.Started) return;
+
 		if (_lines.Count > 0) //processing lines
 		{
 			clearTimer += delta;
