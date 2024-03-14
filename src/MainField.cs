@@ -25,6 +25,8 @@ public partial class MainField : Control
 	[Export] private AudioStreamPlayer dropSound;
 	[Export] private AudioStreamPlayer moveSound;
 	[Export] private AudioStreamPlayer rotateSound;
+
+	[Export] private MiniField _minifield;
 	private Texture2D _ghostTexture;
 
 	private PackedScene _pieceScene = (PackedScene)ResourceLoader.Load("res://scenes/piece.tscn");
@@ -128,6 +130,7 @@ public partial class MainField : Control
 					clearIndex = 0;
 					swapped = false;
 					SpawnNewBlock(_spawner.GetNextBlock());
+					_minifield.Populate(GetGrid());
 				}
 			}
 
@@ -390,6 +393,8 @@ public partial class MainField : Control
 		RemoveChild(_ghostBlock);
 		CheckLines();
 		if (_lines.Count == 0) SpawnNewBlock(_spawner.GetNextBlock());
+
+		_minifield.Populate(GetGrid());
 	}
 
 	public void RemoveBlankLines()
@@ -453,9 +458,9 @@ public partial class MainField : Control
 		_lblLines.Text = $"Lines - {totalLines}";
 	}
 
-	public int[,] GetGrid()
+	public sbyte[,] GetGrid()
 	{
-		int[,] data = new int[GRID_W, GRID_H];
+		sbyte[,] data = new sbyte[GRID_W, GRID_H];
 
 		for (int x = 0; x < GRID_W; x++)
 		{
@@ -466,7 +471,7 @@ public partial class MainField : Control
 					Piece p = _gridData[x, y];
 					data[x, y] = p.colorIndex;
 				}
-				else data[x, y] = 0;
+				else data[x, y] = -1;
 			}
 		}
 		return data;

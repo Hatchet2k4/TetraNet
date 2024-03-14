@@ -1,0 +1,50 @@
+[gd_scene load_steps=11 format=3 uid="uid://xje1qygs2j3e"]
+
+[ext_resource type="Script" path="res://src/MiniField.cs" id="1_itts0"]
+[ext_resource type="Texture2D" uid="uid://j5rbu80ek0x4" path="res://gfx/Border.png" id="1_kktgu"]
+[ext_resource type="Texture2D" uid="uid://fpd1ccvyusfn" path="res://gfx/Grid.png" id="2_6t4xm"]
+[ext_resource type="Texture2D" uid="uid://b80mtd4vjpnxv" path="res://gfx/Cyan.png" id="2_bpwwt"]
+[ext_resource type="Texture2D" uid="uid://bkghomu2gjk0f" path="res://gfx/Blue.png" id="3_umney"]
+[ext_resource type="Texture2D" uid="uid://2yruidscagcj" path="res://gfx/Green.png" id="4_xbs4o"]
+[ext_resource type="Texture2D" uid="uid://dfoe7fg8s03t1" path="res://gfx/Orange.png" id="5_nccgw"]
+[ext_resource type="Texture2D" uid="uid://b5oqnukvf2gsv" path="res://gfx/Purple.png" id="6_6f1sx"]
+[ext_resource type="Texture2D" uid="uid://y8e0lfwwif52" path="res://gfx/Yellow.png" id="6_d7ct4"]
+[ext_resource type="Texture2D" uid="uid://d3uo1phhbrl6k" path="res://gfx/Red.png" id="8_c8uxx"]
+
+[node name="Mini Field" type="Control" node_paths=PackedStringArray("_nameLabel", "_grid")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 512.0
+offset_bottom = 992.0
+scale = Vector2(0.5, 0.5)
+mouse_filter = 2
+script = ExtResource("1_itts0")
+_nameLabel = NodePath("PlayerLabel")
+_grid = NodePath("Border/Grid")
+_textures = Array[Texture2D]([ExtResource("2_bpwwt"), ExtResource("3_umney"), ExtResource("4_xbs4o"), ExtResource("5_nccgw"), ExtResource("6_d7ct4"), ExtResource("6_6f1sx"), ExtResource("8_c8uxx")])
+
+[node name="PlayerLabel" type="Label" parent="."]
+layout_mode = 0
+offset_top = -80.0
+offset_right = 256.0
+offset_bottom = -48.0
+scale = Vector2(2, 2)
+text = "Opponent 1"
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Border" type="TextureRect" parent="."]
+layout_mode = 0
+offset_top = -8.0
+offset_right = 512.0
+offset_bottom = 984.0
+texture = ExtResource("1_kktgu")
+
+[node name="Grid" type="TextureRect" parent="Border"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 496.0
+offset_bottom = 976.0
+texture = ExtResource("2_6t4xm")
+stretch_mode = 1

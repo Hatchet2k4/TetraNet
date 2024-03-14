@@ -37,6 +37,7 @@ public partial class Countdown : TextureRect
 			{
 				Started = false;
 				doneSound.Play();
+				Hide();
 			}
 
 		}
@@ -49,5 +50,6 @@ public partial class Countdown : TextureRect
 		curdigit = 0;
 		Started = true;
 		beepSound.Play();
+		Show();
 	}
 }
