@@ -45,7 +45,7 @@ public partial class MiniField : Control
 		{
 			for (int y = 0; y < GRID_H; y++)
 			{
-				if (data[x, y] > 0)
+				if (data[x, y] >= 0)
 				{
 					Piece p = _pieceScene.Instantiate() as Piece;
 					AddChild(p);

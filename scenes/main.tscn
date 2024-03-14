@@ -1,8 +1,7 @@
-[gd_scene load_steps=34 format=3 uid="uid://dba4ubxkab2hi"]
+[gd_scene load_steps=31 format=3 uid="uid://dba4ubxkab2hi"]
 
 [ext_resource type="AudioStream" uid="uid://3gt8y2muyuuy" path="res://sfx/hold.wav" id="1_6p8t6"]
 [ext_resource type="Theme" uid="uid://dcvi35wnn0w4a" path="res://resources/new_theme.tres" id="1_e648y"]
-[ext_resource type="Script" path="res://src/CatchFocus.cs" id="1_me42g"]
 [ext_resource type="AudioStream" uid="uid://chp35s7nn3l18" path="res://sfx/rotate.wav" id="1_q8bov"]
 [ext_resource type="AudioStream" uid="uid://dgv7fq4c7f832" path="res://sfx/land.wav" id="2_0tjit"]
 [ext_resource type="PackedScene" uid="uid://cafudqe5o8fnt" path="res://scenes/connection_handler.tscn" id="2_4sag1"]
@@ -14,7 +13,6 @@
 [ext_resource type="AudioStream" uid="uid://o5pjkmq87byb" path="res://sfx/clear 1.wav" id="4_5abv5"]
 [ext_resource type="Script" path="res://src/Spawner.cs" id="4_edpkq"]
 [ext_resource type="LabelSettings" uid="uid://d0u2fihvoi8b4" path="res://resources/mainfont.tres" id="5_nx2xu"]
-[ext_resource type="Texture2D" uid="uid://j5rbu80ek0x4" path="res://gfx/Border.png" id="5_rpy1o"]
 [ext_resource type="Texture2D" uid="uid://fpd1ccvyusfn" path="res://gfx/Grid.png" id="6_x34jm"]
 [ext_resource type="FontFile" uid="uid://cj7wvtcdatui1" path="res://fonts/kirifont/Kirifont.tres" id="7_dkgbi"]
 [ext_resource type="AudioStream" uid="uid://dsrusdrhw1laa" path="res://sfx/clear 2.wav" id="8_gfis2"]
@@ -32,16 +30,13 @@
 [ext_resource type="FontFile" uid="uid://cksjotvc3wafa" path="res://fonts/kirifont/KiriFont.otf" id="20_wh82m"]
 [ext_resource type="Texture2D" uid="uid://ccwlpw5uudako" path="res://gfx/Big2.png" id="21_fc3ks"]
 [ext_resource type="Texture2D" uid="uid://cfxe1jwf8vyub" path="res://gfx/Big1.png" id="22_30lc2"]
-[ext_resource type="PackedScene" uid="uid://xje1qygs2j3e" path="res://scenes/mini_field.tscn" id="32_vu0g7"]
 
-[node name="Main" type="Control" node_paths=PackedStringArray("mainField")]
+[node name="Main" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 2560.0
 offset_bottom = 1440.0
 theme = ExtResource("1_e648y")
-script = ExtResource("1_me42g")
-mainField = NodePath("Main Area")
 
 [node name="ConnectionHandler" parent="." instance=ExtResource("2_4sag1")]
 
@@ -104,7 +99,7 @@ bus = &"Sound"
 script = ExtResource("4_edpkq")
 blockScene = ExtResource("3_yjmfd")
 
-[node name="Main Area" type="Control" parent="." node_paths=PackedStringArray("_spawner", "_grid", "_nextGrid", "_holdGrid", "_lblLines", "_countdown", "music", "landSound", "clearSound", "clear2Sound", "clear3Sound", "holdSound", "dropSound", "moveSound", "rotateSound", "_minifield")]
+[node name="Main Area" type="Control" parent="." node_paths=PackedStringArray("_root", "_spawner", "_grid", "_nextGrid", "_holdGrid", "_lblLines", "_countdown", "music", "landSound", "clearSound", "clear2Sound", "clear3Sound", "holdSound", "dropSound", "moveSound", "rotateSound")]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 16.0
@@ -114,6 +109,7 @@ offset_bottom = 1052.0
 focus_mode = 1
 mouse_filter = 2
 script = ExtResource("2_515ng")
+_root = NodePath("..")
 _spawner = NodePath("../Spawner")
 _grid = NodePath("Border/Grid")
 _nextGrid = NodePath("../NextBox")
@@ -129,7 +125,6 @@ holdSound = NodePath("../Sounds/Hold")
 dropSound = NodePath("../Sounds/Drop")
 moveSound = NodePath("../Sounds/Move")
 rotateSound = NodePath("../Sounds/Rotate")
-_minifield = NodePath("../Mini Field")
 
 [node name="Player 1" type="Label" parent="Main Area"]
 layout_mode = 0
@@ -331,387 +326,6 @@ _highlight = NodePath("../Highlight")
 _mainField = NodePath("../../Main Area")
 _chatBox = NodePath("../../ChatBox/TextEdit")
 _chatSound = NodePath("../../Sounds/ChatSound")
-
-[node name="Mini Field" parent="." instance=ExtResource("32_vu0g7")]
-offset_left = 1168.0
-offset_top = 40.0
-offset_right = 1680.0
-offset_bottom = 1032.0
-
-[node name="Player 3" type="Label" parent="."]
-visible = false
-layout_mode = 0
-offset_left = 1168.0
-offset_top = 532.0
-offset_right = 1424.0
-offset_bottom = 564.0
-text = "Opponent 2"
-horizontal_alignment = 1
-vertical_alignment = 2
-
-[node name="Mini Field2" type="Control" parent="."]
-visible = false
-layout_mode = 3
-anchors_preset = 0
-offset_left = 1168.0
-offset_top = 564.0
-offset_right = 1680.0
-offset_bottom = 1556.0
-scale = Vector2(0.5, 0.5)
-mouse_filter = 2
-
-[node name="Border" type="TextureRect" parent="Mini Field2"]
-visible = false
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("5_rpy1o")
-
-[node name="Grid" type="TextureRect" parent="Mini Field2"]
-visible = false
-layout_mode = 0
-offset_left = 16.0
-offset_top = 16.0
-offset_right = 496.0
-offset_bottom = 976.0
-texture = ExtResource("6_x34jm")
-stretch_mode = 1
-
-[node name="Player 4" type="Label" parent="."]
-visible = false
-layout_mode = 0
-offset_left = 1448.0
-offset_right = 1704.0
-offset_bottom = 32.0
-text = "Opponent 3"
-horizontal_alignment = 1
-vertical_alignment = 2
-
-[node name="Mini Field3" type="Control" parent="."]
-visible = false
-layout_mode = 3
-anchors_preset = 0
-offset_left = 1448.0
-offset_top = 40.0
-offset_right = 1960.0
-offset_bottom = 1032.0
-scale = Vector2(0.5, 0.5)
-mouse_filter = 2
-
-[node name="Border" type="TextureRect" parent="Mini Field3"]
-layout_mode = 0
-offset_top = -8.0
-offset_right = 512.0
-offset_bottom = 984.0
-texture = ExtResource("5_rpy1o")
-
-[node name="Grid" type="TextureRect" parent="Mini Field3/Border"]
-layout_mode = 0
-offset_left = 16.0
-offset_top = 16.0
-offset_right = 496.0
-offset_bottom = 976.0
-texture = ExtResource("6_x34jm")
-stretch_mode = 1
-
-[node name="Player 5" type="Label" parent="."]
-visible = false
-layout_mode = 0
-offset_left = 1448.0
-offset_top = 532.0
-offset_right = 1704.0
-offset_bottom = 564.0
-text = "Opponent 4
-"
-horizontal_alignment = 1
-vertical_alignment = 2
-
-[node name="Mini Field4" type="Control" parent="."]
-visible = false
-layout_mode = 3
-anchors_preset = 0
-offset_left = 1448.0
-offset_top = 564.0
-offset_right = 1960.0
-offset_bottom = 1556.0
-scale = Vector2(0.5, 0.5)
-mouse_filter = 2
-
-[node name="Border" type="TextureRect" parent="Mini Field4"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("5_rpy1o")
-
-[node name="Grid" type="TextureRect" parent="Mini Field4"]
-layout_mode = 0
-offset_left = 16.0
-offset_top = 16.0
-offset_right = 496.0
-offset_bottom = 976.0
-texture = ExtResource("6_x34jm")
-stretch_mode = 1
-
-[node name="Player 6" type="Label" parent="."]
-visible = false
-layout_mode = 0
-offset_left = 1728.0
-offset_right = 1984.0
-offset_bottom = 32.0
-text = "Opponent 5"
-horizontal_alignment = 1
-vertical_alignment = 2
-
-[node name="Mini Field5" type="Control" parent="."]
-visible = false
-layout_mode = 3
-anchors_preset = 0
-offset_left = 1728.0
-offset_top = 40.0
-offset_right = 2240.0
-offset_bottom = 1032.0
-scale = Vector2(0.5, 0.5)
-mouse_filter = 2
-
-[node name="Border" type="TextureRect" parent="Mini Field5"]
-layout_mode = 0
-offset_top = -8.0
-offset_right = 512.0
-offset_bottom = 984.0
-texture = ExtResource("5_rpy1o")
-
-[node name="Grid" type="TextureRect" parent="Mini Field5/Border"]
-layout_mode = 0
-offset_left = 16.0
-offset_top = 16.0
-offset_right = 496.0
-offset_bottom = 976.0
-texture = ExtResource("6_x34jm")
-stretch_mode = 1
-
-[node name="Player 7" type="Label" parent="."]
-visible = false
-layout_mode = 0
-offset_left = 1728.0
-offset_top = 532.0
-offset_right = 1984.0
-offset_bottom = 564.0
-text = "Opponent 6
-"
-horizontal_alignment = 1
-vertical_alignment = 2
-
-[node name="Mini Field6" type="Control" parent="."]
-visible = false
-layout_mode = 3
-anchors_preset = 0
-offset_left = 1728.0
-offset_top = 564.0
-offset_right = 2240.0
-offset_bottom = 1556.0
-scale = Vector2(0.5, 0.5)
-mouse_filter = 2
-
-[node name="Border" type="TextureRect" parent="Mini Field6"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("5_rpy1o")
-
-[node name="Grid" type="TextureRect" parent="Mini Field6"]
-layout_mode = 0
-offset_left = 16.0
-offset_top = 16.0
-offset_right = 496.0
-offset_bottom = 976.0
-texture = ExtResource("6_x34jm")
-stretch_mode = 1
-
-[node name="Player 8" type="Label" parent="."]
-visible = false
-layout_mode = 0
-offset_left = 2008.0
-offset_right = 2264.0
-offset_bottom = 32.0
-text = "Opponent 7"
-horizontal_alignment = 1
-vertical_alignment = 2
-
-[node name="Mini Field7" type="Control" parent="."]
-visible = false
-layout_mode = 3
-anchors_preset = 0
-offset_left = 2008.0
-offset_top = 40.0
-offset_right = 2520.0
-offset_bottom = 1032.0
-scale = Vector2(0.5, 0.5)
-mouse_filter = 2
-
-[node name="Border" type="TextureRect" parent="Mini Field7"]
-layout_mode = 0
-offset_top = -8.0
-offset_right = 512.0
-offset_bottom = 984.0
-texture = ExtResource("5_rpy1o")
-
-[node name="Grid" type="TextureRect" parent="Mini Field7/Border"]
-layout_mode = 0
-offset_left = 16.0
-offset_top = 16.0
-offset_right = 496.0
-offset_bottom = 976.0
-texture = ExtResource("6_x34jm")
-stretch_mode = 1
-
-[node name="Player 9" type="Label" parent="."]
-visible = false
-layout_mode = 0
-offset_left = 2008.0
-offset_top = 532.0
-offset_right = 2264.0
-offset_bottom = 564.0
-text = "Opponent 8"
-horizontal_alignment = 1
-vertical_alignment = 2
-
-[node name="Mini Field8" type="Control" parent="."]
-visible = false
-layout_mode = 3
-anchors_preset = 0
-offset_left = 2008.0
-offset_top = 564.0
-offset_right = 2520.0
-offset_bottom = 1556.0
-scale = Vector2(0.5, 0.5)
-mouse_filter = 2
-
-[node name="Border" type="TextureRect" parent="Mini Field8"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("5_rpy1o")
-
-[node name="Grid" type="TextureRect" parent="Mini Field8"]
-layout_mode = 0
-offset_left = 16.0
-offset_top = 16.0
-offset_right = 496.0
-offset_bottom = 976.0
-texture = ExtResource("6_x34jm")
-stretch_mode = 1
-
-[node name="Player 10" type="Label" parent="."]
-visible = false
-layout_mode = 0
-offset_left = 2288.0
-offset_top = 4.0
-offset_right = 2544.0
-offset_bottom = 36.0
-text = "Opponent 9"
-horizontal_alignment = 1
-vertical_alignment = 2
-
-[node name="Mini Field9" type="Control" parent="."]
-visible = false
-layout_mode = 3
-anchors_preset = 0
-offset_left = 2288.0
-offset_top = 40.0
-offset_right = 2800.0
-offset_bottom = 1032.0
-scale = Vector2(0.5, 0.5)
-mouse_filter = 2
-
-[node name="Border" type="TextureRect" parent="Mini Field9"]
-layout_mode = 0
-offset_top = -8.0
-offset_right = 512.0
-offset_bottom = 984.0
-texture = ExtResource("5_rpy1o")
-
-[node name="Grid" type="TextureRect" parent="Mini Field9/Border"]
-layout_mode = 0
-offset_left = 16.0
-offset_top = 16.0
-offset_right = 496.0
-offset_bottom = 976.0
-texture = ExtResource("6_x34jm")
-stretch_mode = 1
-
-[node name="Player 11" type="Label" parent="."]
-visible = false
-layout_mode = 0
-offset_left = 2288.0
-offset_top = 532.0
-offset_right = 2544.0
-offset_bottom = 564.0
-text = "Opponent 10	"
-horizontal_alignment = 1
-vertical_alignment = 2
-
-[node name="Mini Field10" type="Control" parent="."]
-visible = false
-layout_mode = 3
-anchors_preset = 0
-offset_left = 2288.0
-offset_top = 564.0
-offset_right = 2800.0
-offset_bottom = 1556.0
-scale = Vector2(0.5, 0.5)
-mouse_filter = 2
-
-[node name="Border" type="TextureRect" parent="Mini Field10"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("5_rpy1o")
-
-[node name="Grid" type="TextureRect" parent="Mini Field10"]
-layout_mode = 0
-offset_left = 16.0
-offset_top = 16.0
-offset_right = 496.0
-offset_bottom = 976.0
-texture = ExtResource("6_x34jm")
-stretch_mode = 1
-
-[node name="Player 12" type="Label" parent="."]
-visible = false
-layout_mode = 0
-offset_left = 888.0
-offset_right = 1144.0
-offset_bottom = 32.0
-text = "Opponent 1"
-horizontal_alignment = 1
-vertical_alignment = 2
-
-[node name="Mini Field11" type="Control" parent="."]
-visible = false
-layout_mode = 3
-anchors_preset = 0
-offset_left = 888.0
-offset_top = 40.0
-offset_right = 1400.0
-offset_bottom = 1032.0
-scale = Vector2(0.5, 0.5)
-mouse_filter = 2
-
-[node name="Border" type="TextureRect" parent="Mini Field11"]
-layout_mode = 0
-offset_top = -8.0
-offset_right = 512.0
-offset_bottom = 984.0
-texture = ExtResource("5_rpy1o")
-
-[node name="Grid" type="TextureRect" parent="Mini Field11/Border"]
-layout_mode = 0
-offset_left = 16.0
-offset_top = 16.0
-offset_right = 496.0
-offset_bottom = 976.0
-texture = ExtResource("6_x34jm")
-stretch_mode = 1
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="focus_entered" from="TextBox/TextEntry" to="TextBox/TextEntry" method="OnFocusEntered"]
