@@ -1,13 +1,14 @@
 [gd_scene load_steps=5 format=3 uid="uid://dijfdnwe6x7tn"]
 
 [ext_resource type="Texture2D" uid="uid://smxnw8u1gp0k" path="res://gfx/HoldBorder.png" id="1_iqiv8"]
+[ext_resource type="Theme" uid="uid://dcvi35wnn0w4a" path="res://resources/new_theme.tres" id="1_o8m5c"]
 [ext_resource type="Script" path="res://src/NextGrid.cs" id="2_8x5vd"]
-[ext_resource type="LabelSettings" uid="uid://d0u2fihvoi8b4" path="res://resources/mainfont.tres" id="3_1yl13"]
 [ext_resource type="Texture2D" uid="uid://fpd1ccvyusfn" path="res://gfx/Grid.png" id="4_n7upk"]
 
 [node name="NextBox" type="NinePatchRect" node_paths=PackedStringArray("_nextGrid")]
 offset_right = 272.0
 offset_bottom = 464.0
+theme = ExtResource("1_o8m5c")
 texture = ExtResource("1_iqiv8")
 patch_margin_left = 16
 patch_margin_top = 16
@@ -21,8 +22,8 @@ layout_mode = 0
 offset_top = -44.0
 offset_right = 272.0
 offset_bottom = -4.0
+theme_override_font_sizes/font_size = 32
 text = "NEXT"
-label_settings = ExtResource("3_1yl13")
 horizontal_alignment = 1
 vertical_alignment = 2
 
