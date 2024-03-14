@@ -13,9 +13,7 @@ public partial class Block : Node2D
 	public Shape shape;
 	public List<Vector2> cells;
 
-
-
-	public BlockType BlockType
+	public BlockType Block_Type
 	{
 		get
 		{
@@ -25,7 +23,6 @@ public partial class Block : Node2D
 
 	public override void _Ready()
 	{
-
 		SetProcess(false);
 	}
 
@@ -43,6 +40,7 @@ public partial class Block : Node2D
 			p.Position = cells[i] * GRID_SIZE;
 			p.SetTexture(bd.blockTexture);
 			p.ZIndex = 2;
+			p.colorIndex = colorIndexMapping[_blockData.blockType];
 			_pieces[i] = p;
 		}
 	}
@@ -114,6 +112,4 @@ public partial class Block : Node2D
 	{
 		return _pieces[index];
 	}
-
-
 }

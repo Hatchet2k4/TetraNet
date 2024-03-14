@@ -105,6 +105,19 @@ public partial class Data : Node
 		{LEFT, counterClockwiseRotation},
 		{RIGHT, clockwiseRotation}
 	};
+
+	public static Dictionary<BlockType, int> colorIndexMapping = new()
+	{
+		{BlockType.I, 1},
+		{BlockType.J, 2},
+		{BlockType.L, 3},
+		{BlockType.O, 4},
+		{BlockType.S, 5},
+		{BlockType.T, 6},
+		{BlockType.Z, 7}
+	};
+
+
 }
 
 

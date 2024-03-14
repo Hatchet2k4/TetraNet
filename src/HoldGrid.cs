@@ -42,7 +42,7 @@ public partial class HoldGrid : Control
 	{
 		if (HasBlock())
 		{
-			_holdBlock.Position = _holdGrid.Position + nextSpawnPositions[_holdBlock.BlockType] * GRID_SIZE;
+			_holdBlock.Position = _holdGrid.Position + nextSpawnPositions[_holdBlock.Block_Type] * GRID_SIZE;
 		}
 	}
 

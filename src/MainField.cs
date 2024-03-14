@@ -215,7 +215,7 @@ public partial class MainField : Control
 			if (direction == LEFT) wall_kick_index--;
 			wall_kick_index = wrap(wall_kick_index, 8);
 			List<Vector2> kicks;
-			if (_currentBlock.BlockType == BlockType.I) kicks = wallKicksI[wall_kick_index];
+			if (_currentBlock.Block_Type == BlockType.I) kicks = wallKicksI[wall_kick_index];
 			else kicks = wallKicks[wall_kick_index];
 			for (int i = 0; i < 4; i++)
 			{
@@ -284,11 +284,9 @@ public partial class MainField : Control
 				Gradient g = _gradientScene.Instantiate() as Gradient;
 				AddChild(g);
 				g.Position = _grid.Position + (oldPosition + v) * 48;
-
 				g.Size = new Vector2(48, (newPosition.Y - oldPosition.Y) * 48);
+				//g.SetDeferred("Size", new Vector2(48, (newPosition.Y - oldPosition.Y) * 48));
 				GD.Print(g.Size);
-
-				//GD.Print(g.Position);
 			}
 		}
 		Land();
@@ -309,7 +307,7 @@ public partial class MainField : Control
 		{
 			Block t = _currentBlock;
 			RemoveChild(_currentBlock);
-			SpawnNewBlock(_holdGrid.GetBlock().BlockType);
+			SpawnNewBlock(_holdGrid.GetBlock().Block_Type);
 			_holdGrid.SetBlock(t);
 		}
 		swapped = true;
@@ -454,4 +452,29 @@ public partial class MainField : Control
 
 		_lblLines.Text = $"Lines - {totalLines}";
 	}
+
+	public int[,] GetGrid()
+	{
+		int[,] data = new int[GRID_W, GRID_H];
+
+		for (int x = 0; x < GRID_W; x++)
+		{
+			for (int y = 0; y < GRID_H; y++)
+			{
+				if (_gridData[x, y] != null)
+				{
+					Piece p = _gridData[x, y];
+					data[x, y] = p.colorIndex;
+				}
+				else data[x, y] = 0;
+			}
+		}
+		return data;
+	}
+
+	public void SetGrid(int[,] data, int gridIndex)
+	{
+
+	}
+
 }

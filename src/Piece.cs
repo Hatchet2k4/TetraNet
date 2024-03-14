@@ -7,6 +7,7 @@ public partial class Piece : Area2D
 	[Export] private Sprite2D _sprite;
 	[Export] private CollisionShape2D _collision;
 	private Texture2D _ghostTexture;
+	public int colorIndex;
 
 	public void SetTexture(Texture2D texture)
 	{
