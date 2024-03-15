@@ -129,6 +129,6 @@ public partial class Lobby : Control
 
 	public void StartGame()
 	{
-		
+		_title.StartGame();
 	}
 }

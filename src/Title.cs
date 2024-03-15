@@ -8,6 +8,7 @@ public partial class Title : Node2D
 	[Export] private AudioStreamPlayer _titleMusic;
 	[Export] private Control _mainMenu;
 	[Export] private HostJoinMenu _hostJoinMenu;
+	[Export] private Lobby _lobby;
 	[Export] private OptionsMenu _optionsMenu;
 	[Export] private GameData _gameData;
 
@@ -53,16 +54,21 @@ public partial class Title : Node2D
 		_mainMenu.Show();
 	}
 
-	public void SoloGame()
+	public void StartGame()
 	{
 		_titleMusic.Stop();
 		_mainMenu.Hide();
+		_hostJoinMenu.Hide();
+		_lobby.Hide();
 		_main = _mainScene.Instantiate() as Main;
 		AddChild(_main);
 		_main.Connection = connection;
 		_main.GameData = _gameData;
+		if (connection.Mode == ConnectionMode.Host) connection.StartGame();
 		_main.Start();
 	}
+
+
 
 	public void StartServer()
 	{

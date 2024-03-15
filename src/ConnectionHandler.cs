@@ -108,7 +108,10 @@ public partial class ConnectionHandler : Node
 		{
 			Rpc("StartGame");
 		}
-
+		else
+		{
+			_lobby.StartGame();
+		}
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]

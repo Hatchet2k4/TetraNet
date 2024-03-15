@@ -28,11 +28,12 @@
 [ext_resource type="Script" path="res://src/ChatLog.cs" id="25_d15cb"]
 [ext_resource type="Script" path="res://src/OptionsMenu.cs" id="26_7ytwf"]
 
-[node name="Top" type="Node2D" node_paths=PackedStringArray("_titleMusic", "_mainMenu", "_hostJoinMenu", "_optionsMenu", "_gameData", "connection")]
+[node name="Top" type="Node2D" node_paths=PackedStringArray("_titleMusic", "_mainMenu", "_hostJoinMenu", "_lobby", "_optionsMenu", "_gameData", "connection")]
 script = ExtResource("1_4v2tq")
 _titleMusic = NodePath("CommonObjects/TitleMusic")
 _mainMenu = NodePath("Menus/MainMenu")
 _hostJoinMenu = NodePath("Menus/HostJoinMenu")
+_lobby = NodePath("Menus/Lobby")
 _optionsMenu = NodePath("Menus/Options")
 _gameData = NodePath("CommonObjects/GameData")
 connection = NodePath("CommonObjects/ConnectionHandler")
@@ -501,7 +502,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = ExtResource("5_edd4o")
 theme_override_font_sizes/font_size = 36
-disabled = true
 action_mode = 0
 text = "Start Game"
 
@@ -654,7 +654,7 @@ theme_override_font_sizes/font_size = 40
 action_mode = 0
 text = "Main Menu"
 
-[connection signal="pressed" from="Menus/MainMenu/MainMenuBox/Solo Game" to="." method="SoloGame"]
+[connection signal="pressed" from="Menus/MainMenu/MainMenuBox/Solo Game" to="." method="StartGame"]
 [connection signal="pressed" from="Menus/MainMenu/MainMenuBox/Start Server" to="." method="StartServer"]
 [connection signal="pressed" from="Menus/MainMenu/MainMenuBox/Connect to Server" to="." method="ConnectToServer"]
 [connection signal="pressed" from="Menus/MainMenu/MainMenuBox/Game Options" to="." method="Options"]
@@ -668,6 +668,7 @@ text = "Main Menu"
 [connection signal="text_changed" from="Menus/Lobby/NameText" to="Menus/Lobby" method="UpdateName"]
 [connection signal="item_selected" from="Menus/Lobby/TeamOption" to="Menus/Lobby" method="UpdateTeam"]
 [connection signal="pressed" from="Menus/Lobby/GameButtons/Disconnect" to="Menus/Lobby" method="Disconnect"]
+[connection signal="pressed" from="Menus/Lobby/GameButtons/Start Game" to="Menus/Lobby" method="StartGame"]
 [connection signal="focus_entered" from="Menus/Lobby/TextBox/TextEntry" to="Menus/Lobby/TextBox/TextEntry" method="OnFocusEntered"]
 [connection signal="focus_exited" from="Menus/Lobby/TextBox/TextEntry" to="Menus/Lobby/TextBox/TextEntry" method="OnFocusExited"]
 [connection signal="gui_input" from="Menus/Lobby/TextBox/TextEntry" to="Menus/Lobby/TextBox/TextEntry" method="OnGuiInput"]
