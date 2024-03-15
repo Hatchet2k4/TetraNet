@@ -496,9 +496,9 @@ public partial class MainField : Control
 		_lblLines.Text = $"Lines - {totalLines}";
 	}
 
-	public sbyte[,] GetGrid()
+	public sbyte[] GetGrid()
 	{
-		sbyte[,] data = new sbyte[GRID_W, GRID_H];
+		sbyte[] data = new sbyte[GRID_W * GRID_H];
 
 		for (int x = 0; x < GRID_W; x++)
 		{
@@ -507,9 +507,9 @@ public partial class MainField : Control
 				if (_gridData[x, y] != null)
 				{
 					Piece p = _gridData[x, y];
-					data[x, y] = p.colorIndex;
+					data[y * GRID_W + x] = p.colorIndex;
 				}
-				else data[x, y] = -1;
+				else data[y * GRID_W + x] = -1;
 			}
 		}
 		return data;

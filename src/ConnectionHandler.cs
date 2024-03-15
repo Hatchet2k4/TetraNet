@@ -115,7 +115,7 @@ public partial class ConnectionHandler : Node
 		}
 	}
 
-	public void SyncField(sbyte[,] data)
+	public void SyncField(sbyte[] data)
 	{
 		string json = JsonSerializer.Serialize(data);
 		if (Mode == ConnectionMode.Host)
@@ -132,7 +132,7 @@ public partial class ConnectionHandler : Node
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
 	public void SyncGridToHost(string json)
 	{
-		sbyte[,] data = LoadJsonFromString<sbyte[,]>(json);
+		sbyte[] data = LoadJsonFromString<sbyte[]>(json);
 		GD.Print(json);
 		Rpc("SyncGrid", json);
 		main.miniFields[0].Populate(data);
@@ -141,7 +141,7 @@ public partial class ConnectionHandler : Node
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
 	public void SyncGrid(string json)
 	{
-		sbyte[,] data = LoadJsonFromString<sbyte[,]>(json);
+		sbyte[] data = LoadJsonFromString<sbyte[]>(json);
 		main.miniFields[0].Populate(data);
 	}
 

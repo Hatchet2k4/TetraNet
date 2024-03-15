@@ -36,19 +36,19 @@ public partial class MiniField : Control
 		}
 		_pieces.Clear();
 	}
-	public void Populate(sbyte[,] data)
+	public void Populate(sbyte[] data)
 	{
 		ClearPieces();
 		for (int x = 0; x < GRID_W; x++)
 		{
 			for (int y = 0; y < GRID_H; y++)
 			{
-				if (data[x, y] >= 0)
+				if (data[y * GRID_W + x] >= 0)
 				{
 					Piece p = _pieceScene.Instantiate() as Piece;
 					AddChild(p);
 					p.Position = _grid.Position + new Vector2(x * GRID_SIZE, y * GRID_SIZE);
-					p.SetTexture(_textures[data[x, y]]);
+					p.SetTexture(_textures[data[y * GRID_W + x]]);
 					p.ZIndex = 2;
 					_pieces.Add(p);
 				}
