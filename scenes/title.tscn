@@ -28,13 +28,14 @@
 [ext_resource type="Script" path="res://src/ChatLog.cs" id="25_d15cb"]
 [ext_resource type="Script" path="res://src/OptionsMenu.cs" id="26_7ytwf"]
 
-[node name="Title" type="Node2D" node_paths=PackedStringArray("_titleMusic", "_mainMenu", "_hostJoinMenu", "_optionsMenu", "_gameData")]
+[node name="Top" type="Node2D" node_paths=PackedStringArray("_titleMusic", "_mainMenu", "_hostJoinMenu", "_optionsMenu", "_gameData", "connection")]
 script = ExtResource("1_4v2tq")
 _titleMusic = NodePath("CommonObjects/TitleMusic")
-_mainMenu = NodePath("MainMenu")
-_hostJoinMenu = NodePath("HostJoinMenu")
-_optionsMenu = NodePath("Options")
+_mainMenu = NodePath("Menus/MainMenu")
+_hostJoinMenu = NodePath("Menus/HostJoinMenu")
+_optionsMenu = NodePath("Menus/Options")
 _gameData = NodePath("CommonObjects/GameData")
+connection = NodePath("CommonObjects/ConnectionHandler")
 
 [node name="CommonObjects" type="Node" parent="."]
 
@@ -43,7 +44,7 @@ script = ExtResource("2_2r4o3")
 
 [node name="ConnectionHandler" type="Node" parent="CommonObjects" node_paths=PackedStringArray("_lobby", "gameData")]
 script = ExtResource("3_efapg")
-_lobby = NodePath("../../Lobby")
+_lobby = NodePath("../../Menus/Lobby")
 gameData = NodePath("../GameData")
 
 [node name="TitleMusic" type="AudioStreamPlayer" parent="CommonObjects"]
@@ -60,19 +61,24 @@ bus = &"Sound"
 stream = ExtResource("6_gvqgc")
 bus = &"Sound"
 
-[node name="Splash" type="TextureRect" parent="."]
+[node name="Menus" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="BG" type="TextureRect" parent="Menus"]
+layout_mode = 0
 offset_right = 1280.0
 offset_bottom = 720.0
 texture = ExtResource("2_wu36l")
 
-[node name="MainMenu" type="Control" parent="."]
+[node name="MainMenu" type="Control" parent="Menus"]
 visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="MainMenuRect" type="NinePatchRect" parent="MainMenu"]
+[node name="MainMenuRect" type="NinePatchRect" parent="Menus/MainMenu"]
 layout_mode = 0
 offset_left = 368.0
 offset_top = 324.0
@@ -84,7 +90,7 @@ patch_margin_top = 16
 patch_margin_right = 16
 patch_margin_bottom = 16
 
-[node name="MainMenuBox" type="VBoxContainer" parent="MainMenu"]
+[node name="MainMenuBox" type="VBoxContainer" parent="Menus/MainMenu"]
 layout_mode = 0
 offset_left = 400.0
 offset_top = 340.0
@@ -93,28 +99,28 @@ offset_bottom = 700.0
 theme_override_constants/separation = 10
 alignment = 1
 
-[node name="Solo Game" type="Button" parent="MainMenu/MainMenuBox"]
+[node name="Solo Game" type="Button" parent="Menus/MainMenu/MainMenuBox"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("5_edd4o")
 theme_override_font_sizes/font_size = 40
 action_mode = 0
 text = "Solo Game"
 
-[node name="Start Server" type="Button" parent="MainMenu/MainMenuBox"]
+[node name="Start Server" type="Button" parent="Menus/MainMenu/MainMenuBox"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("5_edd4o")
 theme_override_font_sizes/font_size = 40
 action_mode = 0
 text = "Host Server"
 
-[node name="Connect to Server" type="Button" parent="MainMenu/MainMenuBox"]
+[node name="Connect to Server" type="Button" parent="Menus/MainMenu/MainMenuBox"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("5_edd4o")
 theme_override_font_sizes/font_size = 40
 action_mode = 0
 text = "Join Server"
 
-[node name="Game Options" type="Button" parent="MainMenu/MainMenuBox"]
+[node name="Game Options" type="Button" parent="Menus/MainMenu/MainMenuBox"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("5_edd4o")
 theme_override_font_sizes/font_size = 40
@@ -122,14 +128,14 @@ action_mode = 0
 text = "Game Options
 "
 
-[node name="Controls" type="Button" parent="MainMenu/MainMenuBox"]
+[node name="Controls" type="Button" parent="Menus/MainMenu/MainMenuBox"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("5_edd4o")
 theme_override_font_sizes/font_size = 40
 action_mode = 0
 text = "Setup Controls"
 
-[node name="HostJoinMenu" type="Control" parent="." node_paths=PackedStringArray("_title", "nameBox", "teamOption", "_portBox", "_observerBox", "_addressBox", "_StartJoinServer", "_connection", "_lobby", "_status", "_gameData")]
+[node name="HostJoinMenu" type="Control" parent="Menus" node_paths=PackedStringArray("_title", "nameBox", "teamOption", "_portBox", "_observerBox", "_addressBox", "_StartJoinServer", "_connection", "_lobby", "_status", "_gameData")]
 visible = false
 layout_mode = 3
 anchors_preset = 0
@@ -139,19 +145,19 @@ offset_right = 890.0
 offset_bottom = 716.0
 theme = ExtResource("8_bhpob")
 script = ExtResource("9_0otmw")
-_title = NodePath("..")
+_title = NodePath("../..")
 nameBox = NodePath("NameText")
 teamOption = NodePath("TeamOption")
 _portBox = NodePath("Port")
 _observerBox = NodePath("Observer")
 _addressBox = NodePath("Address")
 _StartJoinServer = NodePath("GameButtons/StartJoinServer")
-_connection = NodePath("../CommonObjects/ConnectionHandler")
+_connection = NodePath("../../CommonObjects/ConnectionHandler")
 _lobby = NodePath("../Lobby")
 _status = NodePath("StatusLabel")
-_gameData = NodePath("../CommonObjects/GameData")
+_gameData = NodePath("../../CommonObjects/GameData")
 
-[node name="HostMenuRect" type="NinePatchRect" parent="HostJoinMenu"]
+[node name="HostMenuRect" type="NinePatchRect" parent="Menus/HostJoinMenu"]
 layout_mode = 0
 offset_right = 500.0
 offset_bottom = 392.0
@@ -161,7 +167,7 @@ patch_margin_top = 16
 patch_margin_right = 16
 patch_margin_bottom = 16
 
-[node name="NameLabel" type="Label" parent="HostJoinMenu"]
+[node name="NameLabel" type="Label" parent="Menus/HostJoinMenu"]
 layout_mode = 0
 offset_left = 28.0
 offset_top = 30.0
@@ -169,7 +175,7 @@ offset_right = 202.0
 offset_bottom = 54.0
 text = "Name:"
 
-[node name="NameText" type="LineEdit" parent="HostJoinMenu"]
+[node name="NameText" type="LineEdit" parent="Menus/HostJoinMenu"]
 clip_contents = true
 layout_mode = 0
 offset_left = 128.0
@@ -179,7 +185,7 @@ offset_bottom = 57.0
 max_length = 20
 text_direction = 1
 
-[node name="TeamLabel" type="Label" parent="HostJoinMenu"]
+[node name="TeamLabel" type="Label" parent="Menus/HostJoinMenu"]
 layout_mode = 0
 offset_left = 28.0
 offset_top = 78.0
@@ -187,7 +193,7 @@ offset_right = 118.0
 offset_bottom = 108.0
 text = "Team:"
 
-[node name="TeamOption" type="OptionButton" parent="HostJoinMenu"]
+[node name="TeamOption" type="OptionButton" parent="Menus/HostJoinMenu"]
 layout_mode = 0
 offset_left = 128.0
 offset_top = 71.0
@@ -218,7 +224,7 @@ popup/item_6/text = "Purple"
 popup/item_6/icon = ExtResource("15_lnqci")
 popup/item_6/id = 6
 
-[node name="PortLabel" type="Label" parent="HostJoinMenu"]
+[node name="PortLabel" type="Label" parent="Menus/HostJoinMenu"]
 layout_mode = 2
 offset_left = 28.0
 offset_top = 170.0
@@ -226,7 +232,7 @@ offset_right = 113.0
 offset_bottom = 200.0
 text = "Port:"
 
-[node name="Port" type="LineEdit" parent="HostJoinMenu"]
+[node name="Port" type="LineEdit" parent="Menus/HostJoinMenu"]
 layout_mode = 0
 offset_left = 120.0
 offset_top = 166.0
@@ -235,7 +241,7 @@ offset_bottom = 207.0
 max_length = 5
 text_direction = 1
 
-[node name="ObserverLabel" type="Label" parent="HostJoinMenu"]
+[node name="ObserverLabel" type="Label" parent="Menus/HostJoinMenu"]
 layout_mode = 0
 offset_left = 28.0
 offset_top = 126.0
@@ -243,14 +249,14 @@ offset_right = 311.0
 offset_bottom = 156.0
 text = "Join as Observer:"
 
-[node name="Observer" type="CheckBox" parent="HostJoinMenu"]
+[node name="Observer" type="CheckBox" parent="Menus/HostJoinMenu"]
 layout_mode = 0
 offset_left = 266.0
 offset_top = 131.0
 offset_right = 290.0
 offset_bottom = 155.0
 
-[node name="AddressLabel" type="Label" parent="HostJoinMenu"]
+[node name="AddressLabel" type="Label" parent="Menus/HostJoinMenu"]
 layout_mode = 0
 offset_left = 28.0
 offset_top = 222.0
@@ -258,7 +264,7 @@ offset_right = 139.0
 offset_bottom = 252.0
 text = "Address:"
 
-[node name="Address" type="LineEdit" parent="HostJoinMenu"]
+[node name="Address" type="LineEdit" parent="Menus/HostJoinMenu"]
 layout_mode = 0
 offset_left = 155.0
 offset_top = 216.0
@@ -266,7 +272,7 @@ offset_right = 472.0
 offset_bottom = 254.0
 text_direction = 1
 
-[node name="GameButtons" type="HBoxContainer" parent="HostJoinMenu"]
+[node name="GameButtons" type="HBoxContainer" parent="Menus/HostJoinMenu"]
 layout_mode = 0
 offset_left = 28.0
 offset_top = 308.0
@@ -274,7 +280,7 @@ offset_right = 472.0
 offset_bottom = 365.0
 scale = Vector2(1, 1.01435)
 
-[node name="MainMenu" type="Button" parent="HostJoinMenu/GameButtons"]
+[node name="MainMenu" type="Button" parent="Menus/HostJoinMenu/GameButtons"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = ExtResource("5_edd4o")
@@ -282,7 +288,7 @@ theme_override_font_sizes/font_size = 32
 action_mode = 0
 text = "Main Menu"
 
-[node name="StartJoinServer" type="Button" parent="HostJoinMenu/GameButtons"]
+[node name="StartJoinServer" type="Button" parent="Menus/HostJoinMenu/GameButtons"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = ExtResource("5_edd4o")
@@ -290,14 +296,14 @@ theme_override_font_sizes/font_size = 32
 action_mode = 0
 text = "Start Server"
 
-[node name="StatusLabel" type="Label" parent="HostJoinMenu"]
+[node name="StatusLabel" type="Label" parent="Menus/HostJoinMenu"]
 layout_mode = 0
 offset_left = 30.0
 offset_top = 265.0
 offset_right = 474.0
 offset_bottom = 295.0
 
-[node name="Lobby" type="Control" parent="." node_paths=PackedStringArray("_title", "hostJoinMenu", "_connection", "_nameBox", "_teamOption", "_rowListNode", "_gameData", "_StartButton")]
+[node name="Lobby" type="Control" parent="Menus" node_paths=PackedStringArray("_title", "hostJoinMenu", "_connection", "_nameBox", "_teamOption", "_rowListNode", "_gameData", "_StartButton")]
 visible = false
 layout_mode = 3
 anchors_preset = 0
@@ -306,17 +312,17 @@ offset_right = 824.0
 offset_bottom = 716.0
 theme = ExtResource("8_bhpob")
 script = ExtResource("19_wijlx")
-_title = NodePath("..")
+_title = NodePath("../..")
 hostJoinMenu = NodePath("../HostJoinMenu")
-_connection = NodePath("../CommonObjects/ConnectionHandler")
+_connection = NodePath("../../CommonObjects/ConnectionHandler")
 _nameBox = NodePath("NameText")
 _teamOption = NodePath("TeamOption")
 _connectedRow = ExtResource("18_b2d67")
 _rowListNode = NodePath("ConnectedList/ScrollContainer/RowList")
-_gameData = NodePath("../CommonObjects/GameData")
+_gameData = NodePath("../../CommonObjects/GameData")
 _StartButton = NodePath("GameButtons/Start Game")
 
-[node name="Team" type="Label" parent="Lobby"]
+[node name="Team" type="Label" parent="Menus/Lobby"]
 layout_mode = 0
 offset_left = 602.0
 offset_top = 30.0
@@ -327,7 +333,7 @@ theme_override_fonts/font = ExtResource("7_oseos")
 theme_override_font_sizes/font_size = 24
 text = "Name:"
 
-[node name="HostMenuRect" type="NinePatchRect" parent="Lobby"]
+[node name="HostMenuRect" type="NinePatchRect" parent="Menus/Lobby"]
 layout_mode = 0
 offset_right = 824.0
 offset_bottom = 392.0
@@ -337,7 +343,7 @@ patch_margin_top = 16
 patch_margin_right = 16
 patch_margin_bottom = 16
 
-[node name="NameText" type="LineEdit" parent="Lobby"]
+[node name="NameText" type="LineEdit" parent="Menus/Lobby"]
 clip_contents = true
 layout_mode = 0
 offset_left = 216.0
@@ -347,7 +353,7 @@ offset_bottom = 57.0
 text = "Hatchet2k4"
 max_length = 20
 
-[node name="NameLabel" type="Label" parent="Lobby"]
+[node name="NameLabel" type="Label" parent="Menus/Lobby"]
 layout_mode = 0
 offset_left = 28.0
 offset_top = 30.0
@@ -355,7 +361,7 @@ offset_right = 202.0
 offset_bottom = 54.0
 text = "Name:"
 
-[node name="ConnectedLabel" type="Label" parent="Lobby"]
+[node name="ConnectedLabel" type="Label" parent="Menus/Lobby"]
 layout_mode = 0
 offset_left = 28.0
 offset_top = 76.0
@@ -363,7 +369,7 @@ offset_right = 205.0
 offset_bottom = 100.0
 text = "Connected:"
 
-[node name="TeamOption" type="OptionButton" parent="Lobby"]
+[node name="TeamOption" type="OptionButton" parent="Menus/Lobby"]
 layout_mode = 0
 offset_left = 614.0
 offset_top = 23.0
@@ -394,7 +400,7 @@ popup/item_6/text = "Purple"
 popup/item_6/icon = ExtResource("15_lnqci")
 popup/item_6/id = 6
 
-[node name="TeamLabel" type="Label" parent="Lobby"]
+[node name="TeamLabel" type="Label" parent="Menus/Lobby"]
 layout_mode = 0
 offset_left = 520.0
 offset_top = 30.0
@@ -402,7 +408,7 @@ offset_right = 610.0
 offset_bottom = 54.0
 text = "Team:"
 
-[node name="ConnectedList" type="NinePatchRect" parent="Lobby"]
+[node name="ConnectedList" type="NinePatchRect" parent="Menus/Lobby"]
 clip_contents = true
 layout_mode = 0
 offset_left = 216.0
@@ -415,7 +421,7 @@ patch_margin_top = 6
 patch_margin_right = 6
 patch_margin_bottom = 6
 
-[node name="HeaderRow" type="Control" parent="Lobby/ConnectedList"]
+[node name="HeaderRow" type="Control" parent="Menus/Lobby/ConnectedList"]
 layout_mode = 2
 anchors_preset = 0
 offset_left = 6.0
@@ -423,7 +429,7 @@ offset_top = 6.0
 offset_right = 6.0
 offset_bottom = 6.0
 
-[node name="NameLabel" type="RichTextLabel" parent="Lobby/ConnectedList/HeaderRow"]
+[node name="NameLabel" type="RichTextLabel" parent="Menus/Lobby/ConnectedList/HeaderRow"]
 clip_contents = false
 layout_mode = 0
 offset_top = 4.0
@@ -435,7 +441,7 @@ text = "[center]Name[/center]"
 fit_content = true
 scroll_active = false
 
-[node name="TeamLabel" type="RichTextLabel" parent="Lobby/ConnectedList/HeaderRow"]
+[node name="TeamLabel" type="RichTextLabel" parent="Menus/Lobby/ConnectedList/HeaderRow"]
 clip_contents = false
 layout_mode = 0
 offset_left = 300.0
@@ -448,7 +454,7 @@ text = "[center]Team[/center]"
 fit_content = true
 scroll_active = false
 
-[node name="ReadyLabel" type="RichTextLabel" parent="Lobby/ConnectedList/HeaderRow"]
+[node name="ReadyLabel" type="RichTextLabel" parent="Menus/Lobby/ConnectedList/HeaderRow"]
 clip_contents = false
 layout_mode = 0
 offset_left = 430.0
@@ -461,7 +467,7 @@ text = "[center]Ready[/center]"
 fit_content = true
 scroll_active = false
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Lobby/ConnectedList"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Menus/Lobby/ConnectedList"]
 layout_mode = 0
 offset_left = 6.0
 offset_top = 30.0
@@ -471,18 +477,18 @@ follow_focus = true
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 2
 
-[node name="RowList" type="Control" parent="Lobby/ConnectedList/ScrollContainer"]
+[node name="RowList" type="Control" parent="Menus/Lobby/ConnectedList/ScrollContainer"]
 custom_minimum_size = Vector2(0, 288)
 layout_mode = 2
 
-[node name="GameButtons" type="HBoxContainer" parent="Lobby"]
+[node name="GameButtons" type="HBoxContainer" parent="Menus/Lobby"]
 layout_mode = 0
 offset_left = 29.0
 offset_top = 308.0
 offset_right = 797.0
 offset_bottom = 365.0
 
-[node name="Disconnect" type="Button" parent="Lobby/GameButtons"]
+[node name="Disconnect" type="Button" parent="Menus/Lobby/GameButtons"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = ExtResource("5_edd4o")
@@ -490,7 +496,7 @@ theme_override_font_sizes/font_size = 36
 action_mode = 0
 text = "Disconnect"
 
-[node name="Start Game" type="Button" parent="Lobby/GameButtons"]
+[node name="Start Game" type="Button" parent="Menus/Lobby/GameButtons"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = ExtResource("5_edd4o")
@@ -499,7 +505,7 @@ disabled = true
 action_mode = 0
 text = "Start Game"
 
-[node name="ChatBox" type="NinePatchRect" parent="Lobby"]
+[node name="ChatBox" type="NinePatchRect" parent="Menus/Lobby"]
 layout_mode = 0
 offset_left = 826.0
 offset_right = 1280.0
@@ -511,7 +517,7 @@ patch_margin_top = 16
 patch_margin_right = 16
 patch_margin_bottom = 16
 
-[node name="ChatLog" type="RichTextLabel" parent="Lobby/ChatBox" node_paths=PackedStringArray("_gameData", "_chatSound")]
+[node name="ChatLog" type="RichTextLabel" parent="Menus/Lobby/ChatBox" node_paths=PackedStringArray("_gameData", "_chatSound")]
 layout_mode = 0
 offset_left = 16.0
 offset_top = 16.0
@@ -521,10 +527,10 @@ theme = ExtResource("8_bhpob")
 theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 script = ExtResource("25_d15cb")
-_gameData = NodePath("../../../CommonObjects/GameData")
-_chatSound = NodePath("../../../CommonObjects/ChatSound")
+_gameData = NodePath("../../../../CommonObjects/GameData")
+_chatSound = NodePath("../../../../CommonObjects/ChatSound")
 
-[node name="TextBox" type="NinePatchRect" parent="Lobby"]
+[node name="TextBox" type="NinePatchRect" parent="Menus/Lobby"]
 layout_mode = 0
 offset_left = 826.0
 offset_top = 280.0
@@ -538,7 +544,7 @@ patch_margin_top = 16
 patch_margin_right = 16
 patch_margin_bottom = 16
 
-[node name="Highlight" type="NinePatchRect" parent="Lobby/TextBox"]
+[node name="Highlight" type="NinePatchRect" parent="Menus/Lobby/TextBox"]
 visible = false
 layout_mode = 0
 offset_right = 454.0
@@ -549,7 +555,7 @@ patch_margin_top = 16
 patch_margin_right = 16
 patch_margin_bottom = 16
 
-[node name="TextEntry" type="TextEdit" parent="Lobby/TextBox" node_paths=PackedStringArray("_highlight", "_chatBox", "_chatSound", "_gameData", "_connection")]
+[node name="TextEntry" type="TextEdit" parent="Menus/Lobby/TextBox" node_paths=PackedStringArray("_highlight", "_chatBox", "_chatSound", "_gameData", "_connection")]
 layout_mode = 0
 offset_left = 16.0
 offset_top = 16.0
@@ -564,11 +570,11 @@ text_direction = 1
 script = ExtResource("21_brwkw")
 _highlight = NodePath("../Highlight")
 _chatBox = NodePath("../../ChatBox/ChatLog")
-_chatSound = NodePath("../../../CommonObjects/ChatSound")
-_gameData = NodePath("../../../CommonObjects/GameData")
-_connection = NodePath("../../../CommonObjects/ConnectionHandler")
+_chatSound = NodePath("../../../../CommonObjects/ChatSound")
+_gameData = NodePath("../../../../CommonObjects/GameData")
+_connection = NodePath("../../../../CommonObjects/ConnectionHandler")
 
-[node name="CheckBox" type="CheckBox" parent="Lobby"]
+[node name="CheckBox" type="CheckBox" parent="Menus/Lobby"]
 layout_mode = 0
 offset_left = 28.0
 offset_top = 262.0
@@ -576,7 +582,7 @@ offset_right = 135.0
 offset_bottom = 300.0
 text = "Ready"
 
-[node name="Options" type="Control" parent="." node_paths=PackedStringArray("_title", "masterSlider", "musicSlider", "soundSlider", "testSound")]
+[node name="Options" type="Control" parent="Menus" node_paths=PackedStringArray("_title", "masterSlider", "musicSlider", "soundSlider", "testSound")]
 visible = false
 layout_mode = 3
 anchors_preset = 0
@@ -584,13 +590,13 @@ offset_right = 40.0
 offset_bottom = 40.0
 theme = ExtResource("8_bhpob")
 script = ExtResource("26_7ytwf")
-_title = NodePath("..")
+_title = NodePath("../..")
 masterSlider = NodePath("OptionsBox/MasterSlider")
 musicSlider = NodePath("OptionsBox/MusicSlider")
 soundSlider = NodePath("OptionsBox/SoundSlider")
-testSound = NodePath("../CommonObjects/Rotate")
+testSound = NodePath("../../CommonObjects/Rotate")
 
-[node name="OptionsRect" type="NinePatchRect" parent="Options"]
+[node name="OptionsRect" type="NinePatchRect" parent="Menus/Options"]
 layout_mode = 0
 offset_left = 368.0
 offset_top = 324.0
@@ -602,7 +608,7 @@ patch_margin_top = 16
 patch_margin_right = 16
 patch_margin_bottom = 16
 
-[node name="OptionsBox" type="VBoxContainer" parent="Options"]
+[node name="OptionsBox" type="VBoxContainer" parent="Menus/Options"]
 layout_mode = 0
 offset_left = 400.0
 offset_top = 340.0
@@ -611,62 +617,62 @@ offset_bottom = 700.0
 theme_override_constants/separation = 10
 alignment = 1
 
-[node name="MasterVolume" type="Label" parent="Options/OptionsBox"]
+[node name="MasterVolume" type="Label" parent="Menus/Options/OptionsBox"]
 layout_mode = 2
 text = "Master Volume"
 
-[node name="MasterSlider" type="HSlider" parent="Options/OptionsBox"]
+[node name="MasterSlider" type="HSlider" parent="Menus/Options/OptionsBox"]
 layout_mode = 2
 max_value = 1.0
 step = 0.05
 value = 0.8
 
-[node name="MusicVolume" type="Label" parent="Options/OptionsBox"]
+[node name="MusicVolume" type="Label" parent="Menus/Options/OptionsBox"]
 layout_mode = 2
 text = "Music Volume"
 
-[node name="MusicSlider" type="HSlider" parent="Options/OptionsBox"]
+[node name="MusicSlider" type="HSlider" parent="Menus/Options/OptionsBox"]
 layout_mode = 2
 max_value = 1.0
 step = 0.05
 value = 0.8
 
-[node name="SoundVolume" type="Label" parent="Options/OptionsBox"]
+[node name="SoundVolume" type="Label" parent="Menus/Options/OptionsBox"]
 layout_mode = 2
 text = "Sound Volume"
 
-[node name="SoundSlider" type="HSlider" parent="Options/OptionsBox"]
+[node name="SoundSlider" type="HSlider" parent="Menus/Options/OptionsBox"]
 layout_mode = 2
 max_value = 1.0
 step = 0.05
 value = 0.7
 
-[node name="Back" type="Button" parent="Options/OptionsBox"]
+[node name="Back" type="Button" parent="Menus/Options/OptionsBox"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("5_edd4o")
 theme_override_font_sizes/font_size = 40
 action_mode = 0
 text = "Main Menu"
 
-[connection signal="pressed" from="MainMenu/MainMenuBox/Solo Game" to="." method="SoloGame"]
-[connection signal="pressed" from="MainMenu/MainMenuBox/Start Server" to="." method="StartServer"]
-[connection signal="pressed" from="MainMenu/MainMenuBox/Connect to Server" to="." method="ConnectToServer"]
-[connection signal="pressed" from="MainMenu/MainMenuBox/Game Options" to="." method="Options"]
-[connection signal="pressed" from="MainMenu/MainMenuBox/Controls" to="." method="SetupControls"]
-[connection signal="text_changed" from="HostJoinMenu/NameText" to="HostJoinMenu" method="NameChanged"]
-[connection signal="item_selected" from="HostJoinMenu/TeamOption" to="HostJoinMenu" method="TeamSelected"]
-[connection signal="text_changed" from="HostJoinMenu/Port" to="HostJoinMenu" method="PortChanged"]
-[connection signal="text_changed" from="HostJoinMenu/Address" to="HostJoinMenu" method="AddressChanged"]
-[connection signal="pressed" from="HostJoinMenu/GameButtons/MainMenu" to="HostJoinMenu" method="ReturnToMenu"]
-[connection signal="pressed" from="HostJoinMenu/GameButtons/StartJoinServer" to="HostJoinMenu" method="JoinLobby"]
-[connection signal="text_changed" from="Lobby/NameText" to="Lobby" method="UpdateName"]
-[connection signal="item_selected" from="Lobby/TeamOption" to="Lobby" method="UpdateTeam"]
-[connection signal="pressed" from="Lobby/GameButtons/Disconnect" to="Lobby" method="Disconnect"]
-[connection signal="focus_entered" from="Lobby/TextBox/TextEntry" to="Lobby/TextBox/TextEntry" method="OnFocusEntered"]
-[connection signal="focus_exited" from="Lobby/TextBox/TextEntry" to="Lobby/TextBox/TextEntry" method="OnFocusExited"]
-[connection signal="gui_input" from="Lobby/TextBox/TextEntry" to="Lobby/TextBox/TextEntry" method="OnGuiInput"]
-[connection signal="text_changed" from="Lobby/TextBox/TextEntry" to="Lobby/TextBox/TextEntry" method="OnTextChanged"]
-[connection signal="value_changed" from="Options/OptionsBox/MasterSlider" to="Options" method="MasterChanged"]
-[connection signal="value_changed" from="Options/OptionsBox/MusicSlider" to="Options" method="MusicChanged"]
-[connection signal="value_changed" from="Options/OptionsBox/SoundSlider" to="Options" method="SoundChanged"]
-[connection signal="pressed" from="Options/OptionsBox/Back" to="Options" method="ReturnToMenu"]
+[connection signal="pressed" from="Menus/MainMenu/MainMenuBox/Solo Game" to="." method="SoloGame"]
+[connection signal="pressed" from="Menus/MainMenu/MainMenuBox/Start Server" to="." method="StartServer"]
+[connection signal="pressed" from="Menus/MainMenu/MainMenuBox/Connect to Server" to="." method="ConnectToServer"]
+[connection signal="pressed" from="Menus/MainMenu/MainMenuBox/Game Options" to="." method="Options"]
+[connection signal="pressed" from="Menus/MainMenu/MainMenuBox/Controls" to="." method="SetupControls"]
+[connection signal="text_changed" from="Menus/HostJoinMenu/NameText" to="Menus/HostJoinMenu" method="NameChanged"]
+[connection signal="item_selected" from="Menus/HostJoinMenu/TeamOption" to="Menus/HostJoinMenu" method="TeamSelected"]
+[connection signal="text_changed" from="Menus/HostJoinMenu/Port" to="Menus/HostJoinMenu" method="PortChanged"]
+[connection signal="text_changed" from="Menus/HostJoinMenu/Address" to="Menus/HostJoinMenu" method="AddressChanged"]
+[connection signal="pressed" from="Menus/HostJoinMenu/GameButtons/MainMenu" to="Menus/HostJoinMenu" method="ReturnToMenu"]
+[connection signal="pressed" from="Menus/HostJoinMenu/GameButtons/StartJoinServer" to="Menus/HostJoinMenu" method="JoinLobby"]
+[connection signal="text_changed" from="Menus/Lobby/NameText" to="Menus/Lobby" method="UpdateName"]
+[connection signal="item_selected" from="Menus/Lobby/TeamOption" to="Menus/Lobby" method="UpdateTeam"]
+[connection signal="pressed" from="Menus/Lobby/GameButtons/Disconnect" to="Menus/Lobby" method="Disconnect"]
+[connection signal="focus_entered" from="Menus/Lobby/TextBox/TextEntry" to="Menus/Lobby/TextBox/TextEntry" method="OnFocusEntered"]
+[connection signal="focus_exited" from="Menus/Lobby/TextBox/TextEntry" to="Menus/Lobby/TextBox/TextEntry" method="OnFocusExited"]
+[connection signal="gui_input" from="Menus/Lobby/TextBox/TextEntry" to="Menus/Lobby/TextBox/TextEntry" method="OnGuiInput"]
+[connection signal="text_changed" from="Menus/Lobby/TextBox/TextEntry" to="Menus/Lobby/TextBox/TextEntry" method="OnTextChanged"]
+[connection signal="value_changed" from="Menus/Options/OptionsBox/MasterSlider" to="Menus/Options" method="MasterChanged"]
+[connection signal="value_changed" from="Menus/Options/OptionsBox/MusicSlider" to="Menus/Options" method="MusicChanged"]
+[connection signal="value_changed" from="Menus/Options/OptionsBox/SoundSlider" to="Menus/Options" method="SoundChanged"]
+[connection signal="pressed" from="Menus/Options/OptionsBox/Back" to="Menus/Options" method="ReturnToMenu"]

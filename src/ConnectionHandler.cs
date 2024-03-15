@@ -101,8 +101,13 @@ public partial class ConnectionHandler : Node
 		_peer.Close();
 	}
 
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
 	public void StartGame()
 	{
+		if (Mode == ConnectionMode.Host)
+		{
+			Rpc("StartGame");
+		}
 
 	}
 

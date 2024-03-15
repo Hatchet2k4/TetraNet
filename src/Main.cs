@@ -2,8 +2,13 @@ namespace TetraNet;
 
 using Godot;
 
-public partial class Main : Node2D
+public partial class Main : Control
 {
+	[Export] public ConnectionHandler Connection;
+	[Export] public Camera2D Camera;
+	[Export] public GameData GameData;
+	[Export] public MainField mainField;
+
 	public override void _Ready()
 	{
 	}
@@ -11,4 +16,13 @@ public partial class Main : Node2D
 	public override void _Process(double delta)
 	{
 	}
+
+	public void Start()
+	{
+		Camera.Enabled = true;
+		Show();
+		mainField.NewGame();
+	}
+
+
 }

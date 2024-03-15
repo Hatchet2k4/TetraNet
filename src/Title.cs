@@ -11,6 +11,11 @@ public partial class Title : Node2D
 	[Export] private OptionsMenu _optionsMenu;
 	[Export] private GameData _gameData;
 
+	[Export] public ConnectionHandler connection;
+	private Main _main;
+
+	private PackedScene _mainScene = (PackedScene)ResourceLoader.Load("res://scenes/main.tscn");
+
 	private List<Control> _menuList;
 
 	private bool started = false;
@@ -51,7 +56,12 @@ public partial class Title : Node2D
 	public void SoloGame()
 	{
 		_titleMusic.Stop();
-		GetTree().ChangeSceneToFile("res://scenes/main.tscn");
+		_mainMenu.Hide();
+		_main = _mainScene.Instantiate() as Main;
+		AddChild(_main);
+		_main.Connection = connection;
+		_main.GameData = _gameData;
+		_main.Start();
 	}
 
 	public void StartServer()
@@ -78,5 +88,4 @@ public partial class Title : Node2D
 	{
 
 	}
-
 }

@@ -14,13 +14,11 @@ public partial class MiniField : Control
 	private List<Piece> _pieces;
 	private PackedScene _pieceScene = (PackedScene)ResourceLoader.Load("res://scenes/piece.tscn");
 
-
 	public override void _Ready()
 	{
 		_pieces = new();
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
 	}

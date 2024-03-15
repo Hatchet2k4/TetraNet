@@ -1,20 +1,20 @@
-[gd_scene load_steps=31 format=3 uid="uid://dba4ubxkab2hi"]
+[gd_scene load_steps=28 format=3 uid="uid://dba4ubxkab2hi"]
 
 [ext_resource type="AudioStream" uid="uid://3gt8y2muyuuy" path="res://sfx/hold.wav" id="1_6p8t6"]
 [ext_resource type="Theme" uid="uid://dcvi35wnn0w4a" path="res://resources/new_theme.tres" id="1_e648y"]
+[ext_resource type="Script" path="res://src/CatchFocus.cs" id="1_me42g"]
 [ext_resource type="AudioStream" uid="uid://chp35s7nn3l18" path="res://sfx/rotate.wav" id="1_q8bov"]
 [ext_resource type="AudioStream" uid="uid://dgv7fq4c7f832" path="res://sfx/land.wav" id="2_0tjit"]
-[ext_resource type="PackedScene" uid="uid://cafudqe5o8fnt" path="res://scenes/connection_handler.tscn" id="2_4sag1"]
 [ext_resource type="AudioStream" uid="uid://1grl13fln84y" path="res://sfx/drop.wav" id="2_6se06"]
 [ext_resource type="Script" path="res://src/MainField.cs" id="2_515ng"]
 [ext_resource type="AudioStream" uid="uid://cks47ttfmj3ww" path="res://sfx/move.wav" id="2_dhxxm"]
 [ext_resource type="AudioStream" uid="uid://wov6pgf5uroj" path="res://music/TetriNET Theme Arachno SoundFont.mp3" id="2_lqylp"]
+[ext_resource type="Script" path="res://src/Main.cs" id="2_mt7nt"]
 [ext_resource type="PackedScene" uid="uid://ci12tydqs0eg" path="res://scenes/block.tscn" id="3_yjmfd"]
 [ext_resource type="AudioStream" uid="uid://o5pjkmq87byb" path="res://sfx/clear 1.wav" id="4_5abv5"]
 [ext_resource type="Script" path="res://src/Spawner.cs" id="4_edpkq"]
 [ext_resource type="LabelSettings" uid="uid://d0u2fihvoi8b4" path="res://resources/mainfont.tres" id="5_nx2xu"]
 [ext_resource type="Texture2D" uid="uid://fpd1ccvyusfn" path="res://gfx/Grid.png" id="6_x34jm"]
-[ext_resource type="FontFile" uid="uid://cj7wvtcdatui1" path="res://fonts/kirifont/Kirifont.tres" id="7_dkgbi"]
 [ext_resource type="AudioStream" uid="uid://dsrusdrhw1laa" path="res://sfx/clear 2.wav" id="8_gfis2"]
 [ext_resource type="PackedScene" uid="uid://dijfdnwe6x7tn" path="res://scenes/next_box.tscn" id="8_l0fyc"]
 [ext_resource type="AudioStream" uid="uid://ce72ygwwhwpon" path="res://sfx/clear 3.wav" id="9_nkkwi"]
@@ -23,25 +23,32 @@
 [ext_resource type="PackedScene" uid="uid://c8i7yj12e7n14" path="res://scenes/hold_box.tscn" id="12_c3cha"]
 [ext_resource type="AudioStream" uid="uid://i1eqjogumerv" path="res://sfx/chat 2.wav" id="13_3djd0"]
 [ext_resource type="AudioStream" uid="uid://ctfyo1mf7xhyd" path="res://sfx/chat 3.wav" id="13_bfww7"]
-[ext_resource type="Texture2D" uid="uid://c1h3o60r1yrwa" path="res://gfx/HighlightBorder.png" id="18_f4pp5"]
 [ext_resource type="Script" path="res://src/Countdown.cs" id="19_r060n"]
-[ext_resource type="Script" path="res://src/TextEntry.cs" id="20_8e7c1"]
 [ext_resource type="Texture2D" uid="uid://b3s31h7yvvhp3" path="res://gfx/Big3.png" id="20_pjai2"]
-[ext_resource type="FontFile" uid="uid://cksjotvc3wafa" path="res://fonts/kirifont/KiriFont.otf" id="20_wh82m"]
 [ext_resource type="Texture2D" uid="uid://ccwlpw5uudako" path="res://gfx/Big2.png" id="21_fc3ks"]
 [ext_resource type="Texture2D" uid="uid://cfxe1jwf8vyub" path="res://gfx/Big1.png" id="22_30lc2"]
 
-[node name="Main" type="Control"]
+[node name="Main" type="Control" node_paths=PackedStringArray("Camera", "mainField")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 2560.0
 offset_bottom = 1440.0
 theme = ExtResource("1_e648y")
+script = ExtResource("2_mt7nt")
+Camera = NodePath("Camera2D")
+mainField = NodePath("Main Field")
 
-[node name="ConnectionHandler" parent="." instance=ExtResource("2_4sag1")]
+[node name="BG" type="ColorRect" parent="." node_paths=PackedStringArray("mainField")]
+layout_mode = 0
+offset_right = 3840.0
+offset_bottom = 2160.0
+color = Color(0.298039, 0.298039, 0.298039, 1)
+script = ExtResource("1_me42g")
+mainField = NodePath("../Main Field")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0
+enabled = false
 zoom = Vector2(0.5, 0.5)
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
@@ -99,7 +106,7 @@ bus = &"Sound"
 script = ExtResource("4_edpkq")
 blockScene = ExtResource("3_yjmfd")
 
-[node name="Main Area" type="Control" parent="." node_paths=PackedStringArray("_root", "_spawner", "_grid", "_nextGrid", "_holdGrid", "_lblLines", "_countdown", "music", "landSound", "clearSound", "clear2Sound", "clear3Sound", "holdSound", "dropSound", "moveSound", "rotateSound")]
+[node name="Main Field" type="Control" parent="." node_paths=PackedStringArray("_root", "_spawner", "_grid", "_nextGrid", "_holdGrid", "_lblLines", "_countdown", "music", "landSound", "clearSound", "clear2Sound", "clear3Sound", "holdSound", "dropSound", "moveSound", "rotateSound")]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 16.0
@@ -126,7 +133,7 @@ dropSound = NodePath("../Sounds/Drop")
 moveSound = NodePath("../Sounds/Move")
 rotateSound = NodePath("../Sounds/Rotate")
 
-[node name="Player 1" type="Label" parent="Main Area"]
+[node name="Player 1" type="Label" parent="Main Field"]
 layout_mode = 0
 offset_top = -44.0
 offset_right = 512.0
@@ -136,7 +143,7 @@ text = "PLAYER 1"
 horizontal_alignment = 1
 vertical_alignment = 2
 
-[node name="Border" type="NinePatchRect" parent="Main Area"]
+[node name="Border" type="NinePatchRect" parent="Main Field"]
 layout_mode = 0
 offset_right = 512.0
 offset_bottom = 992.0
@@ -146,7 +153,7 @@ patch_margin_top = 16
 patch_margin_right = 16
 patch_margin_bottom = 16
 
-[node name="Grid" type="TextureRect" parent="Main Area/Border"]
+[node name="Grid" type="TextureRect" parent="Main Field/Border"]
 layout_mode = 0
 offset_left = 16.0
 offset_top = 16.0
@@ -155,7 +162,7 @@ offset_bottom = 976.0
 texture = ExtResource("6_x34jm")
 stretch_mode = 1
 
-[node name="Countdown" type="TextureRect" parent="Main Area" node_paths=PackedStringArray("beepSound", "doneSound")]
+[node name="Countdown" type="TextureRect" parent="Main Field" node_paths=PackedStringArray("beepSound", "doneSound")]
 visible = false
 layout_mode = 0
 offset_left = 156.0
@@ -260,74 +267,4 @@ text = "INVENTORY"
 horizontal_alignment = 1
 vertical_alignment = 2
 
-[node name="ChatBox" type="NinePatchRect" parent="."]
-layout_mode = 0
-offset_left = 572.0
-offset_top = 1104.0
-offset_right = 2544.0
-offset_bottom = 1344.0
-focus_mode = 1
-texture = ExtResource("10_w3jrr")
-patch_margin_left = 16
-patch_margin_top = 16
-patch_margin_right = 16
-patch_margin_bottom = 16
-
-[node name="TextEdit" type="TextEdit" parent="ChatBox"]
-layout_mode = 0
-offset_left = 16.0
-offset_top = 16.0
-offset_right = 1956.0
-offset_bottom = 224.0
-theme_override_constants/line_spacing = 2
-theme_override_fonts/font = ExtResource("20_wh82m")
-theme_override_font_sizes/font_size = 20
-wrap_mode = 1
-
-[node name="TextBox" type="NinePatchRect" parent="."]
-layout_mode = 0
-offset_left = 572.0
-offset_top = 1344.0
-offset_right = 2544.0
-offset_bottom = 1424.0
-focus_mode = 1
-mouse_filter = 0
-texture = ExtResource("10_w3jrr")
-patch_margin_left = 16
-patch_margin_top = 16
-patch_margin_right = 16
-patch_margin_bottom = 16
-
-[node name="Highlight" type="NinePatchRect" parent="TextBox"]
-visible = false
-layout_mode = 0
-offset_right = 1972.0
-offset_bottom = 80.0
-texture = ExtResource("18_f4pp5")
-patch_margin_left = 16
-patch_margin_top = 16
-patch_margin_right = 16
-patch_margin_bottom = 16
-
-[node name="TextEntry" type="TextEdit" parent="TextBox" node_paths=PackedStringArray("_highlight", "_mainField", "_chatBox", "_chatSound")]
-layout_mode = 0
-offset_left = 16.0
-offset_top = 16.0
-offset_right = 1956.0
-offset_bottom = 64.0
-focus_mode = 1
-theme_override_constants/line_spacing = 2
-theme_override_fonts/font = ExtResource("7_dkgbi")
-theme_override_font_sizes/font_size = 20
-wrap_mode = 1
-caret_blink = true
-script = ExtResource("20_8e7c1")
-_highlight = NodePath("../Highlight")
-_mainField = NodePath("../../Main Area")
-_chatBox = NodePath("../../ChatBox/TextEdit")
-_chatSound = NodePath("../../Sounds/ChatSound")
-
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
-[connection signal="focus_entered" from="TextBox/TextEntry" to="TextBox/TextEntry" method="OnFocusEntered"]
-[connection signal="focus_exited" from="TextBox/TextEntry" to="TextBox/TextEntry" method="OnFocusExited"]
-[connection signal="gui_input" from="TextBox/TextEntry" to="TextBox/TextEntry" method="OnGuiInput"]

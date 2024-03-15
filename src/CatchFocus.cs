@@ -3,7 +3,7 @@ namespace TetraNet;
 using Godot;
 using System;
 
-public partial class CatchFocus : Control
+public partial class CatchFocus : ColorRect
 {
 	[Export] private MainField mainField;
 

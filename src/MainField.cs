@@ -70,17 +70,15 @@ public partial class MainField : Control
 
 	public override void _Ready()
 	{
+
 		_ghostTexture = GD.Load("res://gfx/Ghost.png") as Texture2D;
 		_fallTime = 0.5f;
 		_time = 0;
 		_gridData = new Piece[GRID_W, GRID_H];
 		_lines = new();
 		_miniFields = new();
-
-		SpawnNewBlock(_spawner.GetNextBlock());
 		CreateMiniFields();
-		NewGame();
-		music.Play();
+		SetProcess(false);
 
 	}
 
@@ -111,7 +109,15 @@ public partial class MainField : Control
 	{
 		swapped = false;
 		totalLines = 0;
+		SpawnNewBlock(_spawner.GetNextBlock());
 		_countdown.Start();
+		music.Play();
+		SetProcess(true);
+	}
+
+	public void StopGame()
+	{
+
 	}
 
 	public void SpawnNewBlock(BlockType t)

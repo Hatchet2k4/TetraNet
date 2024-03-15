@@ -1,0 +1,52 @@
+[gd_scene load_steps=5 format=3 uid="uid://dulehf80bgwtl"]
+
+[ext_resource type="Texture2D" uid="uid://smxnw8u1gp0k" path="res://gfx/HoldBorder.png" id="1_hgucp"]
+[ext_resource type="Texture2D" uid="uid://c1h3o60r1yrwa" path="res://gfx/HighlightBorder.png" id="2_ghv6t"]
+[ext_resource type="FontFile" uid="uid://cj7wvtcdatui1" path="res://fonts/kirifont/Kirifont.tres" id="3_3ryyf"]
+[ext_resource type="Script" path="res://src/TextEntry.cs" id="4_qhawn"]
+
+[node name="TextBox" type="NinePatchRect"]
+offset_left = 572.0
+offset_top = 1344.0
+offset_right = 2544.0
+offset_bottom = 1424.0
+focus_mode = 1
+mouse_filter = 0
+texture = ExtResource("1_hgucp")
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+
+[node name="Highlight" type="NinePatchRect" parent="."]
+visible = false
+layout_mode = 0
+offset_right = 1972.0
+offset_bottom = 80.0
+texture = ExtResource("2_ghv6t")
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+
+[node name="TextEntry" type="TextEdit" parent="." node_paths=PackedStringArray("_highlight", "_mainField", "_chatBox", "_chatSound")]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 1956.0
+offset_bottom = 64.0
+focus_mode = 1
+theme_override_constants/line_spacing = 2
+theme_override_fonts/font = ExtResource("3_3ryyf")
+theme_override_font_sizes/font_size = 20
+wrap_mode = 1
+caret_blink = true
+script = ExtResource("4_qhawn")
+_highlight = NodePath("")
+_mainField = NodePath("")
+_chatBox = NodePath("")
+_chatSound = NodePath("")
+
+[connection signal="focus_entered" from="TextEntry" to="TextEntry" method="OnFocusEntered"]
+[connection signal="focus_exited" from="TextEntry" to="TextEntry" method="OnFocusExited"]
+[connection signal="gui_input" from="TextEntry" to="TextEntry" method="OnGuiInput"]

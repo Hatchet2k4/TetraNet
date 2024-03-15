@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://gljwmrae0mkk"]
+
+[ext_resource type="Texture2D" uid="uid://smxnw8u1gp0k" path="res://gfx/HoldBorder.png" id="1_bnpwu"]
+[ext_resource type="FontFile" uid="uid://cksjotvc3wafa" path="res://fonts/kirifont/KiriFont.otf" id="2_vfo3n"]
+
+[node name="ChatBox" type="NinePatchRect"]
+offset_left = 572.0
+offset_top = 1104.0
+offset_right = 2544.0
+offset_bottom = 1344.0
+focus_mode = 1
+texture = ExtResource("1_bnpwu")
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+
+[node name="TextEdit" type="TextEdit" parent="."]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 1956.0
+offset_bottom = 224.0
+theme_override_constants/line_spacing = 2
+theme_override_fonts/font = ExtResource("2_vfo3n")
+theme_override_font_sizes/font_size = 20
+wrap_mode = 1
