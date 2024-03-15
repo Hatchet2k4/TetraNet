@@ -22,7 +22,7 @@ public partial class ConnectionHandler : Node
 {
 	[Export] private Lobby _lobby;
 	[Export] public GameData gameData;
-	[Export] public MainField main;
+	[Export] public Main main;
 
 	private ENetMultiplayerPeer _peer;
 	public ConnectionMode Mode = ConnectionMode.None;
@@ -120,7 +120,6 @@ public partial class ConnectionHandler : Node
 		string json = JsonSerializer.Serialize(data);
 		if (Mode == ConnectionMode.Host)
 		{
-			//main.miniFields[0].Populate(data);
 			Rpc("SyncGrid", json);
 		}
 		else
@@ -135,14 +134,14 @@ public partial class ConnectionHandler : Node
 		sbyte[] data = LoadJsonFromString<sbyte[]>(json);
 		GD.Print(json);
 		Rpc("SyncGrid", json);
-		main.miniFields[0].Populate(data);
+		main.mainField.miniFields[0].Populate(data);
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
 	public void SyncGrid(string json)
 	{
 		sbyte[] data = LoadJsonFromString<sbyte[]>(json);
-		main.miniFields[0].Populate(data);
+		main.mainField.miniFields[0].Populate(data);
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]

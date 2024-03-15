@@ -7,6 +7,7 @@ using System;
 using System.Reflection.Metadata;
 
 
+
 public partial class MainField : Control
 {
 	[Export] private Main _root;
@@ -29,6 +30,7 @@ public partial class MainField : Control
 
 	public List<MiniField> miniFields;
 	private Texture2D _ghostTexture;
+	public Dictionary<long, int> fieldMappings;
 
 	private PackedScene _pieceScene = (PackedScene)ResourceLoader.Load("res://scenes/piece.tscn");
 
@@ -70,7 +72,6 @@ public partial class MainField : Control
 
 	public override void _Ready()
 	{
-
 		_ghostTexture = GD.Load("res://gfx/Ghost.png") as Texture2D;
 		_fallTime = 0.5f;
 		_time = 0;
@@ -79,7 +80,6 @@ public partial class MainField : Control
 		miniFields = new();
 		CreateMiniFields();
 		SetProcess(false);
-
 	}
 
 	public void CreateMiniFields()
@@ -101,6 +101,10 @@ public partial class MainField : Control
 			float xpos = 888 + (256 + 16) * x;
 			mf.Position = new Vector2(xpos, ypos);
 			miniFields.Add(mf);
+		}
+		for (int i = 0; i < _root.GameData.PlayerList.Count; i++)
+		{
+
 		}
 
 	}

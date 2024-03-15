@@ -64,6 +64,7 @@ public partial class Title : Node2D
 		AddChild(_main);
 		_main.Connection = connection;
 		_main.GameData = _gameData;
+		connection.main = _main;
 		if (connection.Mode == ConnectionMode.Host) connection.StartGame();
 		_main.Start();
 	}
