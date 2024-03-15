@@ -115,33 +115,33 @@ public partial class ConnectionHandler : Node
 		}
 	}
 
-	public void SyncField(sbyte[] data)
+	public void SyncField(long id, sbyte[] data)
 	{
 		string json = JsonSerializer.Serialize(data);
 		if (Mode == ConnectionMode.Host)
 		{
-			Rpc("SyncGrid", json);
+			Rpc("SyncGrid", id, json);
 		}
 		else
 		{
-			RpcId(1, "SyncGridToHost", json);
+			RpcId(1, "SyncGridToHost", id, json);
 		}
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
-	public void SyncGridToHost(string json)
+	public void SyncGridToHost(long id, string json)
 	{
 		sbyte[] data = LoadJsonFromString<sbyte[]>(json);
 		GD.Print(json);
-		Rpc("SyncGrid", json);
-		main.mainField.miniFields[0].Populate(data);
+		Rpc("SyncGrid", id, json);
+		main.mainField.miniFields[(int)id].Populate(data);
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
-	public void SyncGrid(string json)
+	public void SyncGrid(long id, string json)
 	{
 		sbyte[] data = LoadJsonFromString<sbyte[]>(json);
-		main.mainField.miniFields[0].Populate(data);
+		main.mainField.miniFields[(int)id].Populate(data);
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]

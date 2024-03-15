@@ -102,9 +102,15 @@ public partial class MainField : Control
 			mf.Position = new Vector2(xpos, ypos);
 			miniFields.Add(mf);
 		}
-		for (int i = 0; i < _root.GameData.PlayerList.Count; i++)
-		{
 
+		int index = 0;
+		foreach (long id in _root.GameData.PlayerList.Keys)
+		{
+			if (id != _root.GameData.Id)
+			{
+				fieldMappings[id] = index;
+				index++;
+			}
 		}
 
 	}
@@ -170,7 +176,7 @@ public partial class MainField : Control
 					swapped = false;
 					SpawnNewBlock(_spawner.GetNextBlock());
 					//miniFields[0].Populate(GetGrid());
-					_root.Connection.SyncField(GetGrid());
+					_root.Connection.SyncField(_root.GameData.Id, GetGrid());
 				}
 			}
 
@@ -436,7 +442,7 @@ public partial class MainField : Control
 
 		//miniFields[0].Populate(GetGrid());
 
-		_root.Connection.SyncField(GetGrid());
+		_root.Connection.SyncField(_root.GameData.Id, GetGrid());
 	}
 
 	public void RemoveBlankLines()
