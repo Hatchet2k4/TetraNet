@@ -9,7 +9,7 @@ using System.Reflection.Metadata;
 
 public partial class MainField : Control
 {
-	[Export] private Control _root;
+	[Export] private Main _root;
 	[Export] private Spawner _spawner;
 	[Export] private TextureRect _grid;
 	[Export] private NextGrid _nextGrid;
@@ -27,7 +27,7 @@ public partial class MainField : Control
 	[Export] private AudioStreamPlayer moveSound;
 	[Export] private AudioStreamPlayer rotateSound;
 
-	private List<MiniField> _miniFields;
+	public List<MiniField> miniFields;
 	private Texture2D _ghostTexture;
 
 	private PackedScene _pieceScene = (PackedScene)ResourceLoader.Load("res://scenes/piece.tscn");
@@ -76,7 +76,7 @@ public partial class MainField : Control
 		_time = 0;
 		_gridData = new Piece[GRID_W, GRID_H];
 		_lines = new();
-		_miniFields = new();
+		miniFields = new();
 		CreateMiniFields();
 		SetProcess(false);
 
@@ -91,7 +91,7 @@ public partial class MainField : Control
 			_root.CallDeferred("add_child", mf);
 			float xpos = 888 + (256 + 16) * x;
 			mf.Position = new Vector2(xpos, ypos);
-			_miniFields.Add(mf);
+			miniFields.Add(mf);
 		}
 		ypos = 574;
 		for (int x = 1; x < 6; x++)
@@ -100,7 +100,7 @@ public partial class MainField : Control
 			_root.CallDeferred("add_child", mf);
 			float xpos = 888 + (256 + 16) * x;
 			mf.Position = new Vector2(xpos, ypos);
-			_miniFields.Add(mf);
+			miniFields.Add(mf);
 		}
 
 	}
@@ -165,7 +165,8 @@ public partial class MainField : Control
 					clearIndex = 0;
 					swapped = false;
 					SpawnNewBlock(_spawner.GetNextBlock());
-					_miniFields[0].Populate(GetGrid());
+					//miniFields[0].Populate(GetGrid());
+					_root.Connection.SyncField(GetGrid());
 				}
 			}
 
@@ -429,7 +430,9 @@ public partial class MainField : Control
 		CheckLines();
 		if (_lines.Count == 0) SpawnNewBlock(_spawner.GetNextBlock());
 
-		_miniFields[0].Populate(GetGrid());
+		//miniFields[0].Populate(GetGrid());
+
+		_root.Connection.SyncField(GetGrid());
 	}
 
 	public void RemoveBlankLines()
