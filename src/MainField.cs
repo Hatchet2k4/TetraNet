@@ -11,11 +11,13 @@ using System.Reflection.Metadata;
 public partial class MainField : Control
 {
 	[Export] private Main _root;
+	[Export] private Label _playerName;
 	[Export] private Spawner _spawner;
 	[Export] private TextureRect _grid;
 	[Export] private NextGrid _nextGrid;
 	[Export] private HoldGrid _holdGrid;
 	[Export] private Label _lblLines;
+
 
 	[Export] private Countdown _countdown;
 	[Export] private AudioStreamPlayer music;
@@ -30,7 +32,6 @@ public partial class MainField : Control
 
 	public List<MiniField> miniFields;
 	private Texture2D _ghostTexture;
-	public Dictionary<long, int> fieldMappings;
 
 	private PackedScene _pieceScene = (PackedScene)ResourceLoader.Load("res://scenes/piece.tscn");
 
@@ -69,7 +70,6 @@ public partial class MainField : Control
 	public bool processControls = true;
 
 
-
 	public override void _Ready()
 	{
 		_ghostTexture = GD.Load("res://gfx/Ghost.png") as Texture2D;
@@ -78,13 +78,17 @@ public partial class MainField : Control
 		_gridData = new Piece[GRID_W, GRID_H];
 		_lines = new();
 		miniFields = new();
-		CreateMiniFields();
 		SetProcess(false);
+	}
+
+	public void SetName(string name)
+	{
+		_playerName.Text = name;
 	}
 
 	public void CreateMiniFields()
 	{
-		float ypos = 30;
+		float ypos = 36;
 		for (int x = 0; x < 6; x++)
 		{
 			MiniField mf = _minifieldScene.Instantiate() as MiniField;
@@ -108,7 +112,8 @@ public partial class MainField : Control
 		{
 			if (id != _root.GameData.Id)
 			{
-				fieldMappings[id] = index;
+				_root.GameData.fieldMappings[id] = index;
+				miniFields[index].SetName(_root.GameData.PlayerList[id].PlayerName);
 				index++;
 			}
 		}
@@ -117,6 +122,7 @@ public partial class MainField : Control
 
 	public void NewGame()
 	{
+		CreateMiniFields();
 		swapped = false;
 		totalLines = 0;
 		SpawnNewBlock(_spawner.GetNextBlock());

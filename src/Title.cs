@@ -60,10 +60,18 @@ public partial class Title : Node2D
 		_mainMenu.Hide();
 		_hostJoinMenu.Hide();
 		_lobby.Hide();
+
+
 		_main = _mainScene.Instantiate() as Main;
 		AddChild(_main);
 		_main.Connection = connection;
 		_main.GameData = _gameData;
+
+		if (connection.Mode == ConnectionMode.None)
+			_main.SetName(ConfigData.PlayerName);
+		else
+			_main.SetName(_gameData.PlayerName);
+
 		connection.main = _main;
 		if (connection.Mode == ConnectionMode.Host) connection.StartGame();
 		_main.Start();

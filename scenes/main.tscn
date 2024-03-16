@@ -106,7 +106,7 @@ bus = &"Sound"
 script = ExtResource("4_edpkq")
 blockScene = ExtResource("3_yjmfd")
 
-[node name="Main Field" type="Control" parent="." node_paths=PackedStringArray("_root", "_spawner", "_grid", "_nextGrid", "_holdGrid", "_lblLines", "_countdown", "music", "landSound", "clearSound", "clear2Sound", "clear3Sound", "holdSound", "dropSound", "moveSound", "rotateSound")]
+[node name="Main Field" type="Control" parent="." node_paths=PackedStringArray("_root", "_playerName", "_spawner", "_grid", "_nextGrid", "_holdGrid", "_lblLines", "_countdown", "music", "landSound", "clearSound", "clear2Sound", "clear3Sound", "holdSound", "dropSound", "moveSound", "rotateSound")]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 16.0
@@ -117,6 +117,7 @@ focus_mode = 1
 mouse_filter = 2
 script = ExtResource("2_515ng")
 _root = NodePath("..")
+_playerName = NodePath("Player Name")
 _spawner = NodePath("../Spawner")
 _grid = NodePath("Border/Grid")
 _nextGrid = NodePath("../NextBox")
@@ -133,7 +134,7 @@ dropSound = NodePath("../Sounds/Drop")
 moveSound = NodePath("../Sounds/Move")
 rotateSound = NodePath("../Sounds/Rotate")
 
-[node name="Player 1" type="Label" parent="Main Field"]
+[node name="Player Name" type="Label" parent="Main Field"]
 layout_mode = 0
 offset_top = -44.0
 offset_right = 512.0

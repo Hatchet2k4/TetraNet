@@ -132,16 +132,19 @@ public partial class ConnectionHandler : Node
 	public void SyncGridToHost(long id, string json)
 	{
 		sbyte[] data = LoadJsonFromString<sbyte[]>(json);
-		GD.Print(json);
+		//GD.Print($"SyncToHost. From id {id}, running on id {gameData.Id}");
 		Rpc("SyncGrid", id, json);
-		main.mainField.miniFields[(int)id].Populate(data);
+		int index = gameData.fieldMappings[id];
+		main.mainField.miniFields[index].Populate(data);
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
 	public void SyncGrid(long id, string json)
 	{
+		//GD.Print($"SyncGrid. From id {id}, running on id {gameData.Id}");
 		sbyte[] data = LoadJsonFromString<sbyte[]>(json);
-		main.mainField.miniFields[(int)id].Populate(data);
+		int index = gameData.fieldMappings[id];
+		main.mainField.miniFields[index].Populate(data);
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]

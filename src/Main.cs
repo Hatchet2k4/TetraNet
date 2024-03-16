@@ -17,6 +17,11 @@ public partial class Main : Control
 	{
 	}
 
+	public void SetName(string name)
+	{
+		mainField.SetName(name);
+	}
+
 	public void Start()
 	{
 		Camera.Enabled = true;

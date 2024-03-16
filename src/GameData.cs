@@ -13,6 +13,8 @@ public partial class GameData : Node
 {
 	public Dictionary<long, PlayerData> PlayerList = new();
 
+	public Dictionary<long, int> fieldMappings = new();
+
 	public string PlayerName;
 	public string Team;
 	public long Id;
@@ -50,6 +52,7 @@ public partial class GameData : Node
 			Team = team
 		};
 		PlayerList[id] = p;
+		foreach (long _id in PlayerList.Keys) GD.Print("Playerlist: " + _id.ToString());
 	}
 
 	public void RemovePlayer(long id)
