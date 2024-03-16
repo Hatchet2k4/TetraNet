@@ -17,8 +17,6 @@ public partial class MainField : Control
 	[Export] private NextGrid _nextGrid;
 	[Export] private HoldGrid _holdGrid;
 	[Export] private Label _lblLines;
-
-
 	[Export] private Countdown _countdown;
 	[Export] private AudioStreamPlayer music;
 	[Export] private AudioStreamPlayer landSound;
@@ -42,6 +40,7 @@ public partial class MainField : Control
 	private double _fallTime;
 
 	private Piece[,] _gridData;
+	private List<Piece> _flyingPieces = new();
 
 	private Signal gameover;
 	private Block _currentBlock;
@@ -161,31 +160,7 @@ public partial class MainField : Control
 
 		if (_lines.Count > 0) //processing lines
 		{
-			clearTimer += delta;
-			if (clearTimer >= 0.02f)
-			{
-				clearTimer -= 0.02f;
-				for (int i = 0; i < _lines.Count; i++)
-				{
-					int y = _lines[i];
-					RemoveChild(_gridData[clearIndex, y]);
-					_gridData[clearIndex, y] = null;
-				}
-				clearIndex++;
-				if (clearIndex == GRID_W)
-				{
-					RemoveBlankLines();
-					ResetPiecePositions();
-					_lines.Clear();
-					clearTimer = 0f;
-					clearIndex = 0;
-					swapped = false;
-					SpawnNewBlock(_spawner.GetNextBlock());
-					//miniFields[0].Populate(GetGrid());
-					_root.Connection.SyncField(_root.GameData.Id, GetGrid());
-				}
-			}
-
+			ClearLines(delta);
 			return; //may refactor this later to allow inventory input even while lines are being cleared
 		}
 
@@ -199,6 +174,41 @@ public partial class MainField : Control
 		{
 			ProcessInput(delta);
 		}
+	}
+
+	public void ClearLines(double delta)
+	{
+		clearTimer += delta;
+		if (clearTimer >= 0.02f)
+		{
+			clearTimer -= 0.02f;
+			for (int i = 0; i < _lines.Count; i++)
+			{
+				int y = _lines[i];
+				Piece p = _gridData[clearIndex, y];
+				p.Fly(this);
+				_flyingPieces.Add(p);
+				_gridData[clearIndex, y] = null;
+			}
+			clearIndex++;
+			if (clearIndex == GRID_W)
+			{
+				RemoveBlankLines();
+				ResetPiecePositions();
+				_lines.Clear();
+				clearTimer = 0f;
+				clearIndex = 0;
+				swapped = false;
+				SpawnNewBlock(_spawner.GetNextBlock());
+				_root.Connection.SyncField(_root.GameData.Id, GetGrid());
+			}
+		}
+	}
+
+	public void PieceDone(Piece p)
+	{
+		_flyingPieces.Remove(p);
+		RemoveChild(p);
 	}
 
 	public void ProcessInput(double delta)
