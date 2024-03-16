@@ -33,6 +33,6 @@ public partial class Main : Control
 
 	public void StopGame()
 	{
-
+		title.ReturnFromGame();
 	}
 }

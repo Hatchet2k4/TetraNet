@@ -76,6 +76,7 @@ public partial class MainField : Control
 		_ghostTexture = GD.Load("res://gfx/Ghost.png") as Texture2D;
 		_fallTime = 0.5f;
 		_time = 0;
+		_gameOverTime = 0f;
 		_gridData = new Piece[GRID_W, GRID_H];
 		_lines = new();
 		miniFields = new();
@@ -167,11 +168,15 @@ public partial class MainField : Control
 			if (p != null)
 			{
 				p.Fly(this);
+				_flyingPieces.Add(p);
 			}
 		}
 		foreach (Piece p in _currentBlock.pieces)
 		{
 			p.Fly(this);
+			_currentBlock.RemoveChild(p);
+			AddChild(p);
+			_flyingPieces.Add(p);
 		}
 	}
 
@@ -182,7 +187,12 @@ public partial class MainField : Control
 		if (_gameOver)
 		{
 			_gameOverTime += (float)delta;
-			if (_gameOverTime >= 3f) _root.StopGame();
+			if (_gameOverTime >= 3f)
+			{
+				GD.Print("gameover timeout");
+				_root.StopGame();
+			}
+
 			return;
 		}
 

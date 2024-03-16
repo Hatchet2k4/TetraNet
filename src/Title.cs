@@ -107,7 +107,8 @@ public partial class Title : Node2D
 
 	public void ReturnFromGame()
 	{
-		if (connection.Mode == ConnectionMode.None)
+		_main.Hide();
+		if (connection.Mode != ConnectionMode.None)
 		{
 			_lobby.Show();
 		}
@@ -115,7 +116,7 @@ public partial class Title : Node2D
 		{
 			_mainMenu.Show();
 		}
-		//_main.QueueFree();
+		_main.QueueFree();
 		_titleMusic.Play();
 	}
 

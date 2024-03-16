@@ -54,6 +54,7 @@ public partial class Piece : Area2D
 		else
 		{
 			_main.PieceDone(this);
+			SetProcess(false);
 		}
 	}
 
