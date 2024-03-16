@@ -9,7 +9,7 @@ public partial class Block : Node2D
 {
 	private PackedScene _pieceScene = (PackedScene)ResourceLoader.Load("res://scenes/piece.tscn");
 	private BlockData _blockData;
-	private Piece[] _pieces;
+	public Piece[] pieces;
 	public Shape shape;
 	public List<Vector2> cells;
 
@@ -29,7 +29,7 @@ public partial class Block : Node2D
 	public void Initialize(BlockData bd)
 	{
 		_blockData = bd;
-		_pieces = new Piece[4];
+		pieces = new Piece[4];
 		shape = new Shape(_blockData.blockType);
 		cells = shape.GetCells();
 
@@ -41,7 +41,7 @@ public partial class Block : Node2D
 			p.SetTexture(bd.blockTexture);
 			p.ZIndex = 2;
 			p.colorIndex = colorIndexMapping[_blockData.blockType];
-			_pieces[i] = p;
+			pieces[i] = p;
 		}
 	}
 
@@ -68,7 +68,7 @@ public partial class Block : Node2D
 
 	public void SetGhost(Texture2D t)
 	{
-		foreach (Piece p in _pieces)
+		foreach (Piece p in pieces)
 		{
 			p.SetTexture(t);
 		}
@@ -104,12 +104,12 @@ public partial class Block : Node2D
 	{
 		for (int i = 0; i < 4; i++)
 		{
-			_pieces[i].Position = cells[i] * GRID_SIZE;
+			pieces[i].Position = cells[i] * GRID_SIZE;
 		}
 	}
 
 	public Piece GetPiece(int index)
 	{
-		return _pieces[index];
+		return pieces[index];
 	}
 }

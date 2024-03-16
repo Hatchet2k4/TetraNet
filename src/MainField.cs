@@ -27,6 +27,7 @@ public partial class MainField : Control
 	[Export] private AudioStreamPlayer dropSound;
 	[Export] private AudioStreamPlayer moveSound;
 	[Export] private AudioStreamPlayer rotateSound;
+	[Export] private AudioStreamPlayer gameOverSound;
 
 	public List<MiniField> miniFields;
 	private Texture2D _ghostTexture;
@@ -42,7 +43,8 @@ public partial class MainField : Control
 	private Piece[,] _gridData;
 	private List<Piece> _flyingPieces = new();
 
-	private Signal gameover;
+	private bool _gameOver;
+	private float _gameOverTime;
 	private Block _currentBlock;
 	private Block _ghostBlock;
 
@@ -107,12 +109,12 @@ public partial class MainField : Control
 		}
 
 		int index = 0;
-		foreach (long id in _root.GameData.PlayerList.Keys)
+		foreach (long id in _root.gameData.PlayerList.Keys)
 		{
-			if (id != _root.GameData.Id)
+			if (id != _root.gameData.Id)
 			{
-				_root.GameData.fieldMappings[id] = index;
-				miniFields[index].SetName(_root.GameData.PlayerList[id].PlayerName);
+				_root.gameData.fieldMappings[id] = index;
+				miniFields[index].SetName(_root.gameData.PlayerList[id].PlayerName);
 				index++;
 			}
 		}
@@ -125,38 +127,64 @@ public partial class MainField : Control
 		swapped = false;
 		totalLines = 0;
 		SpawnNewBlock(_spawner.GetNextBlock());
-		_countdown.Start();
+		//_countdown.Start();
 		music.Play();
 		SetProcess(true);
-	}
-
-	public void StopGame()
-	{
-
 	}
 
 	public void SpawnNewBlock(BlockType t)
 	{
 		_currentBlock = _spawner.blockScene.Instantiate() as Block;
 		_currentBlock.Initialize(blockResources[t]);
+		blockPosition = new Vector2(4, 0) + gridSpawnPositions[t];
+		_currentBlock.Position = _grid.Position + (blockPosition * GRID_SIZE);
+		AddChild(_currentBlock);
+		_nextGrid.Populate();
+
+		if (CheckCollisions(new Vector2(0, 0))) //uh oh! 
+		{
+			GameOver();
+			return;
+		}
 
 		_ghostBlock = _spawner.blockScene.Instantiate() as Block;
 		_ghostBlock.Initialize(blockResources[t]);
 		_ghostBlock.SetGhost(_ghostTexture);
-
-		blockPosition = new Vector2(4, 0) + gridSpawnPositions[t];
-		_currentBlock.Position = _grid.Position + (blockPosition * GRID_SIZE);
-
 		SetGhostPosition();
 		AddChild(_ghostBlock);
-		AddChild(_currentBlock);
 
-		_nextGrid.Populate();
+
+	}
+
+	public void GameOver()
+	{
+		_gameOver = true;
+		processControls = false;
+		music.Stop();
+		gameOverSound.Play();
+		foreach (Piece p in _gridData)
+		{
+			if (p != null)
+			{
+				p.Fly(this);
+			}
+		}
+		foreach (Piece p in _currentBlock.pieces)
+		{
+			p.Fly(this);
+		}
 	}
 
 	public override void _Process(double delta)
 	{
 		if (_countdown.Started) return;
+
+		if (_gameOver)
+		{
+			_gameOverTime += (float)delta;
+			if (_gameOverTime >= 3f) _root.StopGame();
+			return;
+		}
 
 		if (_lines.Count > 0) //processing lines
 		{
@@ -200,7 +228,7 @@ public partial class MainField : Control
 				clearIndex = 0;
 				swapped = false;
 				SpawnNewBlock(_spawner.GetNextBlock());
-				if (_root.Connection.Mode != ConnectionMode.None) _root.Connection.SyncField(_root.GameData.Id, GetGrid());
+				if (_root.connection.Mode != ConnectionMode.None) _root.connection.SyncField(_root.gameData.Id, GetGrid());
 			}
 		}
 	}
@@ -454,7 +482,7 @@ public partial class MainField : Control
 		CheckLines();
 		if (_lines.Count == 0) SpawnNewBlock(_spawner.GetNextBlock());
 
-		if (_root.Connection.Mode != ConnectionMode.None) _root.Connection.SyncField(_root.GameData.Id, GetGrid());
+		if (_root.connection.Mode != ConnectionMode.None) _root.connection.SyncField(_root.gameData.Id, GetGrid());
 	}
 
 	public void RemoveBlankLines()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://dba4ubxkab2hi"]
+[gd_scene load_steps=29 format=3 uid="uid://dba4ubxkab2hi"]
 
 [ext_resource type="AudioStream" uid="uid://3gt8y2muyuuy" path="res://sfx/hold.wav" id="1_6p8t6"]
 [ext_resource type="Theme" uid="uid://dcvi35wnn0w4a" path="res://resources/new_theme.tres" id="1_e648y"]
@@ -23,6 +23,7 @@
 [ext_resource type="PackedScene" uid="uid://c8i7yj12e7n14" path="res://scenes/hold_box.tscn" id="12_c3cha"]
 [ext_resource type="AudioStream" uid="uid://i1eqjogumerv" path="res://sfx/chat 2.wav" id="13_3djd0"]
 [ext_resource type="AudioStream" uid="uid://ctfyo1mf7xhyd" path="res://sfx/chat 3.wav" id="13_bfww7"]
+[ext_resource type="AudioStream" uid="uid://bcw5v8wsrfg05" path="res://sfx/gameover.wav" id="16_4jw4w"]
 [ext_resource type="Script" path="res://src/Countdown.cs" id="19_r060n"]
 [ext_resource type="Texture2D" uid="uid://b3s31h7yvvhp3" path="res://gfx/Big3.png" id="20_pjai2"]
 [ext_resource type="Texture2D" uid="uid://ccwlpw5uudako" path="res://gfx/Big2.png" id="21_fc3ks"]
@@ -102,11 +103,15 @@ bus = &"Sound"
 stream = ExtResource("13_bfww7")
 bus = &"Sound"
 
+[node name="GameOver" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("16_4jw4w")
+bus = &"Sound"
+
 [node name="Spawner" type="Node" parent="."]
 script = ExtResource("4_edpkq")
 blockScene = ExtResource("3_yjmfd")
 
-[node name="Main Field" type="Control" parent="." node_paths=PackedStringArray("_root", "_playerName", "_spawner", "_grid", "_nextGrid", "_holdGrid", "_lblLines", "_countdown", "music", "landSound", "clearSound", "clear2Sound", "clear3Sound", "holdSound", "dropSound", "moveSound", "rotateSound")]
+[node name="Main Field" type="Control" parent="." node_paths=PackedStringArray("_root", "_playerName", "_spawner", "_grid", "_nextGrid", "_holdGrid", "_lblLines", "_countdown", "music", "landSound", "clearSound", "clear2Sound", "clear3Sound", "holdSound", "dropSound", "moveSound", "rotateSound", "gameOverSound")]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 16.0
@@ -133,6 +138,7 @@ holdSound = NodePath("../Sounds/Hold")
 dropSound = NodePath("../Sounds/Drop")
 moveSound = NodePath("../Sounds/Move")
 rotateSound = NodePath("../Sounds/Rotate")
+gameOverSound = NodePath("../Sounds/GameOver")
 
 [node name="Player Name" type="Label" parent="Main Field"]
 layout_mode = 0

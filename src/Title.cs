@@ -64,8 +64,9 @@ public partial class Title : Node2D
 
 		_main = _mainScene.Instantiate() as Main;
 		AddChild(_main);
-		_main.Connection = connection;
-		_main.GameData = _gameData;
+		_main.connection = connection;
+		_main.gameData = _gameData;
+		_main.title = this;
 
 		if (connection.Mode == ConnectionMode.None)
 			_main.SetName(ConfigData.PlayerName);
@@ -103,4 +104,19 @@ public partial class Title : Node2D
 	{
 
 	}
+
+	public void ReturnFromGame()
+	{
+		if (connection.Mode == ConnectionMode.None)
+		{
+			_lobby.Show();
+		}
+		else
+		{
+			_mainMenu.Show();
+		}
+		//_main.QueueFree();
+		_titleMusic.Play();
+	}
+
 }
