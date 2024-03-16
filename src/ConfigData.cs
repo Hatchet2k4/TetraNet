@@ -42,6 +42,7 @@ public partial class ConfigData : Node
 			MasterVolume = (float)CF.GetValue("Settings", "MasterVolume", Mathf.LinearToDb(0.8f));
 			MusicVolume = (float)CF.GetValue("Settings", "MusicVolume", Mathf.LinearToDb(0.8f));
 			SoundVolume = (float)CF.GetValue("Settings", "SoundVolume", Mathf.LinearToDb(0.8f));
+			if (Port == 0) Port = 13370;
 		}
 		else
 		{
