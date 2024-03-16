@@ -4,12 +4,7 @@
 [ext_resource type="Script" path="res://src/Gradient.cs" id="2_k23dx"]
 
 [node name="Gradient" type="TextureRect"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = -1232.0
-offset_bottom = -672.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_right = 48.0
+offset_bottom = 48.0
 texture = ExtResource("1_m211s")
 script = ExtResource("2_k23dx")

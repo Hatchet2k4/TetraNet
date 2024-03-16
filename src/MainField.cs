@@ -200,7 +200,7 @@ public partial class MainField : Control
 				clearIndex = 0;
 				swapped = false;
 				SpawnNewBlock(_spawner.GetNextBlock());
-				_root.Connection.SyncField(_root.GameData.Id, GetGrid());
+				if (_root.Connection.Mode != ConnectionMode.None) _root.Connection.SyncField(_root.GameData.Id, GetGrid());
 			}
 		}
 	}
@@ -350,8 +350,6 @@ public partial class MainField : Control
 				AddChild(g);
 				g.Position = _grid.Position + (oldPosition + v) * 48;
 				g.Size = new Vector2(48, (newPosition.Y - oldPosition.Y) * 48);
-				//g.SetDeferred("Size", new Vector2(48, (newPosition.Y - oldPosition.Y) * 48));
-				GD.Print(g.Size);
 			}
 		}
 		Land();
@@ -456,9 +454,7 @@ public partial class MainField : Control
 		CheckLines();
 		if (_lines.Count == 0) SpawnNewBlock(_spawner.GetNextBlock());
 
-		//miniFields[0].Populate(GetGrid());
-
-		_root.Connection.SyncField(_root.GameData.Id, GetGrid());
+		if (_root.Connection.Mode != ConnectionMode.None) _root.Connection.SyncField(_root.GameData.Id, GetGrid());
 	}
 
 	public void RemoveBlankLines()

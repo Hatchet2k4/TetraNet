@@ -13,10 +13,10 @@ public partial class Gradient : TextureRect
 		timer = fadeTime;
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
 		timer -= delta;
+
 		if (timer > 0f)
 		{
 			float percent = (float)(timer / fadeTime);
