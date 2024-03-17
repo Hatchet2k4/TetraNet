@@ -92,26 +92,31 @@ public partial class MainField : Control
 
 	public void CreateMiniFields()
 	{
-		float ypos = 36;
+		float ypos = 60;
+		int index = 0;
 		for (int x = 0; x < 6; x++)
 		{
 			MiniField mf = _minifieldScene.Instantiate() as MiniField;
 			_root.CallDeferred("add_child", mf);
-			float xpos = 888 + (256 + 16) * x;
+			float xpos = 874 + (256 + 24) * x;
 			mf.Position = new Vector2(xpos, ypos);
+			mf.SetName($"({index + 1})", "");
 			miniFields.Add(mf);
+			index++;
 		}
-		ypos = 574;
+		ypos = 784;
 		for (int x = 1; x < 6; x++)
 		{
 			MiniField mf = _minifieldScene.Instantiate() as MiniField;
 			_root.CallDeferred("add_child", mf);
-			float xpos = 888 + (256 + 16) * x;
+			float xpos = 874 + (256 + 24) * x;
 			mf.Position = new Vector2(xpos, ypos);
+			mf.SetName($"({index + 1})", "");
 			miniFields.Add(mf);
+			index++;
 		}
 
-		int index = 0;
+		index = 0;
 		foreach (long id in _root.gameData.PlayerList.Keys)
 		{
 			if (id != _root.gameData.Id)

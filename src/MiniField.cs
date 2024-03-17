@@ -7,9 +7,12 @@ using static Data;
 
 public partial class MiniField : Control
 {
-	[Export] private Label _nameLabel;
+	[Export] private RichTextLabel _nameLabel;
 	[Export] private TextureRect _grid;
 	[Export] private Texture2D[] _textures;
+
+	[Export] private Label _linesLabel;
+	[Export] private Label _koLabel;
 
 	private List<Piece> _pieces;
 	private PackedScene _pieceScene = (PackedScene)ResourceLoader.Load("res://scenes/piece.tscn");
@@ -23,9 +26,9 @@ public partial class MiniField : Control
 	{
 	}
 
-	public void SetName(string name)
+	public void SetName(string name, string team = "")
 	{
-		_nameLabel.Text = name;
+		_nameLabel.Text = $"[center]{name}[/center]";
 	}
 
 	private void ClearPieces()
