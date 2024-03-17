@@ -29,6 +29,7 @@ public partial class MainField : Control
 	[Export] private AudioStreamPlayer rotateSound;
 	[Export] private AudioStreamPlayer gameOverSound;
 	[Export] public Texture2D[] itemTextures;
+	[Export] private Inventory _inventory;
 	private Random _rand;
 	public List<MiniField> miniFields;
 	private Texture2D _ghostTexture;
@@ -70,6 +71,8 @@ public partial class MainField : Control
 	public int totalLines;
 
 	public bool processControls = true;
+
+	private List<string> _actionQueue = new();
 
 
 	public override void _Ready()
@@ -236,6 +239,10 @@ public partial class MainField : Control
 			{
 				int y = _lines[i];
 				Piece p = _gridData[clearIndex, y];
+				if (p.isItem)
+				{
+					_inventory.AddItem(p.itemType);
+				}
 				p.Fly(this);
 				_flyingPieces.Add(p);
 				_gridData[clearIndex, y] = null;

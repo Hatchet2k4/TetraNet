@@ -125,7 +125,7 @@ bus = &"Sound"
 script = ExtResource("4_edpkq")
 blockScene = ExtResource("3_yjmfd")
 
-[node name="Main Field" type="Control" parent="." node_paths=PackedStringArray("_root", "_playerName", "_spawner", "_grid", "_nextGrid", "_holdGrid", "_lblLines", "_countdown", "music", "landSound", "clearSound", "clear2Sound", "clear3Sound", "holdSound", "dropSound", "moveSound", "rotateSound", "gameOverSound")]
+[node name="Main Field" type="Control" parent="." node_paths=PackedStringArray("_root", "_playerName", "_spawner", "_grid", "_nextGrid", "_holdGrid", "_lblLines", "_countdown", "music", "landSound", "clearSound", "clear2Sound", "clear3Sound", "holdSound", "dropSound", "moveSound", "rotateSound", "gameOverSound", "_inventory")]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 16.0
@@ -154,6 +154,7 @@ moveSound = NodePath("../Sounds/Move")
 rotateSound = NodePath("../Sounds/Rotate")
 gameOverSound = NodePath("../Sounds/GameOver")
 itemTextures = Array[Texture2D]([ExtResource("22_17jcg"), ExtResource("21_kfb1d"), ExtResource("23_6l3yu"), ExtResource("24_fked7"), ExtResource("20_liysy"), ExtResource("21_o1x61"), ExtResource("26_yv12d"), ExtResource("27_6q145"), ExtResource("25_k7urw"), ExtResource("26_y15nt"), ExtResource("27_6r22n"), ExtResource("28_0exly")])
+_inventory = NodePath("../InventoryBox")
 
 [node name="Player Name" type="Label" parent="Main Field"]
 layout_mode = 0

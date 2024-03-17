@@ -4,14 +4,29 @@ using System;
 public partial class Item : TextureRect
 {
 	[Export] private Label itemCount;
-	public int count;
+	private int _count;
+	public int Count
+	{
+		get
+		{
+			return _count;
+		}
+		set
+		{
+			_count = value;
+			SetText();
+		}
+	}
 	public int maxCount;
 
 	public override void _Ready()
 	{
+		maxCount = 3;
+		SetProcess(false);
 	}
 
-	public override void _Process(double delta)
+	public void SetText()
 	{
+		itemCount.Text = $"{_count} / {maxCount}";
 	}
 }

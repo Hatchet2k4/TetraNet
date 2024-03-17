@@ -4,13 +4,14 @@
 [ext_resource type="Theme" uid="uid://dcvi35wnn0w4a" path="res://resources/new_theme.tres" id="2_8q6jh"]
 [ext_resource type="Script" path="res://src/Item.cs" id="2_s0meg"]
 
-[node name="ItemTexture" type="TextureRect"]
+[node name="ItemTexture" type="TextureRect" node_paths=PackedStringArray("itemCount")]
 offset_left = 24.0
 offset_top = 24.0
 offset_right = 72.0
 offset_bottom = 72.0
 texture = ExtResource("1_r7d86")
 script = ExtResource("2_s0meg")
+itemCount = NodePath("ItemCount")
 
 [node name="ItemCount" type="Label" parent="."]
 layout_mode = 0

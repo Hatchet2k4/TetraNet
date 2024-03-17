@@ -15,7 +15,7 @@ public partial class Piece : Area2D
 	public Vector2 velocity;
 
 	public bool isItem = false;
-	public ItemType item;
+	public ItemType itemType;
 
 	public void SetTexture(Texture2D texture)
 	{
@@ -25,7 +25,7 @@ public partial class Piece : Area2D
 	public void SetItem(ItemType i, Texture2D texture)
 	{
 		isItem = true;
-		item = i;
+		itemType = i;
 		SetTexture(texture);
 	}
 
