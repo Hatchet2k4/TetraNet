@@ -121,4 +121,9 @@ public partial class Title : Node2D
 		_titleMusic.Play();
 	}
 
+	public void ExitGame()
+	{
+		GetTree().Quit();
+	}
+
 }

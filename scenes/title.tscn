@@ -129,12 +129,12 @@ action_mode = 0
 text = "Game Options
 "
 
-[node name="Controls" type="Button" parent="Menus/MainMenu/MainMenuBox"]
+[node name="Exit" type="Button" parent="Menus/MainMenu/MainMenuBox"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("5_edd4o")
 theme_override_font_sizes/font_size = 40
 action_mode = 0
-text = "Setup Controls"
+text = "Exit Game"
 
 [node name="HostJoinMenu" type="Control" parent="Menus" node_paths=PackedStringArray("_title", "nameBox", "teamOption", "_portBox", "_observerBox", "_addressBox", "_StartJoinServer", "_connection", "_lobby", "_status", "_gameData")]
 visible = false
@@ -583,6 +583,7 @@ offset_bottom = 300.0
 text = "Ready"
 
 [node name="Options" type="Control" parent="Menus" node_paths=PackedStringArray("_title", "masterSlider", "musicSlider", "soundSlider", "testSound", "fullscreenBox")]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -662,7 +663,7 @@ text = "Main Menu"
 [connection signal="pressed" from="Menus/MainMenu/MainMenuBox/Start Server" to="." method="StartServer"]
 [connection signal="pressed" from="Menus/MainMenu/MainMenuBox/Connect to Server" to="." method="ConnectToServer"]
 [connection signal="pressed" from="Menus/MainMenu/MainMenuBox/Game Options" to="." method="Options"]
-[connection signal="pressed" from="Menus/MainMenu/MainMenuBox/Controls" to="." method="SetupControls"]
+[connection signal="pressed" from="Menus/MainMenu/MainMenuBox/Exit" to="." method="ExitGame"]
 [connection signal="text_changed" from="Menus/HostJoinMenu/NameText" to="Menus/HostJoinMenu" method="NameChanged"]
 [connection signal="item_selected" from="Menus/HostJoinMenu/TeamOption" to="Menus/HostJoinMenu" method="TeamSelected"]
 [connection signal="text_changed" from="Menus/HostJoinMenu/Port" to="Menus/HostJoinMenu" method="PortChanged"]
