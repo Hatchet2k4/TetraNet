@@ -10,9 +10,11 @@ public partial class Inventory : NinePatchRect
 {
 	[Export] private MainField _main;
 
+	[Export] private TextureRect _target;
 	private PackedScene _itemScene = (PackedScene)ResourceLoader.Load("res://scenes/item.tscn");
-
 	private List<Item> _items = new();
+
+	public int targetIndex;
 
 	public override void _Ready()
 	{
@@ -24,22 +26,35 @@ public partial class Inventory : NinePatchRect
 				Item itm = _itemScene.Instantiate() as Item;
 				AddChild(itm);
 				_items.Add(itm);
+				itm.inventory = this;
+				itm.index = index;
 				itm.Position = new Vector2(20 + x * 120, 24 + y * 72);
 				itm.TooltipText = "Test Tooltip";
 				itm.Texture = _main.itemTextures[index];
 				index++;
 			}
 		}
+		Target(0);
+	}
+
+	public void Target(int index)
+	{
+		_target.Position = _items[index].Position - new Vector2(2, 2);
+		targetIndex = index;
 	}
 
 	public void AddItem(ItemType it)
 	{
-		Item i = _items[(int)it];
-		if (i.Count < i.maxCount) i.Count++;
+		Item item = _items[(int)it];
+		if (item.Count < item.maxCount) item.Count++;
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+	public void UseItem()
 	{
+		ItemType it = (ItemType)targetIndex;
+		Item item = _items[(int)it];
+		if (item.Count > 0) item.Count--;
 	}
+
+
 }

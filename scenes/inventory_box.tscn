@@ -1,9 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://t2ft5j7qrsuk"]
+[gd_scene load_steps=4 format=3 uid="uid://t2ft5j7qrsuk"]
 
 [ext_resource type="Texture2D" uid="uid://smxnw8u1gp0k" path="res://gfx/HoldBorder.png" id="1_46e02"]
 [ext_resource type="Script" path="res://src/Inventory.cs" id="2_7aqah"]
+[ext_resource type="Texture2D" uid="uid://6elrbh8y4vi5" path="res://gfx/items/itemtarget.png" id="3_iiv1p"]
 
-[node name="InventoryBox" type="NinePatchRect"]
+[node name="InventoryBox" type="NinePatchRect" node_paths=PackedStringArray("_target")]
 offset_right = 512.0
 offset_bottom = 200.0
 texture = ExtResource("1_46e02")
@@ -12,6 +13,7 @@ patch_margin_top = 16
 patch_margin_right = 16
 patch_margin_bottom = 16
 script = ExtResource("2_7aqah")
+_target = NodePath("Target")
 
 [node name="Inventory" type="Label" parent="."]
 visible = false
@@ -23,3 +25,11 @@ theme_override_font_sizes/font_size = 32
 text = "INVENTORY"
 horizontal_alignment = 1
 vertical_alignment = 2
+
+[node name="Target" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 140.0
+offset_bottom = 72.0
+texture = ExtResource("3_iiv1p")
