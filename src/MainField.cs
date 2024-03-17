@@ -28,7 +28,8 @@ public partial class MainField : Control
 	[Export] private AudioStreamPlayer moveSound;
 	[Export] private AudioStreamPlayer rotateSound;
 	[Export] private AudioStreamPlayer gameOverSound;
-
+	[Export] public Texture2D[] itemTextures;
+	private Random _rand;
 	public List<MiniField> miniFields;
 	private Texture2D _ghostTexture;
 
@@ -73,6 +74,7 @@ public partial class MainField : Control
 
 	public override void _Ready()
 	{
+		_rand = new();
 		_ghostTexture = GD.Load("res://gfx/Ghost.png") as Texture2D;
 		_fallTime = 0.5f;
 		_time = 0;
@@ -233,6 +235,9 @@ public partial class MainField : Control
 			{
 				RemoveBlankLines();
 				ResetPiecePositions();
+
+				SpawnItems(_lines.Count);
+
 				_lines.Clear();
 				clearTimer = 0f;
 				clearIndex = 0;
@@ -247,6 +252,43 @@ public partial class MainField : Control
 	{
 		_flyingPieces.Remove(p);
 		RemoveChild(p);
+	}
+
+	public void SpawnItems(int count)
+	{
+		for (int i = 0; i < count; i++)
+		{
+			int itemnum = _rand.Next(0, NUM_ITEMS); //todo - item weights
+			Piece p = GetRandomPiece();
+			if (p != null)
+			{
+				p.SetItem((ItemType)itemnum, itemTextures[itemnum]);
+			}
+		}
+	}
+
+	public Piece GetRandomPiece()
+	{
+		int x;
+		int y;
+		for (int i = 0; i < 80; i++) //80 chances to find a random piece
+		{
+			x = _rand.Next(0, GRID_W);
+			y = _rand.Next(0, GRID_H);
+			try
+			{
+				Piece p = _gridData[x, y];
+				if (p != null)
+				{
+					if (!p.isItem) return p;
+				}
+			}
+			catch
+			{
+				GD.Print($"X: {x}  Y: {y}");
+			}
+		}
+		return null;
 	}
 
 	public void ProcessInput(double delta)

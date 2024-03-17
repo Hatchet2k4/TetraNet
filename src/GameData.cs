@@ -9,6 +9,8 @@ public class ChatEntry
 	public string Text { get; set; }
 }
 
+
+
 public partial class GameData : Node
 {
 	public Dictionary<long, PlayerData> PlayerList = new();
@@ -25,6 +27,8 @@ public partial class GameData : Node
 	{
 
 	}
+
+
 
 	public void AddChat(long id, string text)
 	{

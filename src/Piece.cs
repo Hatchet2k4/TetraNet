@@ -1,6 +1,7 @@
 namespace TetraNet;
 
 using Godot;
+using static Data;
 
 public partial class Piece : Area2D
 {
@@ -13,9 +14,19 @@ public partial class Piece : Area2D
 	public double flyTime = 0f;
 	public Vector2 velocity;
 
+	public bool isItem = false;
+	public ItemType item;
+
 	public void SetTexture(Texture2D texture)
 	{
 		_sprite.Texture = texture;
+	}
+
+	public void SetItem(ItemType i, Texture2D texture)
+	{
+		isItem = true;
+		item = i;
+		SetTexture(texture);
 	}
 
 	public Vector2 GetSize()

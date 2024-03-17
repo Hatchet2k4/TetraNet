@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://dba4ubxkab2hi"]
+[gd_scene load_steps=38 format=3 uid="uid://dba4ubxkab2hi"]
 
 [ext_resource type="AudioStream" uid="uid://3gt8y2muyuuy" path="res://sfx/hold.wav" id="1_6p8t6"]
 [ext_resource type="Theme" uid="uid://dcvi35wnn0w4a" path="res://resources/new_theme.tres" id="1_e648y"]
@@ -25,9 +25,18 @@
 [ext_resource type="AudioStream" uid="uid://ctfyo1mf7xhyd" path="res://sfx/chat 3.wav" id="13_bfww7"]
 [ext_resource type="AudioStream" uid="uid://bcw5v8wsrfg05" path="res://sfx/gameover.wav" id="16_4jw4w"]
 [ext_resource type="Script" path="res://src/Countdown.cs" id="19_r060n"]
+[ext_resource type="Texture2D" uid="uid://d17kwpru0qtvf" path="res://gfx/items/A.png" id="20_liysy"]
 [ext_resource type="Texture2D" uid="uid://b3s31h7yvvhp3" path="res://gfx/Big3.png" id="20_pjai2"]
 [ext_resource type="Texture2D" uid="uid://ccwlpw5uudako" path="res://gfx/Big2.png" id="21_fc3ks"]
+[ext_resource type="Texture2D" uid="uid://bu130nmulqidx" path="res://gfx/items/B.png" id="21_o1x61"]
+[ext_resource type="Texture2D" uid="uid://7kxjlmkks5hn" path="res://gfx/items/C.png" id="22_17jcg"]
 [ext_resource type="Texture2D" uid="uid://cfxe1jwf8vyub" path="res://gfx/Big1.png" id="22_30lc2"]
+[ext_resource type="Texture2D" uid="uid://b55et8kk8npsj" path="res://gfx/items/G.png" id="23_6l3yu"]
+[ext_resource type="Texture2D" uid="uid://dbgy8paiv34i5" path="res://gfx/items/N.png" id="24_fked7"]
+[ext_resource type="Texture2D" uid="uid://mty5h3gjqfov" path="res://gfx/items/O.png" id="25_k7urw"]
+[ext_resource type="Texture2D" uid="uid://d0km3f1kka8hu" path="res://gfx/items/Q.png" id="26_y15nt"]
+[ext_resource type="Texture2D" uid="uid://bok2wscdno6pe" path="res://gfx/items/R.png" id="27_6r22n"]
+[ext_resource type="Texture2D" uid="uid://s366q2thav0y" path="res://gfx/items/S.png" id="28_0exly"]
 
 [node name="Main" type="Control" node_paths=PackedStringArray("Camera", "mainField")]
 layout_mode = 3
@@ -139,6 +148,7 @@ dropSound = NodePath("../Sounds/Drop")
 moveSound = NodePath("../Sounds/Move")
 rotateSound = NodePath("../Sounds/Rotate")
 gameOverSound = NodePath("../Sounds/GameOver")
+itemTextures = Array[Texture2D]([ExtResource("20_liysy"), ExtResource("21_o1x61"), ExtResource("22_17jcg"), ExtResource("23_6l3yu"), ExtResource("24_fked7"), ExtResource("25_k7urw"), ExtResource("26_y15nt"), ExtResource("27_6r22n"), ExtResource("28_0exly")])
 
 [node name="Player Name" type="Label" parent="Main Field"]
 layout_mode = 0
