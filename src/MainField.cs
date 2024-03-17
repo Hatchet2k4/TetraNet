@@ -109,7 +109,7 @@ public partial class MainField : Control
 			miniFields.Add(mf);
 			index++;
 		}
-		ypos = 784;
+		ypos = 772;
 		for (int x = 1; x < 6; x++)
 		{
 			MiniField mf = _minifieldScene.Instantiate() as MiniField;

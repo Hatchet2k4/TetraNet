@@ -57,9 +57,9 @@ stretch_mode = 1
 
 [node name="Score" type="NinePatchRect" parent="."]
 layout_mode = 0
-offset_top = 1000.0
+offset_top = 1024.0
 offset_right = 512.0
-offset_bottom = 1280.0
+offset_bottom = 1304.0
 theme = ExtResource("11_yf0df")
 texture = ExtResource("12_g3vqs")
 patch_margin_left = 16
