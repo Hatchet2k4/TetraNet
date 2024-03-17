@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://2dsw6nvuljyl"]
+
+[ext_resource type="Texture2D" uid="uid://d17kwpru0qtvf" path="res://gfx/items/A.png" id="1_r7d86"]
+[ext_resource type="Theme" uid="uid://dcvi35wnn0w4a" path="res://resources/new_theme.tres" id="2_8q6jh"]
+[ext_resource type="Script" path="res://src/Item.cs" id="2_s0meg"]
+
+[node name="ItemTexture" type="TextureRect"]
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 72.0
+offset_bottom = 72.0
+texture = ExtResource("1_r7d86")
+script = ExtResource("2_s0meg")
+
+[node name="ItemCount" type="Label" parent="."]
+layout_mode = 0
+offset_left = 48.0
+offset_right = 120.0
+offset_bottom = 48.0
+tooltip_text = "Test tooltip"
+mouse_filter = 0
+theme = ExtResource("2_8q6jh")
+text = "0/3"
+horizontal_alignment = 1
+vertical_alignment = 1

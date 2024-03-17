@@ -90,6 +90,11 @@ public partial class MainField : Control
 		_playerName.Text = name;
 	}
 
+	public void CreateInventory()
+	{
+
+	}
+
 	public void CreateMiniFields()
 	{
 		float ypos = 60;

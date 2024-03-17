@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://dba4ubxkab2hi"]
+[gd_scene load_steps=39 format=3 uid="uid://dba4ubxkab2hi"]
 
 [ext_resource type="AudioStream" uid="uid://3gt8y2muyuuy" path="res://sfx/hold.wav" id="1_6p8t6"]
 [ext_resource type="Theme" uid="uid://dcvi35wnn0w4a" path="res://resources/new_theme.tres" id="1_e648y"]
@@ -37,6 +37,7 @@
 [ext_resource type="Texture2D" uid="uid://d0km3f1kka8hu" path="res://gfx/items/Q.png" id="26_y15nt"]
 [ext_resource type="Texture2D" uid="uid://bok2wscdno6pe" path="res://gfx/items/R.png" id="27_6r22n"]
 [ext_resource type="Texture2D" uid="uid://s366q2thav0y" path="res://gfx/items/S.png" id="28_0exly"]
+[ext_resource type="PackedScene" uid="uid://t2ft5j7qrsuk" path="res://scenes/inventory_box.tscn" id="38_efn4i"]
 
 [node name="Main" type="Control" node_paths=PackedStringArray("Camera", "mainField")]
 layout_mode = 3
@@ -209,12 +210,20 @@ offset_top = 580.0
 offset_right = 844.0
 offset_bottom = 756.0
 
+[node name="InventoryBox" parent="." node_paths=PackedStringArray("_main") instance=ExtResource("38_efn4i")]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 1060.0
+offset_right = 528.0
+offset_bottom = 1300.0
+_main = NodePath("../Main Field")
+
 [node name="ScoreBox" type="NinePatchRect" parent="."]
 layout_mode = 0
-offset_left = 572.0
-offset_top = 812.0
-offset_right = 844.0
-offset_bottom = 1052.0
+offset_left = 16.0
+offset_top = 1312.0
+offset_right = 528.0
+offset_bottom = 1432.0
 theme = ExtResource("1_e648y")
 texture = ExtResource("10_w3jrr")
 patch_margin_left = 16
@@ -223,6 +232,7 @@ patch_margin_right = 16
 patch_margin_bottom = 16
 
 [node name="Score" type="Label" parent="ScoreBox"]
+visible = false
 layout_mode = 0
 offset_left = 4.0
 offset_top = -44.0
@@ -260,28 +270,6 @@ offset_right = 284.0
 offset_bottom = 99.0
 theme_override_font_sizes/font_size = 28
 text = "KO's  - 0"
-vertical_alignment = 2
-
-[node name="InventoryBox" type="NinePatchRect" parent="."]
-layout_mode = 0
-offset_left = 16.0
-offset_top = 1104.0
-offset_right = 528.0
-offset_bottom = 1424.0
-texture = ExtResource("10_w3jrr")
-patch_margin_left = 16
-patch_margin_top = 16
-patch_margin_right = 16
-patch_margin_bottom = 16
-
-[node name="Inventory" type="Label" parent="InventoryBox"]
-layout_mode = 0
-offset_top = -44.0
-offset_right = 512.0
-offset_bottom = -4.0
-theme_override_font_sizes/font_size = 32
-text = "INVENTORY"
-horizontal_alignment = 1
 vertical_alignment = 2
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
