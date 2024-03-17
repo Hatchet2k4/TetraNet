@@ -16,22 +16,25 @@ public partial class Data : Node
 	public static readonly Vector2 LEFT = Vector2.Left;
 	public static readonly Vector2 RIGHT = Vector2.Right;
 
-	public static readonly int NUM_ITEMS = 9;
+	public static readonly int NUM_ITEMS = 12;
 
 	public enum ItemType
 	{
-		A, //add random line
-		B, //remove special blocks
+		//defense
 		C, //clear line
+		D, //defense shield - block attacks/line adds for X seconds
 		G, //gravity
-		N, //nuke
+		N, //nuke field - clear all blocks		
+
+		//attack
+		A, //add random line
+		B, //remove special blocks	
+		L, //lock rotation
+		H, //lock hold button			
 		O, //explode special blocks
 		Q, //quake
 		R, //random 
 		S //switch field
-		  //Z, //increase fall speed
-		  //L, //lock rotation
-		  //H, //lock hold button
 	}
 
 	public static Dictionary<int, string> TeamMappings = new()

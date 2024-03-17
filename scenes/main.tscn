@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://dba4ubxkab2hi"]
+[gd_scene load_steps=43 format=3 uid="uid://dba4ubxkab2hi"]
 
 [ext_resource type="AudioStream" uid="uid://3gt8y2muyuuy" path="res://sfx/hold.wav" id="1_6p8t6"]
 [ext_resource type="Theme" uid="uid://dcvi35wnn0w4a" path="res://resources/new_theme.tres" id="1_e648y"]
@@ -28,6 +28,7 @@
 [ext_resource type="Texture2D" uid="uid://d17kwpru0qtvf" path="res://gfx/items/A.png" id="20_liysy"]
 [ext_resource type="Texture2D" uid="uid://b3s31h7yvvhp3" path="res://gfx/Big3.png" id="20_pjai2"]
 [ext_resource type="Texture2D" uid="uid://ccwlpw5uudako" path="res://gfx/Big2.png" id="21_fc3ks"]
+[ext_resource type="Texture2D" uid="uid://dggx0j030i2vf" path="res://gfx/items/D.png" id="21_kfb1d"]
 [ext_resource type="Texture2D" uid="uid://bu130nmulqidx" path="res://gfx/items/B.png" id="21_o1x61"]
 [ext_resource type="Texture2D" uid="uid://7kxjlmkks5hn" path="res://gfx/items/C.png" id="22_17jcg"]
 [ext_resource type="Texture2D" uid="uid://cfxe1jwf8vyub" path="res://gfx/Big1.png" id="22_30lc2"]
@@ -35,12 +36,12 @@
 [ext_resource type="Texture2D" uid="uid://dbgy8paiv34i5" path="res://gfx/items/N.png" id="24_fked7"]
 [ext_resource type="Texture2D" uid="uid://mty5h3gjqfov" path="res://gfx/items/O.png" id="25_k7urw"]
 [ext_resource type="Texture2D" uid="uid://d0km3f1kka8hu" path="res://gfx/items/Q.png" id="26_y15nt"]
+[ext_resource type="Texture2D" uid="uid://dgbswfat7j3ik" path="res://gfx/items/L.png" id="26_yv12d"]
+[ext_resource type="Texture2D" uid="uid://dhdaull0amsq5" path="res://gfx/items/H.png" id="27_6q145"]
 [ext_resource type="Texture2D" uid="uid://bok2wscdno6pe" path="res://gfx/items/R.png" id="27_6r22n"]
 [ext_resource type="Texture2D" uid="uid://s366q2thav0y" path="res://gfx/items/S.png" id="28_0exly"]
 [ext_resource type="PackedScene" uid="uid://t2ft5j7qrsuk" path="res://scenes/inventory_box.tscn" id="38_efn4i"]
-[ext_resource type="Script" path="res://src/ChatLog.cs" id="39_hcayr"]
 [ext_resource type="Texture2D" uid="uid://c1h3o60r1yrwa" path="res://gfx/HighlightBorder.png" id="40_bfupe"]
-[ext_resource type="Script" path="res://src/TextEntry.cs" id="41_3yf02"]
 
 [node name="Main" type="Control" node_paths=PackedStringArray("Camera", "mainField")]
 layout_mode = 3
@@ -152,7 +153,7 @@ dropSound = NodePath("../Sounds/Drop")
 moveSound = NodePath("../Sounds/Move")
 rotateSound = NodePath("../Sounds/Rotate")
 gameOverSound = NodePath("../Sounds/GameOver")
-itemTextures = Array[Texture2D]([ExtResource("20_liysy"), ExtResource("21_o1x61"), ExtResource("22_17jcg"), ExtResource("23_6l3yu"), ExtResource("24_fked7"), ExtResource("25_k7urw"), ExtResource("26_y15nt"), ExtResource("27_6r22n"), ExtResource("28_0exly")])
+itemTextures = Array[Texture2D]([ExtResource("22_17jcg"), ExtResource("21_kfb1d"), ExtResource("23_6l3yu"), ExtResource("24_fked7"), ExtResource("20_liysy"), ExtResource("21_o1x61"), ExtResource("26_yv12d"), ExtResource("27_6q145"), ExtResource("25_k7urw"), ExtResource("26_y15nt"), ExtResource("27_6r22n"), ExtResource("28_0exly")])
 
 [node name="Player Name" type="Label" parent="Main Field"]
 layout_mode = 0
@@ -280,7 +281,7 @@ layout_mode = 0
 offset_left = 540.0
 offset_top = 772.0
 offset_right = 1140.0
-offset_bottom = 1320.0
+offset_bottom = 1300.0
 focus_mode = 1
 texture = ExtResource("10_w3jrr")
 patch_margin_left = 16
@@ -292,20 +293,20 @@ patch_margin_bottom = 16
 layout_mode = 0
 offset_left = 16.0
 offset_top = 16.0
-offset_right = 438.0
-offset_bottom = 264.0
+offset_right = 584.0
+offset_bottom = 532.0
 theme = ExtResource("1_e648y")
 theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
-script = ExtResource("39_hcayr")
 
 [node name="TextBox" type="NinePatchRect" parent="ChatBox"]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
+offset_top = 12.0
 offset_right = 600.0
-offset_bottom = 112.0
+offset_bottom = 132.0
 grow_vertical = 0
 focus_mode = 1
 mouse_filter = 0
@@ -326,12 +327,12 @@ patch_margin_top = 16
 patch_margin_right = 16
 patch_margin_bottom = 16
 
-[node name="TextEntry" type="TextEdit" parent="ChatBox/TextBox" node_paths=PackedStringArray("_highlight", "_mainField", "_chatSound")]
+[node name="TextEntry" type="TextEdit" parent="ChatBox/TextBox"]
 layout_mode = 0
 offset_left = 16.0
 offset_top = 16.0
 offset_right = 584.0
-offset_bottom = 96.0
+offset_bottom = 104.0
 scale = Vector2(1, 1.0063)
 focus_mode = 1
 theme = ExtResource("1_e648y")
@@ -339,10 +340,6 @@ theme_override_font_sizes/font_size = 20
 wrap_mode = 1
 caret_blink = true
 text_direction = 1
-script = ExtResource("41_3yf02")
-_highlight = NodePath("../Highlight")
-_mainField = NodePath("../../../Main Field")
-_chatSound = NodePath("../../../Sounds/ChatSound")
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="focus_entered" from="ChatBox/TextBox/TextEntry" to="ChatBox/TextBox/TextEntry" method="OnFocusEntered"]
