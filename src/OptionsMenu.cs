@@ -10,6 +10,7 @@ public partial class OptionsMenu : Control
 	[Export] public HSlider musicSlider;
 	[Export] public HSlider soundSlider;
 	[Export] private AudioStreamPlayer testSound;
+	[Export] private CheckBox fullscreenBox;
 	private int _masterBus;
 	private int _musicBus;
 	private int _soundBus;
@@ -21,6 +22,19 @@ public partial class OptionsMenu : Control
 		_musicBus = AudioServer.GetBusIndex("Music");
 		_soundBus = AudioServer.GetBusIndex("Sound");
 		SetProcess(false);
+	}
+
+
+	public void ToggleFullScreen()
+	{
+		if (fullscreenBox.ButtonPressed)
+		{
+			DisplayServer.WindowSetMode(DisplayServer.WindowMode.ExclusiveFullscreen);
+		}
+		else
+		{
+			DisplayServer.WindowSetMode(DisplayServer.WindowMode.Windowed);
+		}
 	}
 
 	public void SetVolumes()

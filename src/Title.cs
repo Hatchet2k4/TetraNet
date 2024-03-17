@@ -2,6 +2,7 @@ namespace TetraNet;
 
 using System.Collections.Generic;
 using Godot;
+using System;
 
 public partial class Title : Node2D
 {
@@ -11,8 +12,8 @@ public partial class Title : Node2D
 	[Export] private Lobby _lobby;
 	[Export] private OptionsMenu _optionsMenu;
 	[Export] private GameData _gameData;
-
 	[Export] public ConnectionHandler connection;
+
 	private Main _main;
 
 	private PackedScene _mainScene = (PackedScene)ResourceLoader.Load("res://scenes/main.tscn");
