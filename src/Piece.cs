@@ -17,6 +17,8 @@ public partial class Piece : Area2D
 	public bool isItem = false;
 	public ItemType itemType;
 
+	public Color flyColor;
+
 	public void SetTexture(Texture2D texture)
 	{
 		_sprite.Texture = texture;
@@ -38,6 +40,7 @@ public partial class Piece : Area2D
 	public override void _Ready()
 	{
 		SetProcess(false);
+		flyColor = new Color(1f, 1f, 1f);
 	}
 
 	public void Fly(MainField m)
@@ -60,7 +63,7 @@ public partial class Piece : Area2D
 			Position += velocity;
 			velocity.Y += 10f * (float)delta;
 			RotationDegrees += velocity.X * 80 * (float)delta;
-			Modulate = new Color(1f, 1f, 1f, 1f - (float)flyTime);
+			Modulate = new Color(flyColor.R, flyColor.G, flyColor.B, 1f - (float)flyTime);
 		}
 		else
 		{
