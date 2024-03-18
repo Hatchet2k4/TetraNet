@@ -33,6 +33,7 @@ public partial class MainField : Control
 	private Random _rand;
 	public List<MiniField> miniFields;
 	private Texture2D _ghostTexture;
+	private Texture2D _blackTexture;
 
 	private PackedScene _pieceScene = (PackedScene)ResourceLoader.Load("res://scenes/piece.tscn");
 
@@ -72,13 +73,14 @@ public partial class MainField : Control
 
 	public bool processControls = true;
 
-	private List<string> _actionQueue = new();
+	private List<ItemType> _actionQueue = new();
 
 
 	public override void _Ready()
 	{
 		_rand = new();
 		_ghostTexture = GD.Load("res://gfx/Ghost.png") as Texture2D;
+		_blackTexture = GD.Load("res://gfx/Black.png") as Texture2D;
 		_fallTime = 0.5f;
 		_time = 0;
 		_gameOverTime = 0f;
@@ -91,11 +93,6 @@ public partial class MainField : Control
 	public void SetName(string name)
 	{
 		_playerName.Text = name;
-	}
-
-	public void CreateInventory()
-	{
-
 	}
 
 	public void CreateMiniFields()
@@ -217,6 +214,11 @@ public partial class MainField : Control
 			return; //may refactor this later to allow inventory input even while lines are being cleared
 		}
 
+		if (_actionQueue.Count > 0)
+		{
+			ProcessActionQueue();
+		}
+
 		_time += delta;
 		if (_time > _fallTime)
 		{
@@ -226,6 +228,62 @@ public partial class MainField : Control
 		else
 		{
 			ProcessInput(delta);
+		}
+	}
+
+	public void ProcessActionQueue()
+	{
+		foreach (ItemType it in _actionQueue)
+		{
+			if (it == ItemType.A) AddLine();
+		}
+		_actionQueue.Clear();
+		if (_root.connection.Mode != ConnectionMode.None) _root.connection.SyncField(_root.gameData.Id, GetGrid());
+	}
+
+	public void AddFieldPiece(int x, int y, Texture2D texture)
+	{
+		Piece p = _pieceScene.Instantiate() as Piece;
+		p.SetTexture(texture);
+		p.Position = _grid.Position + new Vector2(x * GRID_SIZE, y * GRID_SIZE);
+		_gridData[x, GRID_H - 1] = p;
+		AddChild(p);
+	}
+
+	public void MovePiece(int x1, int y1, int x2, int y2)
+	{
+		_gridData[x2, y2] = _gridData[x1, y1];
+		if (_gridData[x2, y2] != null)
+		{
+			_gridData[x2, y2].Position = _grid.Position + new Vector2(x2 * GRID_SIZE, y2 * GRID_SIZE);
+		}
+		_gridData[x1, y1] = null;
+	}
+
+	public void AddLine()
+	{
+		for (int x = 0; x < GRID_W; x++)
+		{
+			if (_gridData[x, 0] != null) //piece in top row
+			{
+				GameOver();
+				return;
+			}
+		}
+		for (int y = 1; y < GRID_H; y++)
+		{
+			for (int x = 0; x < GRID_W; x++)
+			{
+				MovePiece(x, y, x, y - 1);
+			}
+		}
+		int hole = _rand.Next(10);
+		for (int x = 0; x < GRID_W; x++)
+		{
+			if (x != hole)
+			{
+				AddFieldPiece(x, GRID_H - 1, _blackTexture);
+			}
 		}
 	}
 
@@ -313,7 +371,11 @@ public partial class MainField : Control
 
 		if (processControls)
 		{
-			//if(Input. )
+			if (Gamepad.PressedY())
+			{
+				_actionQueue.Add(ItemType.A);
+			}
+
 			if (Gamepad.UpPressed())
 			{
 				Rotate(RIGHT);
