@@ -29,7 +29,7 @@ public partial class Inventory : NinePatchRect
 				itm.inventory = this;
 				itm.index = index;
 				itm.Position = new Vector2(20 + x * 120, 24 + y * 72);
-				itm.TooltipText = "Test Tooltip";
+				itm.TooltipText = toolTips[(ItemType)index];
 				itm.Texture = _main.itemTextures[index];
 				index++;
 			}
