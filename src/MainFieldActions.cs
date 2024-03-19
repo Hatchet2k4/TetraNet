@@ -32,7 +32,6 @@ public partial class MainField : Control
 
 		}
 		_actionQueue.Clear();
-		CheckLines();
 		if (_root.connection.Mode != ConnectionMode.None) _root.connection.SyncField(_root.gameData.Id, GetGrid());
 	}
 
@@ -67,8 +66,11 @@ public partial class MainField : Control
 	{
 		for (int x = 0; x < GRID_W; x++)
 		{
-			RemoveChild(_gridData[x, GRID_H - 1]);
-			_gridData[x, GRID_H - 1] = null;
+			if (_gridData[x, GRID_H - 1] != null)
+			{
+				RemoveChild(_gridData[x, GRID_H - 1]);
+				_gridData[x, GRID_H - 1] = null;
+			}
 			for (int dy = GRID_H - 1; dy >= 0; dy--)
 			{
 				if (dy > 0) _gridData[x, dy] = _gridData[x, dy - 1];

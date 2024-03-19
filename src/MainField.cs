@@ -235,6 +235,9 @@ public partial class MainField : Control
 		if (_actionQueue.Count > 0)
 		{
 			ProcessActionQueue();
+			CheckLinesAction();
+			ResetPiecePositions();
+			SetGhostPosition();
 		}
 
 		_time += delta;
