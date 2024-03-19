@@ -289,6 +289,21 @@ public partial class MainField : Control
 		}
 	}
 
+	public void ClearLine()
+	{
+		for (int x = 0; x < GRID_W; x++)
+		{
+			RemoveChild(_gridData[x, GRID_H - 1]);
+			_gridData[x, GRID_H - 1] = null;
+			for (int dy = GRID_H - 1; dy >= 0; dy--)
+			{
+				if (dy > 0) _gridData[x, dy] = _gridData[x, dy - 1];
+				else _gridData[x, dy] = null;
+			}
+		}
+
+	}
+
 	public void Gravity()
 	{
 		for (int x = 0; x < GRID_W; x++)
@@ -402,7 +417,7 @@ public partial class MainField : Control
 		{
 			if (Gamepad.PressedY())
 			{
-				_actionQueue.Add(ItemType.G);
+				_actionQueue.Add(ItemType.C);
 			}
 
 			if (Gamepad.UpPressed())
