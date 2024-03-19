@@ -86,7 +86,6 @@ public partial class MainField : Control
 		{
 			SortColumn(x);
 		}
-
 	}
 
 	public void SortColumn(int x)
@@ -119,12 +118,43 @@ public partial class MainField : Control
 
 	public void NukeAction()
 	{
-
+		for (int x = 0; x < GRID_W; x++)
+		{
+			for (int y = 0; y < GRID_H; y++)
+			{
+				if (_gridData[x, y] != null)
+				{
+					RemoveChild(_gridData[x, y]);
+					_gridData[x, y] = null;
+				}
+			}
+		}
 	}
 
 	public void QuakeAction()
 	{
+		for (int y = 0; y < GRID_H; y++)
+		{
+			int shiftAmount = _rand.Next(-2, 3); // Random shift amount between -2 and 2
+			ShiftRow(y, shiftAmount);
+		}
+	}
 
+	private void ShiftRow(int rowIndex, int shiftAmount)
+	{
+		Piece[] newRow = new Piece[GRID_W];
+
+		for (int x = 0; x < GRID_W; x++)
+		{
+			// Calculate the new position after shifting, wrapping around if necessary
+			int newPosition = (x + shiftAmount + GRID_W) % GRID_W;
+			newRow[newPosition] = _gridData[x, rowIndex];
+		}
+		// Copy the shifted row back to the grid
+		for (int x = 0; x < GRID_W; x++)
+		{
+			_gridData[x, rowIndex] = newRow[x];
+		}
 	}
 
 	public void RandomAction()
