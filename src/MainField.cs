@@ -231,18 +231,6 @@ public partial class MainField : Control
 		}
 	}
 
-	public void ProcessActionQueue()
-	{
-		foreach (ItemType it in _actionQueue)
-		{
-			if (it == ItemType.A) AddLine();
-			if (it == ItemType.G) Gravity();
-		}
-		_actionQueue.Clear();
-		CheckLines();
-		if (_root.connection.Mode != ConnectionMode.None) _root.connection.SyncField(_root.gameData.Id, GetGrid());
-	}
-
 	public void AddFieldPiece(int x, int y, Texture2D texture)
 	{
 		Piece p = _pieceScene.Instantiate() as Piece;
@@ -262,74 +250,7 @@ public partial class MainField : Control
 		_gridData[x1, y1] = null;
 	}
 
-	public void AddLine()
-	{
-		for (int x = 0; x < GRID_W; x++)
-		{
-			if (_gridData[x, 0] != null) //piece in top row
-			{
-				GameOver();
-				return;
-			}
-		}
-		for (int y = 1; y < GRID_H; y++)
-		{
-			for (int x = 0; x < GRID_W; x++)
-			{
-				MovePiece(x, y, x, y - 1);
-			}
-		}
-		int hole = _rand.Next(10);
-		for (int x = 0; x < GRID_W; x++)
-		{
-			if (x != hole)
-			{
-				AddFieldPiece(x, GRID_H - 1, _blackTexture);
-			}
-		}
-	}
 
-	public void ClearLine()
-	{
-		for (int x = 0; x < GRID_W; x++)
-		{
-			RemoveChild(_gridData[x, GRID_H - 1]);
-			_gridData[x, GRID_H - 1] = null;
-			for (int dy = GRID_H - 1; dy >= 0; dy--)
-			{
-				if (dy > 0) _gridData[x, dy] = _gridData[x, dy - 1];
-				else _gridData[x, dy] = null;
-			}
-		}
-
-	}
-
-	public void Gravity()
-	{
-		for (int x = 0; x < GRID_W; x++)
-		{
-			SortColumn(x);
-		}
-
-	}
-
-	public void SortColumn(int x)
-	{
-		for (int y = GRID_H - 1; y > 1; y--)
-		{
-			if (_gridData[x, y] is null)
-			{
-				for (int dy = y - 1; dy > 1; dy--)
-				{
-					if (_gridData[x, dy] is not null)
-					{
-						MovePiece(x, dy, x, y);
-						break;
-					}
-				}
-			}
-		}
-	}
 
 	public void ClearLines(double delta)
 	{
@@ -719,58 +640,6 @@ public partial class MainField : Control
 		totalLines += numlines;
 
 		_lblLines.Text = $"Lines - {totalLines}";
-	}
-
-	public void CheckLinesAction()
-	{
-		int numlines = 0;
-		List<int> lines = new List<int>();
-		for (int y = 0; y < GRID_H; y++)
-		{
-
-			for (int x = 0; x < GRID_W; x++)
-			{
-				if (_gridData[x, y] == null)
-				{
-					break;
-				}
-
-				if (x + 1 == GRID_W) //made it all the way across, found a line!
-				{
-					numlines += 1;
-					lines.Add(y); //found on line y
-				}
-			}
-		}
-
-		//clear found lines
-		for (int i = 0; i < lines.Count; i++)
-		{
-			for (int x = 0; x < GRID_W; x++)
-			{
-				int y = lines[i];
-				Piece p = _gridData[clearIndex, y];
-				p.flyColor = new Color(1f, 0.2f, 0.2f);
-				p.Fly(this);
-				_flyingPieces.Add(p);
-				_gridData[clearIndex, y] = null;
-			}
-		}
-
-		//clear blank lines
-		foreach (int y in lines)
-		{
-			for (int x = 0; x < GRID_W; x++)
-			{
-				for (int dy = y; dy >= 0; dy--)
-				{
-					if (dy > 0) _gridData[x, dy] = _gridData[x, dy - 1];
-					else _gridData[x, dy] = null;
-				}
-			}
-		}
-		ResetPiecePositions();
-		GhostDrop();
 	}
 
 
