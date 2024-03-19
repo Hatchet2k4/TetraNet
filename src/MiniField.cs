@@ -7,12 +7,16 @@ using static Data;
 
 public partial class MiniField : Control
 {
+	public MainField main;
 	[Export] private RichTextLabel _nameLabel;
 	[Export] private TextureRect _grid;
+	[Export] private TextureRect _highlight;
 	[Export] private Texture2D[] _textures;
 
 	[Export] private Label _linesLabel;
 	[Export] private Label _koLabel;
+
+	public int index;
 
 	private List<Piece> _pieces;
 	private PackedScene _pieceScene = (PackedScene)ResourceLoader.Load("res://scenes/piece.tscn");
@@ -22,8 +26,30 @@ public partial class MiniField : Control
 		_pieces = new();
 	}
 
+	public void GUIInput(InputEvent e)
+	{
+		if (e is InputEventMouseButton)
+		{
+
+			InputEventMouseButton ev = (InputEventMouseButton)e;
+			main.Target(index);
+		}
+	}
+
+
 	public override void _Process(double delta)
 	{
+	}
+
+	public void SetHighlight(Color c)
+	{
+		_highlight.Visible = true;
+		_highlight.Modulate = c;
+	}
+
+	public void ClearHighlight()
+	{
+		_highlight.Visible = false;
 	}
 
 	public void SetName(string name, string team = "")

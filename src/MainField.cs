@@ -75,6 +75,7 @@ public partial class MainField : Control
 
 	private List<ItemType> _actionQueue = new();
 
+	public int targetIndex;
 
 	public override void _Ready()
 	{
@@ -106,6 +107,8 @@ public partial class MainField : Control
 			float xpos = 874 + (256 + 24) * x;
 			mf.Position = new Vector2(xpos, ypos);
 			mf.SetName($"({index + 1})", "");
+			mf.main = this;
+			mf.index = index;
 			miniFields.Add(mf);
 			index++;
 		}
@@ -117,6 +120,8 @@ public partial class MainField : Control
 			float xpos = 874 + (256 + 24) * x;
 			mf.Position = new Vector2(xpos, ypos);
 			mf.SetName($"({index + 1})", "");
+			mf.main = this;
+			mf.index = index;
 			miniFields.Add(mf);
 			index++;
 		}
@@ -190,6 +195,19 @@ public partial class MainField : Control
 			AddChild(p);
 			_flyingPieces.Add(p);
 		}
+	}
+
+	public void Target(int index)
+	{
+		//if (_root.connection.Mode != ConnectionMode.None && index <= _root.gameData.PlayerList.Count - 1)
+		//{
+		for (int i = 0; i < 11; i++)
+		{
+			if (i == index) miniFields[i].SetHighlight(new Color(240, 0, 0));
+			else miniFields[i].ClearHighlight();
+		}
+		//}
+		targetIndex = index;
 	}
 
 	public override void _Process(double delta)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://xje1qygs2j3e"]
+[gd_scene load_steps=14 format=3 uid="uid://xje1qygs2j3e"]
 
 [ext_resource type="Script" path="res://src/MiniField.cs" id="1_itts0"]
 [ext_resource type="Texture2D" uid="uid://j5rbu80ek0x4" path="res://gfx/Border.png" id="1_kktgu"]
@@ -11,23 +11,25 @@
 [ext_resource type="Texture2D" uid="uid://y8e0lfwwif52" path="res://gfx/Yellow.png" id="6_d7ct4"]
 [ext_resource type="Texture2D" uid="uid://d3uo1phhbrl6k" path="res://gfx/Red.png" id="8_c8uxx"]
 [ext_resource type="Theme" uid="uid://dcvi35wnn0w4a" path="res://resources/new_theme.tres" id="11_yf0df"]
+[ext_resource type="Texture2D" uid="uid://jdbva6cy1b86" path="res://gfx/HighlightBorderMain.png" id="12_05x6m"]
 [ext_resource type="Texture2D" uid="uid://smxnw8u1gp0k" path="res://gfx/HoldBorder.png" id="12_g3vqs"]
 
-[node name="Mini Field" type="Control" node_paths=PackedStringArray("_nameLabel", "_grid", "_linesLabel", "_koLabel")]
+[node name="Mini Field" type="Control" node_paths=PackedStringArray("_nameLabel", "_grid", "_highlight", "_linesLabel", "_koLabel")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 512.0
 offset_bottom = 992.0
 scale = Vector2(0.5, 0.5)
-mouse_filter = 2
 script = ExtResource("1_itts0")
 _nameLabel = NodePath("PlayerLabel")
 _grid = NodePath("Border/Grid")
+_highlight = NodePath("Border/Highlight")
 _textures = Array[Texture2D]([ExtResource("2_bpwwt"), ExtResource("3_umney"), ExtResource("4_xbs4o"), ExtResource("5_nccgw"), ExtResource("6_d7ct4"), ExtResource("6_6f1sx"), ExtResource("8_c8uxx")])
 _linesLabel = NodePath("Score/Lines")
 _koLabel = NodePath("Score/KOs")
 
 [node name="PlayerLabel" type="RichTextLabel" parent="."]
+visible = false
 layout_mode = 0
 offset_top = -90.0
 offset_right = 256.0
@@ -54,6 +56,13 @@ offset_right = 496.0
 offset_bottom = 976.0
 texture = ExtResource("2_6t4xm")
 stretch_mode = 1
+
+[node name="Highlight" type="TextureRect" parent="Border"]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("12_05x6m")
 
 [node name="Score" type="NinePatchRect" parent="."]
 layout_mode = 0
@@ -101,3 +110,5 @@ offset_right = 496.0
 offset_bottom = 264.0
 theme_override_font_sizes/font_size = 50
 text = " "
+
+[connection signal="gui_input" from="." to="." method="GUIInput"]
