@@ -25,7 +25,7 @@ public partial class Item : TextureRect
 
 	public override void _Ready()
 	{
-		maxCount = 3;
+
 	}
 
 	public void SetText()

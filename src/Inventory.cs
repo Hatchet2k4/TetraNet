@@ -16,6 +16,22 @@ public partial class Inventory : NinePatchRect
 
 	public int targetIndex;
 
+	public Dictionary<ItemType, int> maxCounts = new()
+	{
+		{ItemType.C, 8},
+		{ItemType.D, 3},
+		{ItemType.G, 3},
+		{ItemType.N, 1},
+		{ItemType.A, 8},
+		{ItemType.B, 4},
+		{ItemType.L, 3},
+		{ItemType.H, 3},
+		{ItemType.O, 3},
+		{ItemType.Q, 3},
+		{ItemType.R, 3},
+		{ItemType.S, 2}
+	};
+
 	public override void _Ready()
 	{
 		int index = 0;
@@ -28,9 +44,11 @@ public partial class Inventory : NinePatchRect
 				_items.Add(itm);
 				itm.inventory = this;
 				itm.index = index;
-				itm.Position = new Vector2(20 + x * 120, 24 + y * 72);
+				itm.maxCount = maxCounts[(ItemType)index];
+				itm.Position = new Vector2(18 + x * 120, 24 + y * 72);
 				itm.TooltipText = toolTips[(ItemType)index];
 				itm.Texture = _main.itemTextures[index];
+				itm.SetText();
 				index++;
 			}
 		}
