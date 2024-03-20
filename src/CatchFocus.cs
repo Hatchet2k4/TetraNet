@@ -9,11 +9,14 @@ public partial class CatchFocus : ColorRect
 
 	public void _on_gui_input(InputEvent e)
 	{
+
 		if (e is InputEventMouseButton)
 		{
-			InputEventMouseButton ev = (InputEventMouseButton)e;
 			GD.Print("Catchall");
+			InputEventMouseButton ev = (InputEventMouseButton)e;
+
 			mainField.GrabFocus();
+			mainField.OnFocusEntered();
 			mainField.processControls = true;
 		}
 	}

@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://dba4ubxkab2hi"]
+[gd_scene load_steps=50 format=3 uid="uid://dba4ubxkab2hi"]
 
 [ext_resource type="AudioStream" uid="uid://3gt8y2muyuuy" path="res://sfx/hold.wav" id="1_6p8t6"]
 [ext_resource type="Theme" uid="uid://dcvi35wnn0w4a" path="res://resources/new_theme.tres" id="1_e648y"]
@@ -46,6 +46,9 @@
 [ext_resource type="Texture2D" uid="uid://s366q2thav0y" path="res://gfx/items/S.png" id="28_0exly"]
 [ext_resource type="PackedScene" uid="uid://t2ft5j7qrsuk" path="res://scenes/inventory_box.tscn" id="38_efn4i"]
 [ext_resource type="Texture2D" uid="uid://c1h3o60r1yrwa" path="res://gfx/HighlightBorder.png" id="40_bfupe"]
+[ext_resource type="Texture2D" uid="uid://jdbva6cy1b86" path="res://gfx/HighlightBorderMain.png" id="42_63okw"]
+[ext_resource type="Script" path="res://src/ChatLog.cs" id="46_o40lh"]
+[ext_resource type="Script" path="res://src/TextEntry.cs" id="48_ip7nc"]
 
 [node name="Main" type="Control" node_paths=PackedStringArray("Camera", "mainField")]
 layout_mode = 3
@@ -61,6 +64,7 @@ mainField = NodePath("Main Field")
 layout_mode = 0
 offset_right = 3840.0
 offset_bottom = 2160.0
+focus_mode = 1
 color = Color(0.298039, 0.298039, 0.298039, 1)
 script = ExtResource("1_me42g")
 mainField = NodePath("../Main Field")
@@ -145,7 +149,7 @@ bus = &"Sound"
 script = ExtResource("4_edpkq")
 blockScene = ExtResource("3_yjmfd")
 
-[node name="Main Field" type="Control" parent="." node_paths=PackedStringArray("_root", "_playerName", "_spawner", "_grid", "_nextGrid", "_holdGrid", "_lblLines", "_countdown", "music", "landSound", "clearSound", "clear2Sound", "clear3Sound", "holdSound", "dropSound", "moveSound", "rotateSound", "gameOverSound", "nukeSound", "gravitySound", "clearLineSound", "addLineSound", "_inventory")]
+[node name="Main Field" type="Control" parent="." node_paths=PackedStringArray("_root", "_highlight", "_chat", "_playerName", "_spawner", "_grid", "_nextGrid", "_holdGrid", "_lblLines", "_countdown", "music", "landSound", "clearSound", "clear2Sound", "clear3Sound", "holdSound", "dropSound", "moveSound", "rotateSound", "gameOverSound", "nukeSound", "gravitySound", "clearLineSound", "addLineSound", "_inventory")]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 16.0
@@ -153,9 +157,10 @@ offset_top = 60.0
 offset_right = 528.0
 offset_bottom = 1052.0
 focus_mode = 1
-mouse_filter = 2
 script = ExtResource("2_515ng")
 _root = NodePath("..")
+_highlight = NodePath("Highlight")
+_chat = NodePath("../ChatBox/TextBox/TextEntry")
 _playerName = NodePath("Player Name")
 _spawner = NodePath("../Spawner")
 _grid = NodePath("Border/Grid")
@@ -223,6 +228,13 @@ script = ExtResource("19_r060n")
 Numbers = Array[Texture2D]([ExtResource("20_pjai2"), ExtResource("21_fc3ks"), ExtResource("22_30lc2")])
 beepSound = NodePath("../../Sounds/Chat2")
 doneSound = NodePath("../../Sounds/Chat3")
+
+[node name="Highlight" type="TextureRect" parent="Main Field"]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("42_63okw")
 
 [node name="NextBox" parent="." node_paths=PackedStringArray("_spawner") instance=ExtResource("8_l0fyc")]
 layout_mode = 0
@@ -308,21 +320,27 @@ offset_top = 772.0
 offset_right = 1140.0
 offset_bottom = 1300.0
 focus_mode = 1
+theme = ExtResource("1_e648y")
 texture = ExtResource("10_w3jrr")
 patch_margin_left = 16
 patch_margin_top = 16
 patch_margin_right = 16
 patch_margin_bottom = 16
 
-[node name="ChatLog" type="RichTextLabel" parent="ChatBox"]
+[node name="ChatLog" type="RichTextLabel" parent="ChatBox" node_paths=PackedStringArray("main", "_chatSound", "_chatSound2")]
 layout_mode = 0
 offset_left = 16.0
 offset_top = 16.0
 offset_right = 584.0
-offset_bottom = 532.0
+offset_bottom = 512.0
 theme = ExtResource("1_e648y")
-theme_override_font_sizes/normal_font_size = 20
+theme_override_font_sizes/normal_font_size = 32
 bbcode_enabled = true
+scroll_following = true
+script = ExtResource("46_o40lh")
+main = NodePath("../../Main Field")
+_chatSound = NodePath("../../Sounds/ChatSound")
+_chatSound2 = NodePath("../../Sounds/Chat2")
 
 [node name="TextBox" type="NinePatchRect" parent="ChatBox"]
 layout_mode = 1
@@ -344,15 +362,15 @@ patch_margin_bottom = 16
 [node name="Highlight" type="NinePatchRect" parent="ChatBox/TextBox"]
 visible = false
 layout_mode = 0
-offset_right = 454.0
-offset_bottom = 112.0
+offset_right = 600.0
+offset_bottom = 120.0
 texture = ExtResource("40_bfupe")
 patch_margin_left = 16
 patch_margin_top = 16
 patch_margin_right = 16
 patch_margin_bottom = 16
 
-[node name="TextEntry" type="TextEdit" parent="ChatBox/TextBox"]
+[node name="TextEntry" type="TextEdit" parent="ChatBox/TextBox" node_paths=PackedStringArray("_highlight", "_mainField", "_chatBox")]
 layout_mode = 0
 offset_left = 16.0
 offset_top = 16.0
@@ -361,12 +379,20 @@ offset_bottom = 104.0
 scale = Vector2(1, 1.0063)
 focus_mode = 1
 theme = ExtResource("1_e648y")
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 32
 wrap_mode = 1
 caret_blink = true
+caret_blink_interval = 0.35
 text_direction = 1
+script = ExtResource("48_ip7nc")
+_highlight = NodePath("../Highlight")
+_mainField = NodePath("../../../Main Field")
+_chatBox = NodePath("../../ChatLog")
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="gui_input" from="BG" to="BG" method="_on_gui_input"]
+[connection signal="focus_entered" from="Main Field" to="." method="OnFocusEntered"]
+[connection signal="focus_exited" from="Main Field" to="." method="OnFocusExited"]
 [connection signal="focus_entered" from="ChatBox/TextBox/TextEntry" to="ChatBox/TextBox/TextEntry" method="OnFocusEntered"]
 [connection signal="focus_exited" from="ChatBox/TextBox/TextEntry" to="ChatBox/TextBox/TextEntry" method="OnFocusExited"]
 [connection signal="gui_input" from="ChatBox/TextBox/TextEntry" to="ChatBox/TextBox/TextEntry" method="OnGuiInput"]

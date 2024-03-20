@@ -10,7 +10,9 @@ using System.Reflection.Metadata;
 
 public partial class MainField : Control
 {
-	[Export] private Main _root;
+	[Export] public Main _root;
+	[Export] private TextureRect _highlight;
+	[Export] private TextEntry _chat;
 	[Export] private Label _playerName;
 	[Export] private Spawner _spawner;
 	[Export] private TextureRect _grid;
@@ -77,6 +79,7 @@ public partial class MainField : Control
 	public int totalLines;
 
 	public bool processControls = true;
+	public int tabtimer = 0;
 
 	private List<ItemType> _actionQueue = new();
 
@@ -176,6 +179,7 @@ public partial class MainField : Control
 		//_countdown.Start();
 		music.Play();
 		Target(0);
+		OnFocusEntered();
 		SetProcess(true);
 	}
 
@@ -284,8 +288,8 @@ public partial class MainField : Control
 			{
 				ProcessInput(delta);
 			}
-
 		}
+		if (tabtimer > 0) tabtimer--;
 	}
 
 	public void AddFieldPiece(int x, int y, Texture2D texture)
@@ -412,6 +416,13 @@ public partial class MainField : Control
 	public void ProcessInput(double delta)
 	{
 
+		if (Input.IsActionJustPressed("tab") && tabtimer == 0)
+		{
+			GetViewport().SetInputAsHandled();
+			GD.Print("tab");
+			_chat.OnFocusEntered();
+			_chat.GrabFocus();
+		}
 		if (Input.IsActionJustPressed("action_a"))
 		{
 			//todo - target
@@ -847,4 +858,18 @@ public partial class MainField : Control
 
 	}
 
+	public void OnFocusEntered()
+	{
+		_highlight.Visible = true;
+		_highlight.Modulate = new Color(0f, 0.9f, 0f, 1f);
+		processControls = true;
+		tabtimer = 1;
+	}
+	public void OnFocusExited()
+	{
+		_highlight.Visible = false;
+		processControls = false;
+	}
+
 }
+

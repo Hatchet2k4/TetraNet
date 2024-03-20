@@ -30,9 +30,11 @@ public partial class MiniField : Control
 	{
 		if (e is InputEventMouseButton)
 		{
-
 			InputEventMouseButton ev = (InputEventMouseButton)e;
 			main.Target(index);
+			main.OnFocusEntered();
+			main.GrabFocus();
+
 		}
 	}
 
