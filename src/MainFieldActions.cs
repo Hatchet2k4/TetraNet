@@ -16,7 +16,6 @@ public partial class MainField : Control
 	{
 		foreach (ItemType it in _actionQueue)
 		{
-
 			if (it == ItemType.C) ClearLineAction();
 			else if (it == ItemType.D) DefenseAction();
 			else if (it == ItemType.G) GravityAction();
@@ -29,7 +28,6 @@ public partial class MainField : Control
 			else if (it == ItemType.Q) QuakeAction();
 			else if (it == ItemType.R) RandomAction();
 			else if (it == ItemType.S) SwitchAction();
-
 		}
 		_actionQueue.Clear();
 		if (_root.connection.Mode != ConnectionMode.None) _root.connection.SyncField(_root.gameData.Id, GetGrid());
@@ -234,7 +232,4 @@ public partial class MainField : Control
 		ResetPiecePositions();
 		GhostDrop();
 	}
-
-
-
 }

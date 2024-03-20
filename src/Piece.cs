@@ -63,7 +63,7 @@ public partial class Piece : Area2D
 			Position += velocity;
 			velocity.Y += 10f * (float)delta;
 			RotationDegrees += velocity.X * 80 * (float)delta;
-			Modulate = new Color(flyColor.R, flyColor.G, flyColor.B, 1f - (float)flyTime);
+			SelfModulate = new Color(flyColor.R, flyColor.G, flyColor.B, 1f - (float)flyTime);
 		}
 		else
 		{

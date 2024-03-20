@@ -43,12 +43,12 @@ public partial class Data : Node
 		{ItemType.G, "Gravity - Pull all blocks down, filling any gaps."},
 		{ItemType.N, "Nuke - Destroys all blocks in field."},
 		{ItemType.A, "Add Line - Adds a junk line to bottom of field."},
-		{ItemType.B, "Block Clear - Remove all item blocks from field."},
+		{ItemType.B, "Block Clear - Remove all item blocks from field. (Not implemented)" },
 		{ItemType.L, "Lock - Locks rotation of blocks for 6 seconds. (Not implemented)"},
 		{ItemType.H, "Hold - Prevents use of hold box for 6 seconds. (Not implemented)"},
 		{ItemType.O, "Block Bomb - Destroys O blocks in field, scattering up to 8 blocks randomly. (Not implemented)"},
 		{ItemType.Q, "Quake - Randomly shift all field rows."},
-		{ItemType.R, "Random - Removes up to 10 random blocks from field."},
+		{ItemType.R, "Random - Removes up to 10 random blocks from field. (Not implemented)" },
 		{ItemType.S, "Switch Field - Switch your field with an opponent's. (Not implemented)"}
 	};
 

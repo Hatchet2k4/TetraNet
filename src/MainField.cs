@@ -357,10 +357,65 @@ public partial class MainField : Control
 
 		if (processControls)
 		{
-			if (Gamepad.PressedY())
+			if (Input.IsActionPressed("action_a"))
+			{
+				//todo - target
+				_actionQueue.Add(ItemType.A);
+			}
+			if (Input.IsActionPressed("action_b"))
+			{
+				//todo - target
+				_actionQueue.Add(ItemType.B);
+			}
+			if (Input.IsActionPressed("action_c"))
 			{
 				_actionQueue.Add(ItemType.C);
 			}
+			if (Input.IsActionPressed("action_d"))
+			{
+				_actionQueue.Add(ItemType.D);
+			}
+			if (Input.IsActionPressed("action_g"))
+			{
+				_actionQueue.Add(ItemType.G);
+			}
+			if (Input.IsActionPressed("action_n"))
+			{
+				_actionQueue.Add(ItemType.N);
+			}
+			if (Input.IsActionPressed("action_l"))
+			{
+				//todo - target
+				_actionQueue.Add(ItemType.L);
+			}
+			if (Input.IsActionPressed("action_h"))
+			{
+				//todo - target
+				_actionQueue.Add(ItemType.H);
+			}
+			if (Input.IsActionPressed("action_o"))
+			{
+				//todo - target
+				_actionQueue.Add(ItemType.O);
+			}
+			if (Input.IsActionPressed("action_q"))
+			{
+				//todo - target
+				_actionQueue.Add(ItemType.Q);
+			}
+			if (Input.IsActionPressed("action_r"))
+			{
+				//todo - target
+				_actionQueue.Add(ItemType.R);
+			}
+			if (Input.IsActionPressed("action_s"))
+			{
+				//todo - target
+				_actionQueue.Add(ItemType.S);
+			}
+
+
+
 
 			if (Gamepad.UpPressed())
 			{
