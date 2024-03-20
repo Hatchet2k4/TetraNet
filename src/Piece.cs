@@ -1,5 +1,6 @@
 namespace TetraNet;
 
+using System.Diagnostics;
 using Godot;
 using static Data;
 
@@ -12,12 +13,15 @@ public partial class Piece : Area2D
 	private MainField _main;
 
 	public double flyTime = 0f;
+	public double flashtime = 0f;
 	public Vector2 velocity;
 
 	public bool isItem = false;
 	public ItemType itemType;
 
 	public Color flyColor;
+
+	public string mode;
 
 	public void SetTexture(Texture2D texture)
 	{
@@ -45,29 +49,72 @@ public partial class Piece : Area2D
 
 	public void Fly(MainField m)
 	{
-
 		_main = m;
-		SetProcess(true);
+		mode = "Fly";
 		ZIndex++;
 		float xv = GD.Randf() * 2 + 0.5f;
 		if (GD.Randf() >= 0.5f) xv *= -1;
-		float yv = -1f - GD.Randf();
+		float yv = -2f - GD.Randf() * 2;
 		velocity = new Vector2(xv, yv);
+		SetProcess(true);
+	}
+
+	public void Flash(MainField m)
+	{
+		_main = m;
+		mode = "Flash";
+		SetProcess(true);
 	}
 
 	public override void _Process(double delta)
 	{
+		if (mode == "Fly")
+		{
+			ProcessFly(delta);
+		}
+		else if (mode == "Flash")
+		{
+			ProcessFlash(delta);
+		}
+	}
+
+	public void ProcessFly(double delta)
+	{
+
 		flyTime += delta;
 		if (flyTime < 1f)
 		{
 			Position += velocity;
-			velocity.Y += 10f * (float)delta;
+			velocity.Y += 15f * (float)delta;
 			RotationDegrees += velocity.X * 80 * (float)delta;
-			SelfModulate = new Color(flyColor.R, flyColor.G, flyColor.B, 1f - (float)flyTime);
+			flyColor.A = 1f - (float)flyTime;
+			Modulate = flyColor;
 		}
 		else
 		{
 			_main.PieceDone(this);
+			Hide();
+			SetProcess(false);
+		}
+	}
+
+	public void ProcessFlash(double delta)
+	{
+		flashtime += delta;
+		if (flashtime < 0.1f)
+		{
+			float f = (float)delta;
+			Color c = new Color(25f * f, 25f * f, 25f * f);
+			Modulate += c;
+		}
+		else if (flashtime < 0.15f)
+		{
+			Modulate = new Color(Modulate.R, Modulate.G, Modulate.B, 1f - ((float)flashtime - 0.1f) * 20);
+		}
+		else
+		{
+			_main.PieceDone(this);
+			Hide();
 			SetProcess(false);
 		}
 	}

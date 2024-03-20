@@ -12,6 +12,7 @@ using System.Reflection;
 public partial class MainField : Control
 {
 
+	private List<Piece> _processingPieces = new();
 	public void ProcessActionQueue()
 	{
 		foreach (ItemType it in _actionQueue)
@@ -58,6 +59,7 @@ public partial class MainField : Control
 				AddFieldPiece(x, GRID_H - 1, _blackTexture);
 			}
 		}
+		addLineSound.Play();
 	}
 
 	public void ClearLineAction()
@@ -75,7 +77,7 @@ public partial class MainField : Control
 				else _gridData[x, dy] = null;
 			}
 		}
-
+		clearLineSound.Play();
 	}
 
 	public void GravityAction()
@@ -84,6 +86,7 @@ public partial class MainField : Control
 		{
 			SortColumn(x);
 		}
+		gravitySound.Play();
 	}
 
 	public void SortColumn(int x)
@@ -120,13 +123,16 @@ public partial class MainField : Control
 		{
 			for (int y = 0; y < GRID_H; y++)
 			{
+
 				if (_gridData[x, y] != null)
 				{
-					RemoveChild(_gridData[x, y]);
+					_processingPieces.Add(_gridData[x, y]);
+					_gridData[x, y].Flash(this);
 					_gridData[x, y] = null;
 				}
 			}
 		}
+		nukeSound.Play();
 	}
 
 	public void QuakeAction()
@@ -209,11 +215,14 @@ public partial class MainField : Control
 			for (int x = 0; x < GRID_W; x++)
 			{
 				int y = lines[i];
-				Piece p = _gridData[clearIndex, y];
-				p.flyColor = new Color(1f, 0.2f, 0.2f);
-				p.Fly(this);
-				_flyingPieces.Add(p);
-				_gridData[clearIndex, y] = null;
+				if (_gridData[x, y] != null)
+				{
+					Piece p = _gridData[x, y];
+					p.flyColor = new Color(0.2f, 0.2f, 1f, 1f);
+					p.Fly(this);
+					_processingPieces.Add(p);
+					_gridData[x, y] = null;
+				}
 			}
 		}
 

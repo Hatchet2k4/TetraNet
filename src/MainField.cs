@@ -28,6 +28,11 @@ public partial class MainField : Control
 	[Export] private AudioStreamPlayer moveSound;
 	[Export] private AudioStreamPlayer rotateSound;
 	[Export] private AudioStreamPlayer gameOverSound;
+	[Export] private AudioStreamPlayer nukeSound;
+	[Export] private AudioStreamPlayer gravitySound;
+	[Export] private AudioStreamPlayer clearLineSound;
+	[Export] private AudioStreamPlayer addLineSound;
+
 	[Export] public Texture2D[] itemTextures;
 	[Export] private Inventory _inventory;
 	private Random _rand;
@@ -44,7 +49,7 @@ public partial class MainField : Control
 	private double _fallTime;
 
 	private Piece[,] _gridData;
-	private List<Piece> _flyingPieces = new();
+
 
 	private bool _gameOver;
 	private float _gameOverTime;
@@ -76,6 +81,29 @@ public partial class MainField : Control
 	private List<ItemType> _actionQueue = new();
 
 	public int targetIndex;
+
+	public Dictionary<ItemType, float> soloItems = new()
+	{
+		{ItemType.C, 0.75f},
+		{ItemType.G, 0.2f},
+		{ItemType.N, 0.05f}
+	};
+
+	public Dictionary<ItemType, float> netItems = new()
+	{
+		{ItemType.C, 0.16f},
+		{ItemType.D, 0.0f},
+		{ItemType.G, 0.07f},
+		{ItemType.N, 0.03f},
+		{ItemType.A, 0.21f},
+		{ItemType.B, 0.15f},
+		{ItemType.L, 0.0f},
+		{ItemType.H, 0.0f},
+		{ItemType.O, 0.1f},
+		{ItemType.Q, 0.1f},
+		{ItemType.R, 0.15f},
+		{ItemType.S, 0.03f}
+	};
 
 	public override void _Ready()
 	{
@@ -185,16 +213,18 @@ public partial class MainField : Control
 		{
 			if (p != null)
 			{
+				p.flyColor = new Color(240f, 0, 0, 1f);
 				p.Fly(this);
-				_flyingPieces.Add(p);
+				_processingPieces.Add(p);
 			}
 		}
 		foreach (Piece p in _currentBlock.pieces)
 		{
+			p.flyColor = new Color(240f, 0, 0, 1f);
 			p.Fly(this);
 			_currentBlock.RemoveChild(p);
 			AddChild(p);
-			_flyingPieces.Add(p);
+			_processingPieces.Add(p);
 		}
 	}
 
@@ -294,7 +324,7 @@ public partial class MainField : Control
 					_inventory.AddItem(p.itemType);
 				}
 				p.Fly(this);
-				_flyingPieces.Add(p);
+				_processingPieces.Add(p);
 				_gridData[clearIndex, y] = null;
 			}
 			clearIndex++;
@@ -302,7 +332,6 @@ public partial class MainField : Control
 			{
 				RemoveBlankLines();
 				ResetPiecePositions();
-
 				SpawnItems(_lines.Count);
 
 				_lines.Clear();
@@ -317,19 +346,41 @@ public partial class MainField : Control
 
 	public void PieceDone(Piece p)
 	{
-		_flyingPieces.Remove(p);
+		_processingPieces.Remove(p);
 		RemoveChild(p);
+	}
+
+	public ItemType SelectItem()
+	{
+		double randomValue = _rand.NextDouble();
+
+		Dictionary<ItemType, float> items;
+		if (_root.connection.Mode == ConnectionMode.None) items = soloItems;
+		else items = netItems;
+
+		foreach (var kvp in items)
+		{
+			//If the random value is less than or equal to the spawn chance, return this item type
+			if (randomValue <= kvp.Value)
+			{
+				return kvp.Key;
+			}
+			//Subtract the spawn chance from the random value to consider the next item type
+			randomValue -= kvp.Value;
+		}
+		//default item to return just in case.
+		return ItemType.C;
 	}
 
 	public void SpawnItems(int count)
 	{
 		for (int i = 0; i < count; i++)
 		{
-			int itemnum = _rand.Next(0, NUM_ITEMS); //todo - item weights
+			ItemType it = SelectItem();
 			Piece p = GetRandomPiece();
 			if (p != null)
 			{
-				p.SetItem((ItemType)itemnum, itemTextures[itemnum]);
+				p.SetItem(it, itemTextures[(int)it]);
 			}
 		}
 	}
@@ -371,7 +422,7 @@ public partial class MainField : Control
 			//todo - target
 			_actionQueue.Add(ItemType.B);
 		}
-		if (Input.IsActionJustPressed("action_c") || Gamepad.PressedX()) //Keyboard C
+		if (Input.IsActionJustPressed("action_c"))
 		{
 			_actionQueue.Add(ItemType.C);
 		}
@@ -476,22 +527,22 @@ public partial class MainField : Control
 		}
 
 
-		else if (Gamepad.PressedB()) //Keyboard X
+		else if (Gamepad.PressedA()) //Keyboard Z
 		{
 			Rotate(RIGHT);
 			rotateSound.Play();
 		}
-		else if (Gamepad.PressedA()) //Keyboard Z
+		else if (Gamepad.PressedB()) //Keyboard X
 		{
 			Rotate(LEFT);
 			rotateSound.Play();
 		}
-		else if (Gamepad.PressedX()) //Keyboard X
+		else if (Gamepad.PressedX()) //Keyboard Space
 		{
 			FastDrop();
 			dropSound.Play();
 		}
-		else if (Gamepad.PressedY()) //Keyboard Z
+		else if (Gamepad.PressedY()) //Keyboard V
 		{
 			SwapBlocks();
 			holdSound.Play();
