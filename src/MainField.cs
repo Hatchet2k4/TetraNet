@@ -276,6 +276,7 @@ public partial class MainField : Control
 			CheckLinesAction();
 			ResetPiecePositions();
 			SetGhostPosition();
+			if (_root.connection.Mode != ConnectionMode.None) SyncGrid();
 		}
 
 		_time += delta;
@@ -294,12 +295,13 @@ public partial class MainField : Control
 		if (tabtimer > 0) tabtimer--;
 	}
 
-	public void AddFieldPiece(int x, int y, Texture2D texture)
+	public void AddFieldPiece(int x, int y, Texture2D texture, int textureIndex = -1)
 	{
 		Piece p = _pieceScene.Instantiate() as Piece;
 		p.SetTexture(texture);
 		p.Position = _grid.Position + new Vector2(x * GRID_SIZE, y * GRID_SIZE);
 		_gridData[x, GRID_H - 1] = p;
+		if (textureIndex >= 0) p.textureIndex = textureIndex;
 		AddChild(p);
 	}
 
@@ -345,7 +347,7 @@ public partial class MainField : Control
 				clearIndex = 0;
 				swapped = false;
 				SpawnNewBlock(_spawner.GetNextBlock());
-				if (_root.connection.Mode != ConnectionMode.None) _root.connection.SyncField(_root.gameData.Id, GetGrid());
+				if (_root.connection.Mode != ConnectionMode.None) SyncGrid();
 			}
 		}
 	}
@@ -797,7 +799,7 @@ public partial class MainField : Control
 		CheckLines();
 		if (_lines.Count == 0) SpawnNewBlock(_spawner.GetNextBlock());
 
-		if (_root.connection.Mode != ConnectionMode.None) _root.connection.SyncField(_root.gameData.Id, GetGrid());
+		if (_root.connection.Mode != ConnectionMode.None) SyncGrid();
 	}
 
 	public void RemoveBlankLines()
@@ -873,12 +875,17 @@ public partial class MainField : Control
 				if (_gridData[x, y] != null)
 				{
 					Piece p = _gridData[x, y];
-					data[y * GRID_W + x] = p.colorIndex;
+					data[y * GRID_W + x] = (sbyte)p.textureIndex;
 				}
 				else data[y * GRID_W + x] = -1;
 			}
 		}
 		return data;
+	}
+
+	public void SyncGrid()
+	{
+		_root.connection.SyncField(_root.gameData.Id, GetGrid());
 	}
 
 	public void SetGrid(int[,] data, int gridIndex)

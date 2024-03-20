@@ -40,7 +40,7 @@ public partial class Block : Node2D
 			p.Position = cells[i] * GRID_SIZE;
 			p.SetTexture(bd.blockTexture);
 			p.ZIndex = 2;
-			p.colorIndex = colorIndexMapping[_blockData.blockType];
+			p.textureIndex = colorIndexMapping[_blockData.blockType];
 			pieces[i] = p;
 		}
 	}

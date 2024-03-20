@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://xje1qygs2j3e"]
+[gd_scene load_steps=27 format=3 uid="uid://xje1qygs2j3e"]
 
 [ext_resource type="Script" path="res://src/MiniField.cs" id="1_itts0"]
 [ext_resource type="Texture2D" uid="uid://j5rbu80ek0x4" path="res://gfx/Border.png" id="1_kktgu"]
@@ -10,9 +10,22 @@
 [ext_resource type="Texture2D" uid="uid://b5oqnukvf2gsv" path="res://gfx/Purple.png" id="6_6f1sx"]
 [ext_resource type="Texture2D" uid="uid://y8e0lfwwif52" path="res://gfx/Yellow.png" id="6_d7ct4"]
 [ext_resource type="Texture2D" uid="uid://d3uo1phhbrl6k" path="res://gfx/Red.png" id="8_c8uxx"]
+[ext_resource type="Texture2D" uid="uid://7kxjlmkks5hn" path="res://gfx/items/C.png" id="9_sc3s3"]
+[ext_resource type="Texture2D" uid="uid://dggx0j030i2vf" path="res://gfx/items/D.png" id="10_qsck1"]
+[ext_resource type="Texture2D" uid="uid://b55et8kk8npsj" path="res://gfx/items/G.png" id="11_wym7s"]
 [ext_resource type="Theme" uid="uid://dcvi35wnn0w4a" path="res://resources/new_theme.tres" id="11_yf0df"]
 [ext_resource type="Texture2D" uid="uid://jdbva6cy1b86" path="res://gfx/HighlightBorderMain.png" id="12_05x6m"]
 [ext_resource type="Texture2D" uid="uid://smxnw8u1gp0k" path="res://gfx/HoldBorder.png" id="12_g3vqs"]
+[ext_resource type="Texture2D" uid="uid://dbgy8paiv34i5" path="res://gfx/items/N.png" id="12_jmw3f"]
+[ext_resource type="Texture2D" uid="uid://d17kwpru0qtvf" path="res://gfx/items/A.png" id="13_sipyu"]
+[ext_resource type="Texture2D" uid="uid://bu130nmulqidx" path="res://gfx/items/B.png" id="14_2dgxa"]
+[ext_resource type="Texture2D" uid="uid://dgbswfat7j3ik" path="res://gfx/items/L.png" id="15_n7ihw"]
+[ext_resource type="Texture2D" uid="uid://dhdaull0amsq5" path="res://gfx/items/H.png" id="16_1l1nd"]
+[ext_resource type="Texture2D" uid="uid://mty5h3gjqfov" path="res://gfx/items/O.png" id="17_7tnsk"]
+[ext_resource type="Texture2D" uid="uid://d0km3f1kka8hu" path="res://gfx/items/Q.png" id="18_cvwjn"]
+[ext_resource type="Texture2D" uid="uid://bok2wscdno6pe" path="res://gfx/items/R.png" id="19_l207j"]
+[ext_resource type="Texture2D" uid="uid://s366q2thav0y" path="res://gfx/items/S.png" id="20_7ro7w"]
+[ext_resource type="Texture2D" uid="uid://cjh5mom5iajjg" path="res://gfx/Black.png" id="21_phicv"]
 
 [node name="Mini Field" type="Control" node_paths=PackedStringArray("_nameLabel", "_grid", "_highlight", "_linesLabel", "_koLabel")]
 layout_mode = 3
@@ -25,7 +38,7 @@ script = ExtResource("1_itts0")
 _nameLabel = NodePath("PlayerLabel")
 _grid = NodePath("Border/Grid")
 _highlight = NodePath("Border/Highlight")
-_textures = Array[Texture2D]([ExtResource("2_bpwwt"), ExtResource("3_umney"), ExtResource("4_xbs4o"), ExtResource("5_nccgw"), ExtResource("6_d7ct4"), ExtResource("6_6f1sx"), ExtResource("8_c8uxx")])
+_textures = Array[Texture2D]([ExtResource("2_bpwwt"), ExtResource("3_umney"), ExtResource("4_xbs4o"), ExtResource("5_nccgw"), ExtResource("6_d7ct4"), ExtResource("6_6f1sx"), ExtResource("8_c8uxx"), ExtResource("9_sc3s3"), ExtResource("10_qsck1"), ExtResource("11_wym7s"), ExtResource("12_jmw3f"), ExtResource("13_sipyu"), ExtResource("14_2dgxa"), ExtResource("15_n7ihw"), ExtResource("16_1l1nd"), ExtResource("17_7tnsk"), ExtResource("18_cvwjn"), ExtResource("19_l207j"), ExtResource("20_7ro7w"), ExtResource("21_phicv")])
 _linesLabel = NodePath("Score/Lines")
 _koLabel = NodePath("Score/KOs")
 

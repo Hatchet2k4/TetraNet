@@ -9,7 +9,7 @@ public partial class Piece : Area2D
 	[Export] private Sprite2D _sprite;
 	[Export] private CollisionShape2D _collision;
 	private Texture2D _ghostTexture;
-	public sbyte colorIndex;
+	public int textureIndex;
 	private MainField _main;
 
 	public double flyTime = 0f;
@@ -33,6 +33,7 @@ public partial class Piece : Area2D
 		isItem = true;
 		itemType = i;
 		SetTexture(texture);
+		textureIndex = (int)itemType + 7;
 	}
 
 	public Vector2 GetSize()

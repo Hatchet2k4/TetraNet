@@ -32,7 +32,7 @@ public partial class MainField : Control
 			else if (it == ItemType.S) SwitchAction();
 		}
 		_actionQueue.Clear();
-		if (_root.connection.Mode != ConnectionMode.None) _root.connection.SyncField(_root.gameData.Id, GetGrid());
+
 	}
 
 	public void AddLineAction()
@@ -57,7 +57,7 @@ public partial class MainField : Control
 		{
 			if (x != hole)
 			{
-				AddFieldPiece(x, GRID_H - 1, _blackTexture);
+				AddFieldPiece(x, GRID_H - 1, _blackTexture, 19); //19 texture is black
 			}
 		}
 		addLineSound.Play();
