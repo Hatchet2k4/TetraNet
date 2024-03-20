@@ -1,6 +1,7 @@
 namespace TetraNet;
 
 using Godot;
+using static Data;
 
 public partial class Main : Control
 {
@@ -34,5 +35,10 @@ public partial class Main : Control
 	public void StopGame()
 	{
 		title.ReturnFromGame();
+	}
+
+	public void AddAction(int actionId)
+	{
+		mainField._actionQueue.Add((ItemType)actionId);
 	}
 }

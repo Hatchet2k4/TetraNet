@@ -81,7 +81,7 @@ public partial class MainField : Control
 	public bool processControls = true;
 	public int tabtimer = 0;
 
-	private List<ItemType> _actionQueue = new();
+	public List<ItemType> _actionQueue = new();
 
 	public int targetIndex;
 
@@ -140,6 +140,7 @@ public partial class MainField : Control
 			mf.SetName($"({index + 1})", "");
 			mf.main = this;
 			mf.index = index;
+
 			miniFields.Add(mf);
 			index++;
 		}
@@ -164,6 +165,7 @@ public partial class MainField : Control
 			{
 				_root.gameData.fieldMappings[id] = index;
 				miniFields[index].SetName(_root.gameData.PlayerList[id].PlayerName);
+				miniFields[index].targetId = id;
 				index++;
 			}
 		}
@@ -423,61 +425,87 @@ public partial class MainField : Control
 			_chat.OnFocusEntered();
 			_chat.GrabFocus();
 		}
+
+		//process actions
 		if (Input.IsActionJustPressed("action_a"))
 		{
-			//todo - target
-			_actionQueue.Add(ItemType.A);
+			if (_inventory.GetItemCount(ItemType.A) > 0)
+			{
+				long id = miniFields[targetIndex].targetId;
+				_root.connection.AddAction(miniFields[targetIndex].targetId, (int)ItemType.A);
+				string fromname = _root.gameData.PlayerList[id].PlayerName;
+				_root.gameData.AddChat(0, $"Line added to {fromname} from {_root.gameData.PlayerName}.");
+			}
 		}
 		if (Input.IsActionJustPressed("action_b"))
 		{
-			//todo - target
-			_actionQueue.Add(ItemType.B);
+			//_actionQueue.Add(ItemType.B);
 		}
 		if (Input.IsActionJustPressed("action_c"))
 		{
-			_actionQueue.Add(ItemType.C);
+			ItemType it = ItemType.C;
+			if (_inventory.GetItemCount(it) > 0)
+			{
+				_actionQueue.Add(it);
+				_inventory.UseItem(it);
+			}
 		}
 		if (Input.IsActionJustPressed("action_d"))
 		{
-			_actionQueue.Add(ItemType.D);
+			ItemType it = ItemType.D;
+			if (_inventory.GetItemCount(it) > 0)
+			{
+				_actionQueue.Add(it);
+				_inventory.UseItem(it);
+			}
 		}
 		if (Input.IsActionJustPressed("action_g"))
 		{
-			_actionQueue.Add(ItemType.G);
+			ItemType it = ItemType.G;
+			if (_inventory.GetItemCount(it) > 0)
+			{
+				_actionQueue.Add(it);
+				_inventory.UseItem(it);
+			}
 		}
 		if (Input.IsActionJustPressed("action_n"))
 		{
-			_actionQueue.Add(ItemType.N);
+			ItemType it = ItemType.N;
+			if (_inventory.GetItemCount(it) > 0)
+			{
+				_actionQueue.Add(it);
+				_inventory.UseItem(it);
+			}
 		}
 		if (Input.IsActionJustPressed("action_l"))
 		{
 			//todo - target
-			_actionQueue.Add(ItemType.L);
+			//_actionQueue.Add(ItemType.L);
 		}
 		if (Input.IsActionJustPressed("action_h"))
 		{
 			//todo - target
-			_actionQueue.Add(ItemType.H);
+			//_actionQueue.Add(ItemType.H);
 		}
 		if (Input.IsActionJustPressed("action_o"))
 		{
 			//todo - target
-			_actionQueue.Add(ItemType.O);
+			//_actionQueue.Add(ItemType.O);
 		}
 		if (Input.IsActionJustPressed("action_q"))
 		{
 			//todo - target
-			_actionQueue.Add(ItemType.Q);
+			//_actionQueue.Add(ItemType.Q);
 		}
 		if (Input.IsActionJustPressed("action_r"))
 		{
 			//todo - target
-			_actionQueue.Add(ItemType.R);
+			//_actionQueue.Add(ItemType.R);
 		}
 		if (Input.IsActionJustPressed("action_s"))
 		{
 			//todo - target
-			_actionQueue.Add(ItemType.S);
+			//_actionQueue.Add(ItemType.S);
 		}
 
 		if (Gamepad.PressedStart()) //Keyboard Enter || V

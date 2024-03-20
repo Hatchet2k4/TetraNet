@@ -34,7 +34,11 @@ public partial class ChatLog : RichTextLabel
 	{
 		if (chatSound > 0) _chatSound2.Play();
 		else _chatSound.Play();
-		//if (ScrollBar.)
+		while (_gameData.ChatLog.Count > 250)
+		{
+			_gameData.ChatLog.RemoveAt(0);
+		}
+
 
 		StringBuilder fullText = new();
 		for (int i = 0; i < _gameData.ChatLog.Count; i++)
@@ -43,6 +47,10 @@ public partial class ChatLog : RichTextLabel
 			if (line.Id == _gameData.Id)
 			{
 				fullText.AppendLine("[color=#F9FF8F]" + line.Text + "[/color]");
+			}
+			else if (line.Id == 0)
+			{
+				fullText.AppendLine("[color=#7FFF8E]" + line.Text + "[/color]");
 			}
 			else fullText.AppendLine(line.Text);
 		}

@@ -17,6 +17,7 @@ public partial class MainField : Control
 	{
 		foreach (ItemType it in _actionQueue)
 		{
+			//defense
 			if (it == ItemType.C) ClearLineAction();
 			else if (it == ItemType.D) DefenseAction();
 			else if (it == ItemType.G) GravityAction();

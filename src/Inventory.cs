@@ -44,6 +44,7 @@ public partial class Inventory : NinePatchRect
 				_items.Add(itm);
 				itm.inventory = this;
 				itm.index = index;
+				itm.itemType = (ItemType)index;
 				itm.maxCount = maxCounts[(ItemType)index];
 				itm.Position = new Vector2(18 + x * 120, 24 + y * 72);
 				itm.TooltipText = toolTips[(ItemType)index];
@@ -61,16 +62,23 @@ public partial class Inventory : NinePatchRect
 		targetIndex = index;
 	}
 
+	public int GetItemCount(ItemType it)
+	{
+		Item item = _items[(int)it];
+		return item.Count;
+	}
+
 	public void AddItem(ItemType it)
 	{
 		Item item = _items[(int)it];
 		if (item.Count < item.maxCount) item.Count++;
+		item.SetText();
 	}
 
-	public void UseItem()
+	public void UseItem(ItemType it)
 	{
-		ItemType it = (ItemType)targetIndex;
 		Item item = _items[(int)it];
 		if (item.Count > 0) item.Count--;
+		item.SetText();
 	}
 }

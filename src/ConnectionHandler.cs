@@ -166,6 +166,7 @@ public partial class ConnectionHandler : Node
 	}
 
 
+
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
 	private void SendPlayerInfo(string name, long id, string team) //send name data from client to server
 	{
@@ -208,6 +209,16 @@ public partial class ConnectionHandler : Node
 		}
 	}
 
+	public void AddAction(long id, int actionId)
+	{
+		RpcId(id, "RPCAddAction", actionId);
+	}
+
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer, TransferMode = MultiplayerPeer.TransferModeEnum.Reliable)]
+	private void RPCAddAction(int actionId) //send name data from client to server
+	{
+		main.AddAction(actionId);
+	}
 
 	public static T LoadJsonFromString<T>(string str)
 	{

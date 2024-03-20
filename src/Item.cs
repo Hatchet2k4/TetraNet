@@ -1,6 +1,8 @@
+namespace TetraNet;
+
 using Godot;
 using System;
-using TetraNet;
+using static Data;
 
 public partial class Item : TextureRect
 {
@@ -9,6 +11,7 @@ public partial class Item : TextureRect
 	private int _count;
 	public int index;
 	public double clickTimer;
+	public ItemType itemType;
 	public int Count
 	{
 		get
@@ -39,7 +42,7 @@ public partial class Item : TextureRect
 		{
 			if (clickTimer > 0f)
 			{
-				inventory.UseItem();
+				inventory.UseItem(itemType);
 			}
 			else
 			{

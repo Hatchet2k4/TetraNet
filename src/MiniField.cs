@@ -17,6 +17,7 @@ public partial class MiniField : Control
 	[Export] private Label _koLabel;
 
 	public int index;
+	public long targetId;
 
 	private List<Piece> _pieces;
 	private PackedScene _pieceScene = (PackedScene)ResourceLoader.Load("res://scenes/piece.tscn");
@@ -34,7 +35,6 @@ public partial class MiniField : Control
 			main.Target(index);
 			main.OnFocusEntered();
 			main.GrabFocus();
-
 		}
 	}
 
