@@ -147,6 +147,7 @@ public partial class MainField : Control
 		SpawnNewBlock(_spawner.GetNextBlock());
 		//_countdown.Start();
 		music.Play();
+		Target(0);
 		SetProcess(true);
 	}
 
@@ -201,13 +202,14 @@ public partial class MainField : Control
 	{
 		//if (_root.connection.Mode != ConnectionMode.None && index <= _root.gameData.PlayerList.Count - 1)
 		//{
+		targetIndex = index;
+		miniFields[targetIndex].SetHighlight(new Color(240, 0, 0));
 		for (int i = 0; i < 11; i++)
 		{
-			if (i == index) miniFields[i].SetHighlight(new Color(240, 0, 0));
-			else miniFields[i].ClearHighlight();
+			if (i != targetIndex) miniFields[i].ClearHighlight();
 		}
 		//}
-		targetIndex = index;
+
 	}
 
 	public override void _Process(double delta)
@@ -248,7 +250,11 @@ public partial class MainField : Control
 		}
 		else
 		{
-			ProcessInput(delta);
+			if (processControls)
+			{
+				ProcessInput(delta);
+			}
+
 		}
 	}
 
@@ -355,117 +361,164 @@ public partial class MainField : Control
 	public void ProcessInput(double delta)
 	{
 
-		if (processControls)
+		if (Input.IsActionJustPressed("action_a"))
 		{
-			if (Input.IsActionPressed("action_a"))
-			{
-				//todo - target
-				_actionQueue.Add(ItemType.A);
-			}
-			if (Input.IsActionPressed("action_b"))
-			{
-				//todo - target
-				_actionQueue.Add(ItemType.B);
-			}
-			if (Input.IsActionPressed("action_c"))
-			{
-				_actionQueue.Add(ItemType.C);
-			}
-			if (Input.IsActionPressed("action_d"))
-			{
-				_actionQueue.Add(ItemType.D);
-			}
-			if (Input.IsActionPressed("action_g"))
-			{
-				_actionQueue.Add(ItemType.G);
-			}
-			if (Input.IsActionPressed("action_n"))
-			{
-				_actionQueue.Add(ItemType.N);
-			}
-			if (Input.IsActionPressed("action_l"))
-			{
-				//todo - target
-				_actionQueue.Add(ItemType.L);
-			}
-			if (Input.IsActionPressed("action_h"))
-			{
-				//todo - target
-				_actionQueue.Add(ItemType.H);
-			}
-			if (Input.IsActionPressed("action_o"))
-			{
-				//todo - target
-				_actionQueue.Add(ItemType.O);
-			}
-			if (Input.IsActionPressed("action_q"))
-			{
-				//todo - target
-				_actionQueue.Add(ItemType.Q);
-			}
-			if (Input.IsActionPressed("action_r"))
-			{
-				//todo - target
-				_actionQueue.Add(ItemType.R);
-			}
-			if (Input.IsActionPressed("action_s"))
-			{
-				//todo - target
-				_actionQueue.Add(ItemType.S);
-			}
-
-
-
-
-			if (Gamepad.UpPressed())
-			{
-				Rotate(RIGHT);
-				rotateSound.Play();
-			}
-			if (Gamepad.LeftPressed())
-			{
-				Move(LEFT);
-				moveSound.Play();
-			}
-			else if (Gamepad.RightPressed())
-			{
-				Move(RIGHT);
-				moveSound.Play();
-			}
-			else if (Gamepad.PressedB())
-			{
-				FastDrop();
-				dropSound.Play();
-			}
-			else if (Gamepad.PressedA())
-			{
-				SwapBlocks();
-				holdSound.Play();
-			}
-			else if (Gamepad.DownHeld() || Gamepad.RightHeld() || Gamepad.LeftHeld())
-			{
-				if (!_downHeld && _holdTime == 0d)
-				{
-					_holdTime = _holdRate;
-					_downHeld = true;
-				}
-				else if (_holdTime <= 0d)
-				{
-					_holdTime += _holdRate;
-					if (Gamepad.DownHeld()) Move(DOWN);
-					else if (Gamepad.LeftHeld()) Move(LEFT);
-					else if (Gamepad.RightHeld()) Move(RIGHT);
-					moveSound.Play();
-				}
-				else
-				{
-					_holdTime -= delta;
-				}
-				return;
-			}
-			_downHeld = false;
-			_holdTime = 0d;
+			//todo - target
+			_actionQueue.Add(ItemType.A);
 		}
+		if (Input.IsActionJustPressed("action_b"))
+		{
+			//todo - target
+			_actionQueue.Add(ItemType.B);
+		}
+		if (Input.IsActionJustPressed("action_c") || Gamepad.PressedX()) //Keyboard C
+		{
+			_actionQueue.Add(ItemType.C);
+		}
+		if (Input.IsActionJustPressed("action_d"))
+		{
+			_actionQueue.Add(ItemType.D);
+		}
+		if (Input.IsActionJustPressed("action_g"))
+		{
+			_actionQueue.Add(ItemType.G);
+		}
+		if (Input.IsActionJustPressed("action_n"))
+		{
+			_actionQueue.Add(ItemType.N);
+		}
+		if (Input.IsActionJustPressed("action_l"))
+		{
+			//todo - target
+			_actionQueue.Add(ItemType.L);
+		}
+		if (Input.IsActionJustPressed("action_h"))
+		{
+			//todo - target
+			_actionQueue.Add(ItemType.H);
+		}
+		if (Input.IsActionJustPressed("action_o"))
+		{
+			//todo - target
+			_actionQueue.Add(ItemType.O);
+		}
+		if (Input.IsActionJustPressed("action_q"))
+		{
+			//todo - target
+			_actionQueue.Add(ItemType.Q);
+		}
+		if (Input.IsActionJustPressed("action_r"))
+		{
+			//todo - target
+			_actionQueue.Add(ItemType.R);
+		}
+		if (Input.IsActionJustPressed("action_s"))
+		{
+			//todo - target
+			_actionQueue.Add(ItemType.S);
+		}
+
+		if (Gamepad.PressedStart()) //Keyboard Enter || V
+		{
+
+		}
+
+		if (Gamepad.PressedL()) //Keyboard [
+		{
+			if (targetIndex > 0)
+			{
+				targetIndex--;
+				Target(targetIndex);
+			}
+		}
+
+		if (Gamepad.PressedR()) //Keyboard ]
+		{
+			if (targetIndex < 10)
+			{
+				targetIndex++;
+				Target(targetIndex);
+			}
+		}
+
+		for (int i = 1; i < 10; i++)
+		{
+			if (Input.IsActionJustPressed(i.ToString()))
+			{
+				Target(i - 1);
+			}
+		}
+
+		if (Input.IsActionJustPressed("0"))
+		{
+			Target(9);
+		}
+		if (Input.IsActionJustPressed("-"))
+		{
+			Target(10);
+		}
+
+
+		if (Gamepad.UpPressed())
+		{
+			Rotate(RIGHT);
+			rotateSound.Play();
+		}
+		if (Gamepad.LeftPressed())
+		{
+			Move(LEFT);
+			moveSound.Play();
+		}
+		else if (Gamepad.RightPressed())
+		{
+			Move(RIGHT);
+			moveSound.Play();
+		}
+
+
+		else if (Gamepad.PressedB()) //Keyboard X
+		{
+			Rotate(RIGHT);
+			rotateSound.Play();
+		}
+		else if (Gamepad.PressedA()) //Keyboard Z
+		{
+			Rotate(LEFT);
+			rotateSound.Play();
+		}
+		else if (Gamepad.PressedX()) //Keyboard X
+		{
+			FastDrop();
+			dropSound.Play();
+		}
+		else if (Gamepad.PressedY()) //Keyboard Z
+		{
+			SwapBlocks();
+			holdSound.Play();
+		}
+		else if (Gamepad.DownHeld() || Gamepad.RightHeld() || Gamepad.LeftHeld())
+		{
+			if (!_downHeld && _holdTime == 0d)
+			{
+				_holdTime = _holdRate;
+				_downHeld = true;
+			}
+			else if (_holdTime <= 0d)
+			{
+				_holdTime += _holdRate;
+				if (Gamepad.DownHeld()) Move(DOWN);
+				else if (Gamepad.LeftHeld()) Move(LEFT);
+				else if (Gamepad.RightHeld()) Move(RIGHT);
+				moveSound.Play();
+			}
+			else
+			{
+				_holdTime -= delta;
+			}
+			return;
+		}
+		_downHeld = false;
+		_holdTime = 0d;
 	}
 
 	public void Rotate(Vector2 direction)

@@ -73,6 +73,4 @@ public partial class Inventory : NinePatchRect
 		Item item = _items[(int)it];
 		if (item.Count > 0) item.Count--;
 	}
-
-
 }
