@@ -28,7 +28,15 @@ public partial class GameData : Node
 
 	}
 
+	public string GetPlayerName(int index)
+	{
+		return PlayerList[index].PlayerName;
+	}
 
+	public string GetPlayerName(long id)
+	{
+		return PlayerList[fieldMappings[id]].PlayerName;
+	}
 
 	public void AddChat(long id, string text)
 	{

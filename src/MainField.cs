@@ -94,6 +94,22 @@ public partial class MainField : Control
 
 	public Dictionary<ItemType, float> netItems = new()
 	{
+		{ItemType.C, 0.26f},
+		{ItemType.D, 0.0f},
+		{ItemType.G, 0.10f},
+		{ItemType.N, 0.07f},
+		{ItemType.A, 0.26f},
+		{ItemType.B, 0.0f},
+		{ItemType.L, 0.0f},
+		{ItemType.H, 0.0f},
+		{ItemType.O, 0.0f},
+		{ItemType.Q, 0.15f},
+		{ItemType.R, 0.15f},
+		{ItemType.S, 0.0f}
+	};
+
+	public Dictionary<ItemType, float> finalNetItems = new() //not used yet
+	{
 		{ItemType.C, 0.16f},
 		{ItemType.D, 0.0f},
 		{ItemType.G, 0.07f},
@@ -137,10 +153,8 @@ public partial class MainField : Control
 			_root.CallDeferred("add_child", mf);
 			float xpos = 874 + (256 + 24) * x;
 			mf.Position = new Vector2(xpos, ypos);
-			mf.SetName($"({index + 1})", "");
 			mf.main = this;
 			mf.index = index;
-
 			miniFields.Add(mf);
 			index++;
 		}
@@ -151,7 +165,7 @@ public partial class MainField : Control
 			_root.CallDeferred("add_child", mf);
 			float xpos = 874 + (256 + 24) * x;
 			mf.Position = new Vector2(xpos, ypos);
-			mf.SetName($"({index + 1})", "");
+
 			mf.main = this;
 			mf.index = index;
 			miniFields.Add(mf);
@@ -164,10 +178,15 @@ public partial class MainField : Control
 			if (id != _root.gameData.Id)
 			{
 				_root.gameData.fieldMappings[id] = index;
-				miniFields[index].SetName(_root.gameData.PlayerList[id].PlayerName);
+				miniFields[index].SetName($"({index + 1}) " + _root.gameData.PlayerList[id].PlayerName, "");
 				miniFields[index].targetId = id;
 				index++;
 			}
+		}
+		for (int i = index; i < 11; i++)
+		{
+			miniFields[i].Modulate = new Color(0.5f, 0.5f, 0.5f, 0.5f);
+			miniFields[i].SetName("", "");
 		}
 
 	}
@@ -234,18 +253,19 @@ public partial class MainField : Control
 		}
 	}
 
-	public void Target(int index)
+	public bool Target(int index)
 	{
-		//if (_root.connection.Mode != ConnectionMode.None && index <= _root.gameData.PlayerList.Count - 1)
-		//{
-		targetIndex = index;
-		miniFields[targetIndex].SetHighlight(new Color(240, 0, 0));
-		for (int i = 0; i < 11; i++)
+		if (_root.connection.Mode != ConnectionMode.None && index < _root.gameData.PlayerList.Count - 1)
 		{
-			if (i != targetIndex) miniFields[i].ClearHighlight();
+			targetIndex = index;
+			miniFields[targetIndex].SetHighlight(new Color(240, 0, 0));
+			for (int i = 0; i < 11; i++)
+			{
+				if (i != targetIndex) miniFields[i].ClearHighlight();
+			}
+			return true;
 		}
-		//}
-
+		return false;
 	}
 
 	public override void _Process(double delta)
@@ -366,15 +386,15 @@ public partial class MainField : Control
 		if (_root.connection.Mode == ConnectionMode.None) items = soloItems;
 		else items = netItems;
 
-		foreach (var kvp in items)
+		foreach (var item in items)
 		{
 			//If the random value is less than or equal to the spawn chance, return this item type
-			if (randomValue <= kvp.Value)
+			if (item.Value > 0f && randomValue <= item.Value)
 			{
-				return kvp.Key;
+				return item.Key;
 			}
 			//Subtract the spawn chance from the random value to consider the next item type
-			randomValue -= kvp.Value;
+			randomValue -= item.Value;
 		}
 		//default item to return just in case.
 		return ItemType.C;
@@ -437,7 +457,9 @@ public partial class MainField : Control
 				long id = miniFields[targetIndex].targetId;
 				_root.connection.AddAction(miniFields[targetIndex].targetId, (int)ItemType.A);
 				string toname = _root.gameData.PlayerList[id].PlayerName;
-				_root.connection.AddChat(0, $"Line added to {toname} from {_root.gameData.PlayerName}.");
+				string text = $"Line added to {toname} from {_root.gameData.PlayerName}.";
+				_root.gameData.AddChat(0, text);
+				_root.connection.AddChat(0, text);
 			}
 		}
 		if (Input.IsActionJustPressed("action_b"))
@@ -503,19 +525,23 @@ public partial class MainField : Control
 				long id = miniFields[targetIndex].targetId;
 				_root.connection.AddAction(miniFields[targetIndex].targetId, (int)ItemType.Q);
 				string toname = _root.gameData.PlayerList[id].PlayerName;
-				_root.connection.AddChat(0, $"Quake used on {toname} from {_root.gameData.PlayerName}.");
+				string text = $"Quake used on {toname} from {_root.gameData.PlayerName}.";
+				_root.gameData.AddChat(0, text);
+				_root.connection.AddChat(0, text);
 			}
 		}
 		if (Input.IsActionJustPressed("action_r"))
 		{
-			//if (_inventory.GetItemCount(ItemType.R) > 0)
-			//{
-			_inventory.UseItem(ItemType.R);
-			long id = miniFields[targetIndex].targetId;
-			_root.connection.AddAction(miniFields[targetIndex].targetId, (int)ItemType.R);
-			string toname = _root.gameData.PlayerList[id].PlayerName;
-			_root.connection.AddChat(0, $"Remove Random used on {toname} from {_root.gameData.PlayerName}.");
-			//}
+			if (_inventory.GetItemCount(ItemType.R) > 0)
+			{
+				_inventory.UseItem(ItemType.R);
+				long id = miniFields[targetIndex].targetId;
+				_root.connection.AddAction(miniFields[targetIndex].targetId, (int)ItemType.R);
+				string toname = _root.gameData.PlayerList[id].PlayerName;
+				string text = $"Remove Random used on {toname} from {_root.gameData.PlayerName}.";
+				_root.gameData.AddChat(0, text);
+				_root.connection.AddChat(0, text);
+			}
 		}
 		if (Input.IsActionJustPressed("action_s"))
 		{
@@ -891,6 +917,7 @@ public partial class MainField : Control
 			string s = "";
 			if (linesToAdd > 1) s = "s";
 			string toname = _root.gameData.PlayerList[id].PlayerName;
+			_root.gameData.AddChat(0, $"{linesToAdd} line{s} added to {toname} from {_root.gameData.PlayerName}.");
 			_root.connection.AddChat(0, $"{linesToAdd} line{s} added to {toname} from {_root.gameData.PlayerName}.");
 		}
 	}

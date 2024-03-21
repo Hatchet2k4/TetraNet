@@ -166,12 +166,16 @@ public partial class MainField : Control
 	{
 		for (int i = 0; i < 10; i++)
 		{
-			int x = _rand.Next(GRID_W);
-			int y = _rand.Next(GRID_H);
-			if (_gridData[x, y] != null)
+			for (int j = 0; j < 10; j++) //10 chances to try and find a non-null block
 			{
-				RemoveChild(_gridData[x, y]);
-				_gridData[x, y] = null;
+				int x = _rand.Next(GRID_W);
+				int y = _rand.Next(GRID_H);
+				if (_gridData[x, y] != null)
+				{
+					RemoveChild(_gridData[x, y]);
+					_gridData[x, y] = null;
+					break;
+				}
 			}
 		}
 	}

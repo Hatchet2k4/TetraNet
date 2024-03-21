@@ -33,8 +33,10 @@ public partial class MiniField : Control
 		{
 			InputEventMouseButton ev = (InputEventMouseButton)e;
 			main.Target(index);
+
 			main.OnFocusEntered();
 			main.GrabFocus();
+
 		}
 	}
 
@@ -56,6 +58,7 @@ public partial class MiniField : Control
 
 	public void SetName(string name, string team = "")
 	{
+		GD.Print("Setname " + name);
 		_nameLabel.Text = $"[center]{name}[/center]";
 	}
 
