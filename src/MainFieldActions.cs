@@ -164,7 +164,16 @@ public partial class MainField : Control
 
 	public void RandomAction()
 	{
-
+		for (int i = 0; i < 10; i++)
+		{
+			int x = _rand.Next(GRID_W);
+			int y = _rand.Next(GRID_H);
+			if (_gridData[x, y] != null)
+			{
+				RemoveChild(_gridData[x, y]);
+				_gridData[x, y] = null;
+			}
+		}
 	}
 
 	public void DefenseAction()

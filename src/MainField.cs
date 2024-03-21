@@ -433,10 +433,11 @@ public partial class MainField : Control
 		{
 			if (_inventory.GetItemCount(ItemType.A) > 0)
 			{
+				_inventory.UseItem(ItemType.A);
 				long id = miniFields[targetIndex].targetId;
 				_root.connection.AddAction(miniFields[targetIndex].targetId, (int)ItemType.A);
-				string fromname = _root.gameData.PlayerList[id].PlayerName;
-				_root.gameData.AddChat(0, $"Line added to {fromname} from {_root.gameData.PlayerName}.");
+				string toname = _root.gameData.PlayerList[id].PlayerName;
+				_root.connection.AddChat(0, $"Line added to {toname} from {_root.gameData.PlayerName}.");
 			}
 		}
 		if (Input.IsActionJustPressed("action_b"))
@@ -496,13 +497,25 @@ public partial class MainField : Control
 		}
 		if (Input.IsActionJustPressed("action_q"))
 		{
-			//todo - target
-			//_actionQueue.Add(ItemType.Q);
+			if (_inventory.GetItemCount(ItemType.Q) > 0)
+			{
+				_inventory.UseItem(ItemType.Q);
+				long id = miniFields[targetIndex].targetId;
+				_root.connection.AddAction(miniFields[targetIndex].targetId, (int)ItemType.Q);
+				string toname = _root.gameData.PlayerList[id].PlayerName;
+				_root.connection.AddChat(0, $"Quake used on {toname} from {_root.gameData.PlayerName}.");
+			}
 		}
 		if (Input.IsActionJustPressed("action_r"))
 		{
-			//todo - target
-			//_actionQueue.Add(ItemType.R);
+			//if (_inventory.GetItemCount(ItemType.R) > 0)
+			//{
+			_inventory.UseItem(ItemType.R);
+			long id = miniFields[targetIndex].targetId;
+			_root.connection.AddAction(miniFields[targetIndex].targetId, (int)ItemType.R);
+			string toname = _root.gameData.PlayerList[id].PlayerName;
+			_root.connection.AddChat(0, $"Remove Random used on {toname} from {_root.gameData.PlayerName}.");
+			//}
 		}
 		if (Input.IsActionJustPressed("action_s"))
 		{
@@ -512,7 +525,8 @@ public partial class MainField : Control
 
 		if (Gamepad.PressedStart()) //Keyboard Enter || V
 		{
-
+			SwapBlocks();
+			holdSound.Play();
 		}
 
 		if (Gamepad.PressedL()) //Keyboard [
@@ -836,7 +850,6 @@ public partial class MainField : Control
 		int numlines = 0;
 		for (int y = 0; y < GRID_H; y++)
 		{
-
 			for (int x = 0; x < GRID_W; x++)
 			{
 				if (_gridData[x, y] == null)
@@ -861,6 +874,25 @@ public partial class MainField : Control
 		totalLines += numlines;
 
 		_lblLines.Text = $"Lines - {totalLines}";
+
+		if (_root.connection.Mode != ConnectionMode.None && numlines > 1)
+		{
+			int linesToAdd;
+			if (numlines == 2) linesToAdd = 1;
+			else if (numlines == 3) linesToAdd = 2;
+			else linesToAdd = 4;
+
+			long id = miniFields[targetIndex].targetId;
+			for (int i = 0; i < linesToAdd; i++)
+			{
+
+				_root.connection.AddAction(miniFields[targetIndex].targetId, (int)ItemType.A);
+			}
+			string s = "";
+			if (linesToAdd > 1) s = "s";
+			string toname = _root.gameData.PlayerList[id].PlayerName;
+			_root.connection.AddChat(0, $"{linesToAdd} line{s} added to {toname} from {_root.gameData.PlayerName}.");
+		}
 	}
 
 

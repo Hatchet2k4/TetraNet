@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://cag0a4qb86rel"]
+[gd_scene load_steps=29 format=3 uid="uid://cag0a4qb86rel"]
 
 [ext_resource type="Script" path="res://src/Title.cs" id="1_4v2tq"]
 [ext_resource type="Script" path="res://src/GameData.cs" id="2_2r4o3"]
@@ -11,6 +11,7 @@
 [ext_resource type="Theme" uid="uid://dewu86uod5qnt" path="res://resources/menuTextTheme.tres" id="6_gkvc4"]
 [ext_resource type="AudioStream" uid="uid://chp35s7nn3l18" path="res://sfx/rotate.wav" id="6_gvqgc"]
 [ext_resource type="FontFile" uid="uid://cj7wvtcdatui1" path="res://fonts/kirifont/Kirifont.tres" id="7_oseos"]
+[ext_resource type="AudioStream" uid="uid://i1eqjogumerv" path="res://sfx/chat 2.wav" id="7_yasfo"]
 [ext_resource type="Theme" uid="uid://dcvi35wnn0w4a" path="res://resources/new_theme.tres" id="8_bhpob"]
 [ext_resource type="Script" path="res://src/HostJoinMenu.cs" id="9_0otmw"]
 [ext_resource type="Texture2D" uid="uid://b08i17xwe36xo" path="res://gfx/RedIcon.png" id="10_ey3m3"]
@@ -62,6 +63,10 @@ bus = &"Sound"
 stream = ExtResource("6_gvqgc")
 bus = &"Sound"
 
+[node name="Chat2" type="AudioStreamPlayer" parent="CommonObjects"]
+stream = ExtResource("7_yasfo")
+bus = &"Sound"
+
 [node name="Menus" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
@@ -71,6 +76,15 @@ layout_mode = 0
 offset_right = 1280.0
 offset_bottom = 720.0
 texture = ExtResource("2_wu36l")
+
+[node name="Label" type="Label" parent="Menus"]
+offset_left = 960.0
+offset_top = 680.0
+offset_right = 1267.0
+offset_bottom = 719.0
+theme = ExtResource("8_bhpob")
+theme_override_font_sizes/font_size = 32
+text = "2024 HatchetSoft"
 
 [node name="MainMenu" type="Control" parent="Menus"]
 visible = false
@@ -517,7 +531,7 @@ patch_margin_top = 16
 patch_margin_right = 16
 patch_margin_bottom = 16
 
-[node name="ChatLog" type="RichTextLabel" parent="Menus/Lobby/ChatBox" node_paths=PackedStringArray("_gameData", "_chatSound")]
+[node name="ChatLog" type="RichTextLabel" parent="Menus/Lobby/ChatBox" node_paths=PackedStringArray("_gameData", "_chatSound", "_chatSound2")]
 layout_mode = 0
 offset_left = 16.0
 offset_top = 16.0
@@ -529,6 +543,7 @@ bbcode_enabled = true
 script = ExtResource("25_d15cb")
 _gameData = NodePath("../../../../CommonObjects/GameData")
 _chatSound = NodePath("../../../../CommonObjects/ChatSound")
+_chatSound2 = NodePath("../../../../CommonObjects/Chat2")
 
 [node name="TextBox" type="NinePatchRect" parent="Menus/Lobby"]
 layout_mode = 0
