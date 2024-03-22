@@ -48,7 +48,7 @@ public partial class Data : Node
 		{ItemType.H, "Hold - Prevents use of hold box for 6 seconds. (Not implemented)"},
 		{ItemType.O, "Block Bomb - Destroys O blocks in field, scattering up to 8 blocks randomly. (Not implemented)"},
 		{ItemType.Q, "Quake - Randomly shift all field rows."},
-		{ItemType.R, "Random - Removes up to 10 random blocks from field. (Not implemented)" },
+		{ItemType.R, "Remove Random - Removes up to 10 random blocks from field. (Not implemented)" },
 		{ItemType.S, "Switch Field - Switch your field with an opponent's. (Not implemented)"}
 	};
 

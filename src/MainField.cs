@@ -901,6 +901,8 @@ public partial class MainField : Control
 
 		_lblLines.Text = $"Lines - {totalLines}";
 
+		_fallTime = Math.Max(0.1f, 0.5f - totalLines / 200);
+
 		if (_root.connection.Mode != ConnectionMode.None && numlines > 1)
 		{
 			int linesToAdd;
@@ -920,6 +922,9 @@ public partial class MainField : Control
 			_root.gameData.AddChat(0, $"{linesToAdd} line{s} added to {toname} from {_root.gameData.PlayerName}.");
 			_root.connection.AddChat(0, $"{linesToAdd} line{s} added to {toname} from {_root.gameData.PlayerName}.");
 		}
+
+
+
 	}
 
 
