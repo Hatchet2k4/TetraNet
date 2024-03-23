@@ -110,7 +110,51 @@ public partial class MainField : Control
 
 	public void BlockBombAction()
 	{
+		for (int x = 0; x < GRID_W; x++)
+		{
+			for (int y = 0; y < GRID_H; y++)
+			{
+				if (_gridData[x, y] != null)
+				{
+					Piece p = _gridData[x, y];
+					if (p.isItem && p.itemType == ItemType.O)
+					{
+						Explode(x, y, p);
+					}
+					_processingPieces.Add(_gridData[x, y]);
+					_gridData[x, y].Flash(this);
+					_gridData[x, y] = null;
+				}
+			}
+		}
+	}
 
+	public void Explode(int x, int y, Piece p)
+	{
+		List<Vector2> checkList = new()
+		{
+			new Vector2(-1, -1),
+			new Vector2(0, -1),
+			new Vector2(1, -1),
+			new Vector2(-1, 0),
+			new Vector2(1, 0),
+			new Vector2(-1, 1),
+			new Vector2(0, 1),
+			new Vector2(1, 1)
+		};
+
+		foreach (Vector2 position in checkList)
+		{
+			if (InBounds(x, y) && _gridData[x, y] != null)
+			{
+
+			}
+		}
+	}
+
+	public bool InBounds(int x, int y)
+	{
+		return x >= 0 && x < GRID_W && y >= 0 && y < GRID_H;
 	}
 
 	public void BlockClearAction()
